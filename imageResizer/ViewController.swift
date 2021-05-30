@@ -11,15 +11,15 @@ import PhotosUI
 
 class StandardButton: UIButton {
     override func draw(_ rect: CGRect) {
-        self.layer.masksToBounds = true
-        
-        self.layer.cornerRadius = 10
-        self.layer.cornerCurve = .continuous
-
-        
-        self.layer.borderWidth = 1.5
-        self.layer.borderColor = UIColor.label.withAlphaComponent(0.075).cgColor
-        
+        #if !targetEnvironment(macCatalyst)
+            self.layer.masksToBounds = true
+            self.layer.cornerRadius = 10
+            self.layer.cornerCurve = .continuous
+            self.backgroundColor = UIColor(named: "AccentColor")
+            self.layer.borderWidth = 2.0
+        #else
+            print("Hello")
+        #endif
     }
 }
 

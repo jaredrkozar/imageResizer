@@ -21,14 +21,14 @@
                                 <rect key="frame" x="50" y="114" width="540" height="540"/>
                             </imageView>
                             <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" reversesTitleShadowWhenHighlighted="YES" lineBreakMode="middleTruncation" pointerInteraction="YES" translatesAutoresizingMaskIntoConstraints="NO" id="KXy-8j-UER" customClass="StandardButton" customModule="imageResizer" customModuleProvider="target">
-                                <rect key="frame" x="625" y="613" width="353" height="41"/>
-                                <color key="backgroundColor" name="AccentColor"/>
+                                <rect key="frame" x="625" y="589" width="353" height="65"/>
                                 <constraints>
                                     <constraint firstAttribute="width" secondItem="KXy-8j-UER" secondAttribute="height" multiplier="353:41" id="6YU-Vx-ssg"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" type="system" weight="medium" pointSize="20"/>
+                                <color key="tintColor" name="gray"/>
                                 <state key="normal" title="Resize Image">
-                                    <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    <color key="titleColor" name="textColor"/>
                                 </state>
                                 <connections>
                                     <action selector="resizeButtonTapped:" destination="BYZ-38-t0r" eventType="touchUpInside" id="NNJ-uo-xqx"/>
@@ -140,8 +140,11 @@
     </scenes>
     <resources>
         <image name="square.and.arrow.up" catalog="system" width="115" height="128"/>
-        <namedColor name="AccentColor">
-            <color red="0.0" green="0.4779999852180481" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        <namedColor name="gray">
+            <color red="1" green="1" blue="1" alpha="0.5" colorSpace="custom" customColorSpace="displayP3"/>
+        </namedColor>
+        <namedColor name="textColor">
+            <color red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
         </namedColor>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
