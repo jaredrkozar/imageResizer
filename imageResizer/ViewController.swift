@@ -120,8 +120,7 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, PHPicke
     }
     
     func resizeImageWithAspectRatio() {
-        var widthRatio: Double = 0.0
-        var heightRatio: Double = 0.0
+        
         var image = imageView.image
         
         let heigthFieldInt = heigthField.text!
@@ -130,28 +129,23 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, PHPicke
         let widthFieldInt = widthField.text!
         widthnum = Int(widthFieldInt)!
         
-        widthRatio  = Double(widthnum  / Int(image!.size.width))
-        heightRatio = Double(heightnum / Int(image!.size.height))
-        print(image!.size.height)
-        print(heightnum)
-        print(heightRatio)
-        // Figure out what our orientation is, and use that to form the rectangle
+        let widthRatio  = Double(widthnum)  / Double(image!.size.width)
+        let heightRatio = Double(heightnum) / Double(image!.size.height)
+
         var newSize: CGSize
         if(widthRatio > heightRatio) {
             newSize = CGSize(width: Double(image!.size.width) * heightRatio, height: Double(Int(image!.size.height)) * heightRatio)
         } else {
             newSize = CGSize(width: Double(image!.size.width) * widthRatio, height: Double(image!.size.height) * widthRatio)
         }
-        
-        // This is the rect that we've calculated out and this is what is actually used below
-        let rect = CGRect(origin: .zero, size: newSize)
-        
-        // Actually do the resizing to the rect using the ImageContext stuff
-        UIGraphicsBeginImageContextWithOptions(newSize, false, 1.0)
-        image!.draw(in: rect)
-        let newImage = UIGraphicsGetImageFromCurrentImageContext()
-        UIGraphicsEndImageContext()
-        imageView.image = newImage
+
+        if let image = imageView.image {
+            UIGraphicsBeginImageContextWithOptions(newSize, false, 1.0)
+            image.draw(in: CGRect(origin: .zero, size: newSize))
+            let newImage = UIGraphicsGetImageFromCurrentImageContext()
+            UIGraphicsEndImageContext()
+            imageView.image = newImage
+        }
     }
     
     @IBAction func shareButtonTapped(_ sender: UIBarButtonItem) {
