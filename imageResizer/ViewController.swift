@@ -87,10 +87,11 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, PHPicke
     
                 }
             }
-            picker.dismiss(animated: true, completion: nil)
+        
             NotificationCenter.default.post(name: Notification.Name( "imageSelected"), object: nil)
             
         }
+        picker.dismiss(animated: true, completion: nil)
     }
  
     @IBAction func resizeButtonTapped(_ sender: StandardButton) {
