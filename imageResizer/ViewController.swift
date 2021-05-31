@@ -17,8 +17,6 @@ class StandardButton: UIButton {
             self.layer.cornerCurve = .continuous
             self.backgroundColor = UIColor(named: "AccentColor")
             self.layer.borderWidth = 2.0
-        #else
-            print("Hello")
         #endif
     }
 }
@@ -51,13 +49,15 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, PHPicke
         super.viewDidLoad()
         // Do any additional setup after loading the view.
         
-        title = "Image Resizer"
         NotificationCenter.default.addObserver(self, selector: #selector(isImageSelected(_:)), name: NSNotification.Name( "imageSelected"), object: nil)
+        
+        title = "Image Resizer"
         
         if imageView.image == nil {
             imageView.image = UIImage(systemName: "photo")
             resizeImageButton.isEnabled = false;
             resizeImageButton.alpha = 0.5;
+
         }
     }
     
@@ -88,7 +88,11 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, PHPicke
                 }
             }
         
-            NotificationCenter.default.post(name: Notification.Name( "imageSelected"), object: nil)
+            if widthField.text != "" && heigthField.text != "" {
+                NotificationCenter.default.post(name: Notification.Name( "imageSelected"), object: nil)
+                resizeImageButton.isEnabled = true;
+                resizeImageButton.alpha = 1.0;
+            }
             
         }
         picker.dismiss(animated: true, completion: nil)

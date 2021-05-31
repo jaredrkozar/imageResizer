@@ -34,8 +34,8 @@
                                     <action selector="resizeButtonTapped:" destination="BYZ-38-t0r" eventType="touchUpInside" id="NNJ-uo-xqx"/>
                                 </connections>
                             </button>
-                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Height..." textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="ggi-qk-GGh">
-                                <rect key="frame" x="815" y="121" width="97" height="34"/>
+                            <textField opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Height..." textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="ggi-qk-GGh">
+                                <rect key="frame" x="815" y="121" width="118" height="34"/>
                                 <constraints>
                                     <constraint firstAttribute="width" secondItem="ggi-qk-GGh" secondAttribute="height" multiplier="97:34" id="yHF-te-vFN"/>
                                 </constraints>
@@ -48,8 +48,8 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Width......" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="CjD-aR-8UN">
-                                <rect key="frame" x="819" y="184" width="97" height="34"/>
+                            <textField opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Width......" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="CjD-aR-8UN">
+                                <rect key="frame" x="819" y="184" width="114" height="34"/>
                                 <constraints>
                                     <constraint firstAttribute="width" secondItem="CjD-aR-8UN" secondAttribute="height" multiplier="97:34" id="de7-bH-5ll"/>
                                 </constraints>
