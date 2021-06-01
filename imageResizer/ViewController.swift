@@ -23,11 +23,9 @@ class StandardButton: UIButton {
 }
 
 
-class ViewController: UIViewController, UIImagePickerControllerDelegate, PHPickerViewControllerDelegate {
+class ViewController: UIViewController, PHPickerViewControllerDelegate, UITableViewDataSource, UITableViewDelegate {
 
-    
-
-    var sizes = [String]()
+    var presets = ["Ray Wenderlich", "NSHipster"]
     var newImage = UIImage()
     
     @IBOutlet var imageView: UIImageView!
@@ -39,6 +37,8 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, PHPicke
     @IBOutlet var heightField: UITextField!
     
     @IBOutlet var widthField: UITextField!
+    
+    @IBOutlet var presetCellsView: UITableView!
     
     var widthnum = 0
     var heightnum = 0
@@ -57,9 +57,34 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, PHPicke
             imageView.image = UIImage(systemName: "photo")
             resizeImageButton.isEnabled = false;
             resizeImageButton.alpha = 0.5;
-
         }
+        
+        presetCellsView.delegate = self
+        presetCellsView.dataSource = self
+    }
+    
+    func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+        return 1
+    }
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return presets.count
+    }
 
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "presetCell", for: indexPath)
+        cell.textLabel?.text = presets[indexPath.row]
+        return cell
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        
+        tableView.cellForRow(at: indexPath as IndexPath)?.accessoryType = .checkmark
+    }
+    
+    func tableView(_ tableView: UITableView, didDeselectRowAt indexPath: IndexPath) {
+        tableView.cellForRow(at: indexPath as IndexPath)?.accessoryType = .none
     }
     
     @IBAction func importButtonTapped(_ sender: UIBarButtonItem) {
