@@ -13,10 +13,11 @@ class StandardButton: UIButton {
     override func draw(_ rect: CGRect) {
         #if !targetEnvironment(macCatalyst)
             self.layer.masksToBounds = true
-            self.layer.cornerRadius = 10
             self.layer.cornerCurve = .continuous
             self.backgroundColor = UIColor(named: "AccentColor")
-            self.layer.borderWidth = 2.0
+            self.layer.cornerRadius = 5.0
+        #elseif targetEnvironment(macCatalyst)
+            self.backgroundColor = UIColor.white
         #endif
     }
 }
@@ -33,10 +34,9 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, PHPicke
     
     @IBOutlet var resizeImageButton: UIButton!
     
-    @IBOutlet var heigthField: UITextField!
-    
-    
     @IBOutlet var aspectRatioLocked: UISwitch!
+    
+    @IBOutlet var heightField: UITextField!
     
     @IBOutlet var widthField: UITextField!
     
@@ -48,7 +48,7 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, PHPicke
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
-        
+    
         NotificationCenter.default.addObserver(self, selector: #selector(isImageSelected(_:)), name: NSNotification.Name( "imageSelected"), object: nil)
         
         title = "Image Resizer"
@@ -59,6 +59,7 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, PHPicke
             resizeImageButton.alpha = 0.5;
 
         }
+
     }
     
     @IBAction func importButtonTapped(_ sender: UIBarButtonItem) {
@@ -84,20 +85,15 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, PHPicke
                 DispatchQueue.main.async {
                     guard let self = self, let image = image as? UIImage, self.imageView.image == previousImage else { return }
                     self.imageView.image = image
-    
+                    self.checkText(UITextField())
                 }
             }
-        
-            if widthField.text != "" && heigthField.text != "" {
-                NotificationCenter.default.post(name: Notification.Name( "imageSelected"), object: nil)
-                resizeImageButton.isEnabled = true;
-                resizeImageButton.alpha = 1.0;
-            }
-            
         }
         picker.dismiss(animated: true, completion: nil)
     }
- 
+
+
+    
     @IBAction func resizeButtonTapped(_ sender: StandardButton) {
         if aspectRatioLocked.isOn {
             resizeImageWithAspectRatio()
@@ -108,8 +104,8 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, PHPicke
         
     func resizeImage() {
         
-        let heigthFieldInt = heigthField.text!
-        heightnum = Int(heigthFieldInt)! / 2
+        let heightFieldInt = heightField.text!
+        heightnum = Int(heightFieldInt)! / 2
         
         let widthFieldInt = widthField.text!
         widthnum = Int(widthFieldInt)! / 2
@@ -124,12 +120,23 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, PHPicke
         
     }
     
+    
+    @IBAction func checkText(_ sender: UITextField) {
+        
+        
+        if widthField.text != "" && heightField.text != "" && imageView.image != UIImage(systemName: "photo") {
+            NotificationCenter.default.post(name: Notification.Name( "imageSelected"), object: nil)
+            resizeImageButton.isEnabled = true;
+            resizeImageButton.alpha = 1.0;
+        }
+        
+    }
     func resizeImageWithAspectRatio() {
         
         var image = imageView.image
         
-        let heigthFieldInt = heigthField.text!
-        heightnum = Int(heigthFieldInt)!
+        let heightFieldInt = heightField.text!
+        heightnum = Int(heightFieldInt)!
         
         let widthFieldInt = widthField.text!
         widthnum = Int(widthFieldInt)!
