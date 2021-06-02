@@ -22,41 +22,43 @@ class StandardButton: UIButton {
     }
 }
 
-
 class ViewController: UIViewController, PHPickerViewControllerDelegate, UITableViewDataSource, UITableViewDelegate {
 
-    var presets = ["Ray Wenderlich", "NSHipster"]
+    var presets = [String]()
+    
+    var selectedPresets = Set<Int>()
+    
     var newImage = UIImage()
+    // create a set of integer type
     
     @IBOutlet var imageView: UIImageView!
     
     @IBOutlet var resizeImageButton: UIButton!
     
     @IBOutlet var aspectRatioLocked: UISwitch!
-    
-    @IBOutlet var heightField: UITextField!
-    
-    @IBOutlet var widthField: UITextField!
-    
+
     @IBOutlet var presetCellsView: UITableView!
     
-    var widthnum = 0
-    var heightnum = 0
+    var heightnum = UserDefaults.standard.integer(forKey: "height")
     
+    var widthnum = UserDefaults.standard.integer(forKey: "width")
+
     let nc = NotificationCenter.default
     
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
     
-        NotificationCenter.default.addObserver(self, selector: #selector(isImageSelected(_:)), name: NSNotification.Name( "imageSelected"), object: nil)
-        
         title = "Image Resizer"
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(isImageSelected(_:)), name: NSNotification.Name( "widthHeightEntered"), object: nil)
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(addtoTable(_:)), name: NSNotification.Name( "addWidthHeighttoTable"), object: nil)
         
         if imageView.image == nil {
             imageView.image = UIImage(systemName: "photo")
             resizeImageButton.isEnabled = false;
-            resizeImageButton.alpha = 0.5;
+            resizeImageButton.alpha = 0.5
         }
         
         presetCellsView.delegate = self
@@ -86,7 +88,7 @@ class ViewController: UIViewController, PHPickerViewControllerDelegate, UITableV
     func tableView(_ tableView: UITableView, didDeselectRowAt indexPath: IndexPath) {
         tableView.cellForRow(at: indexPath as IndexPath)?.accessoryType = .none
     }
-    
+
     @IBAction func importButtonTapped(_ sender: UIBarButtonItem) {
         var configuration = PHPickerConfiguration()
         configuration.filter = .images
@@ -96,13 +98,19 @@ class ViewController: UIViewController, PHPickerViewControllerDelegate, UITableV
         present(picker, animated: true)
     }
     
+    @objc func addtoTable(_ notification: Notification) {
+        let dimensions = String("\(heightnum) x \(widthnum)")
+        presets.append(dimensions)
+    }
     @objc func isImageSelected(_ notification: Notification) {
-
-        resizeImageButton.isEnabled = true;
-        resizeImageButton.alpha = 1.0;
+        if imageView.image != UIImage(systemName: "photo") {
+            resizeImageButton.isEnabled = true;
+            resizeImageButton.alpha = 1.0;
+        }
     }
     
     func picker(_ picker: PHPickerViewController, didFinishPicking results: [PHPickerResult]) {
+
         if let itemProvider = results.first?.itemProvider, itemProvider.canLoadObject(ofClass: UIImage.self) {
             
             let previousImage = imageView.image
@@ -110,16 +118,13 @@ class ViewController: UIViewController, PHPickerViewControllerDelegate, UITableV
                 DispatchQueue.main.async {
                     guard let self = self, let image = image as? UIImage, self.imageView.image == previousImage else { return }
                     self.imageView.image = image
-                    self.checkText(UITextField())
                 }
             }
         }
         picker.dismiss(animated: true, completion: nil)
     }
 
-
-    
-    @IBAction func resizeButtonTapped(_ sender: StandardButton) {
+    @IBAction func resizeButtonTapped(_ sender: Any) {
         if aspectRatioLocked.isOn {
             resizeImageWithAspectRatio()
         } else {
@@ -128,12 +133,8 @@ class ViewController: UIViewController, PHPickerViewControllerDelegate, UITableV
     }
         
     func resizeImage() {
-        
-        let heightFieldInt = heightField.text!
-        heightnum = Int(heightFieldInt)! / 2
-        
-        let widthFieldInt = widthField.text!
-        widthnum = Int(widthFieldInt)! / 2
+        let heightnum = Double(heightnum)
+        let widthnum = Double(widthnum)
         
         if let image = imageView.image {
             UIGraphicsBeginImageContextWithOptions(CGSize(width: widthnum, height: heightnum), false, 0.0)
@@ -145,29 +146,16 @@ class ViewController: UIViewController, PHPickerViewControllerDelegate, UITableV
         
     }
     
-    
-    @IBAction func checkText(_ sender: UITextField) {
-        
-        
-        if widthField.text != "" && heightField.text != "" && imageView.image != UIImage(systemName: "photo") {
-            NotificationCenter.default.post(name: Notification.Name( "imageSelected"), object: nil)
-            resizeImageButton.isEnabled = true;
-            resizeImageButton.alpha = 1.0;
-        }
-        
-    }
     func resizeImageWithAspectRatio() {
         
         var image = imageView.image
+        let heightnum = Double(heightnum)
+        let widthnum = Double(widthnum)
         
-        let heightFieldInt = heightField.text!
-        heightnum = Int(heightFieldInt)!
         
-        let widthFieldInt = widthField.text!
-        widthnum = Int(widthFieldInt)!
+        let widthRatio  = widthnum  / Double(image!.size.width)
         
-        let widthRatio  = Double(widthnum)  / Double(image!.size.width)
-        let heightRatio = Double(heightnum) / Double(image!.size.height)
+        let heightRatio = heightnum / Double(image!.size.height)
 
         var newSize: CGSize
         if(widthRatio > heightRatio) {
