@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="18122" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="9fO-JW-53i">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="18122" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="9fO-JW-53i" initialMenu="829-VQ-39P">
     <device id="ipad9_7" orientation="landscape" layout="fullscreen" appearance="light"/>
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="18093"/>
@@ -7,6 +7,7 @@
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
+        <capability name="UIMenu" message="Requires Xcode 11 or later." minToolsVersion="11.0" requiredIntegratedClassName="UICommandDiff"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -22,20 +23,6 @@
                                 <rect key="frame" x="50" y="114" width="540" height="540"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             </imageView>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" reversesTitleShadowWhenHighlighted="YES" lineBreakMode="middleTruncation" pointerInteraction="YES" translatesAutoresizingMaskIntoConstraints="NO" id="KXy-8j-UER" customClass="StandardButton" customModule="imageResizer" customModuleProvider="target">
-                                <rect key="frame" x="668" y="618" width="310" height="36"/>
-                                <color key="backgroundColor" name="AccentColor"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" secondItem="KXy-8j-UER" secondAttribute="height" multiplier="353:41" id="6YU-Vx-ssg"/>
-                                </constraints>
-                                <fontDescription key="fontDescription" type="system" weight="medium" pointSize="20"/>
-                                <state key="normal" title="Resize Image">
-                                    <color key="titleColor" name="textColor"/>
-                                </state>
-                                <connections>
-                                    <action selector="resizeButtonTapped:" destination="BYZ-38-t0r" eventType="touchUpInside" id="NNJ-uo-xqx"/>
-                                </connections>
-                            </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Aspect Ratio Locked" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="FvR-Ou-073">
                                 <rect key="frame" x="625" y="535" width="151" height="26"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="16"/>
@@ -45,8 +32,9 @@
                             <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="1bQ-gc-he3">
                                 <rect key="frame" x="873" y="533" width="51" height="31"/>
                             </switch>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" ambiguous="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="18" sectionFooterHeight="18" translatesAutoresizingMaskIntoConstraints="NO" id="yCX-Xf-KGV">
-                                <rect key="frame" x="625" y="114" width="365" height="336"/>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" separatorStyle="singleLineEtched" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="18" sectionFooterHeight="18" translatesAutoresizingMaskIntoConstraints="NO" id="yCX-Xf-KGV">
+                                <rect key="frame" x="625" y="129" width="365" height="336"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="presetCell" textLabel="2pf-dP-CwV" rowHeight="63" style="IBUITableViewCellStyleDefault" id="fPb-fJ-3rB">
@@ -68,39 +56,49 @@
                                     </tableViewCell>
                                 </prototypes>
                             </tableView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="VFk-Nw-r5a">
+                                <rect key="frame" x="637" y="73" width="31" height="34"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="18"/>
+                                <state key="normal" title="Edit"/>
+                            </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="DPn-Xj-Lhc">
-                                <rect key="frame" x="901" y="87" width="89" height="34"/>
+                                <rect key="frame" x="901" y="73" width="89" height="34"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="18"/>
                                 <state key="normal" title="Add Preset"/>
                                 <connections>
-                                    <segue destination="lPo-U7-eg0" kind="popoverPresentation" popoverAnchorView="DPn-Xj-Lhc" id="SQO-pJ-5Kb">
+                                    <segue destination="a27-Qn-aZv" kind="popoverPresentation" popoverAnchorView="DPn-Xj-Lhc" id="y7q-dS-Mlm">
                                         <popoverArrowDirection key="popoverArrowDirection" up="YES" down="YES" left="YES" right="YES"/>
                                     </segue>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="VFk-Nw-r5a">
-                                <rect key="frame" x="633" y="87" width="31" height="34"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="18"/>
-                                <state key="normal" title="Edit"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" reversesTitleShadowWhenHighlighted="YES" lineBreakMode="middleTruncation" pointerInteraction="YES" translatesAutoresizingMaskIntoConstraints="NO" id="k6o-pn-FLc" customClass="StandardButton" customModule="imageResizer" customModuleProvider="target">
+                                <rect key="frame" x="621" y="618" width="369" height="36"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" secondItem="k6o-pn-FLc" secondAttribute="height" multiplier="41:4" id="wE1-Hl-xt7"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" weight="medium" pointSize="20"/>
+                                <state key="normal" title="Resize Image">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                </state>
+                                <connections>
+                                    <action selector="resizeButtonTapped:" destination="BYZ-38-t0r" eventType="touchUpInside" id="GDk-RU-xiJ"/>
+                                </connections>
                             </button>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
-                            <constraint firstItem="VFk-Nw-r5a" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="37" id="1Vc-9L-JLr"/>
-                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="KXy-8j-UER" secondAttribute="bottom" constant="114" id="5h1-l2-gdR"/>
-                            <constraint firstItem="DPn-Xj-Lhc" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="37" id="8Is-IS-0cG"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="k6o-pn-FLc" secondAttribute="trailing" constant="34" id="2fJ-jj-HTI"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="FvR-Ou-073" secondAttribute="bottom" constant="207" id="A2d-J8-v9w"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="1bQ-gc-he3" secondAttribute="bottom" constant="204" id="BYS-QB-i5N"/>
-                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="KXy-8j-UER" secondAttribute="trailing" constant="46" id="BiL-ln-Mjt"/>
-                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="DPn-Xj-Lhc" secondAttribute="trailing" constant="34" id="D2u-SQ-Xfb"/>
                             <constraint firstItem="FvR-Ou-073" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="625" id="Ifo-cr-sTn"/>
-                            <constraint firstItem="yCX-Xf-KGV" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="625" id="S1Q-xW-cys"/>
-                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="VFk-Nw-r5a" secondAttribute="trailing" constant="360" id="ece-lA-N5X"/>
+                            <constraint firstItem="VFk-Nw-r5a" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="637" id="JEQ-ux-C4K"/>
+                            <constraint firstItem="DPn-Xj-Lhc" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="23" id="LY0-Pz-2yf"/>
+                            <constraint firstItem="VFk-Nw-r5a" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="23" id="NSl-K4-2Ta"/>
+                            <constraint firstItem="DPn-Xj-Lhc" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="901" id="ULO-Pa-bPK"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="FvR-Ou-073" secondAttribute="trailing" constant="248" id="o02-sJ-ZaU"/>
-                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="yCX-Xf-KGV" secondAttribute="bottom" constant="318" id="rA4-sz-3fA"/>
-                            <constraint firstItem="DPn-Xj-Lhc" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="901" id="rol-GN-4T4"/>
                             <constraint firstItem="1bQ-gc-he3" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="873" id="xIS-Te-TnT"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="k6o-pn-FLc" secondAttribute="bottom" constant="114" id="zaq-Ou-qzq"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="sXk-se-eJo">
@@ -120,7 +118,7 @@
                         <outlet property="aspectRatioLocked" destination="1bQ-gc-he3" id="CIE-dj-x8n"/>
                         <outlet property="imageView" destination="Iue-9H-XWq" id="H0l-OM-qmi"/>
                         <outlet property="presetCellsView" destination="yCX-Xf-KGV" id="TZS-gs-hqo"/>
-                        <outlet property="resizeImageButton" destination="KXy-8j-UER" id="r9I-LS-lPE"/>
+                        <outlet property="resizeImageButton" destination="k6o-pn-FLc" id="QEd-zW-RuA"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
@@ -130,7 +128,7 @@
         <!--Add Preset View Controller-->
         <scene sceneID="M4L-a8-s3f">
             <objects>
-                <viewController id="Gmj-tL-yLc" customClass="AddPresetViewController" customModule="imageResizer" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="addPreset" id="Gmj-tL-yLc" customClass="AddPresetViewController" customModule="imageResizer" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="HhB-FA-FrD">
                         <rect key="frame" x="0.0" y="0.0" width="400" height="338"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -141,7 +139,7 @@
                                 <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                 <textInputTraits key="textInputTraits" keyboardType="numberPad"/>
                                 <connections>
-                                    <action selector="checkText:" destination="Gmj-tL-yLc" eventType="editingDidEnd" id="xpo-kU-fDw"/>
+                                    <action selector="checkText:" destination="Gmj-tL-yLc" eventType="editingChanged" id="LEv-Xb-TZS"/>
                                 </connections>
                             </textField>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Height" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="C6k-vO-BBn">
@@ -151,10 +149,9 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Hau-lL-smB" customClass="StandardButton" customModule="imageResizer" customModuleProvider="target">
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" reversesTitleShadowWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Hau-lL-smB" customClass="StandardButton" customModule="imageResizer" customModuleProvider="target">
                                 <rect key="frame" x="55" y="229" width="297" height="36"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <color key="backgroundColor" name="AccentColor"/>
                                 <fontDescription key="fontDescription" type="system" weight="medium" pointSize="20"/>
                                 <state key="normal" title="Save Preset">
                                     <color key="titleColor" name="textColor"/>
@@ -176,7 +173,7 @@
                                 <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                 <textInputTraits key="textInputTraits" keyboardType="numberPad"/>
                                 <connections>
-                                    <action selector="checkText:" destination="Gmj-tL-yLc" eventType="editingChanged" id="NoZ-W0-rzu"/>
+                                    <action selector="checkText:" destination="Gmj-tL-yLc" eventType="editingChanged" id="VRZ-DX-9BB"/>
                                 </connections>
                             </textField>
                         </subviews>
@@ -193,7 +190,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Wr4-YF-Akr" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2329.6875" y="75.78125"/>
+            <point key="canvasLocation" x="2337.890625" y="36.71875"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="J05-0q-RbD">
@@ -213,30 +210,60 @@
             </objects>
             <point key="canvasLocation" x="19.921875" y="75.78125"/>
         </scene>
-        <!--Navigation Controller-->
-        <scene sceneID="ZgH-7x-PdG">
+        <!--Main Menu-->
+        <scene sceneID="BR0-49-Hqs">
             <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="lPo-U7-eg0" sceneMemberID="viewController">
+                <menu isSystemItem="YES" title="Main Menu" identifier="com.apple.menu.root" id="829-VQ-39P" sceneMemberID="viewController">
+                    <children>
+                        <menu isSystemItem="YES" title="File" identifier="com.apple.menu.file" id="2if-nK-ipn">
+                            <children>
+                                <menu isSystemItem="YES" title="New Scene" identifier="com.apple.menu.new-scene" id="HcR-Gi-Xs3">
+                                    <menuOptions key="menuOptions" displayInline="YES"/>
+                                    <systemMenuChildDeletions>
+                                        <itemDeletion anchorAction="requestNewScene:"/>
+                                    </systemMenuChildDeletions>
+                                </menu>
+                                <command title="Import Photo" input="i" anchor="com.apple.menu.new-scene" id="HoD-qy-7sE">
+                                    <keyModifierFlags key="modifierFlags" command="YES"/>
+                                    <connections>
+                                        <action selector="importButtonTapped:" destination="kox-cN-g3D" id="e71-Tm-Nfw"/>
+                                    </connections>
+                                </command>
+                                <command title="Add Preset" input="p" anchor="com.apple.menu.new-scene" id="0z5-re-LOx">
+                                    <keyModifierFlags key="modifierFlags" command="YES"/>
+                                </command>
+                            </children>
+                        </menu>
+                    </children>
+                    <systemMenuChildDeletions>
+                        <menuDeletion anchor="com.apple.menu.format"/>
+                    </systemMenuChildDeletions>
+                </menu>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="kox-cN-g3D" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2249" y="-420"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="eBa-xc-r8T">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="a27-Qn-aZv" sceneMemberID="viewController">
                     <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="n5F-in-l0J">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="j8k-yL-co6">
                         <rect key="frame" x="0.0" y="13" width="375" height="50"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <nil name="viewControllers"/>
                     <connections>
-                        <segue destination="Gmj-tL-yLc" kind="relationship" relationship="rootViewController" id="y8P-HZ-Qym"/>
+                        <segue destination="Gmj-tL-yLc" kind="relationship" relationship="rootViewController" id="5l8-f8-jxL"/>
                     </connections>
                 </navigationController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="8eP-pd-kQs" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="yqu-Up-Bcw" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1475" y="76"/>
+            <point key="canvasLocation" x="1613.671875" y="36.71875"/>
         </scene>
     </scenes>
     <resources>
         <image name="square.and.arrow.up" catalog="system" width="115" height="128"/>
-        <namedColor name="AccentColor">
-            <color red="0.0" green="0.4779999852180481" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-        </namedColor>
         <namedColor name="textColor">
             <color red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
         </namedColor>

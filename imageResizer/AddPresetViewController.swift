@@ -8,13 +8,14 @@
 import UIKit
 
 
-class AddPresetViewController: UIViewController {
+class AddPresetViewController: UIViewController, UIPopoverPresentationControllerDelegate {
 
     @IBOutlet var heightField: UITextField!
     
     @IBOutlet var widthField: UITextField!
     
     @IBOutlet var savePresetButton: StandardButton!
+    
     let nc = NotificationCenter.default
     
     override func viewDidLoad() {
@@ -24,22 +25,30 @@ class AddPresetViewController: UIViewController {
         
         savePresetButton.isEnabled = false
         savePresetButton.alpha = 0.5;
+        
+        
     }
     
     @IBAction func checkText(_ sender: Any) {
         
-        if widthField.text != "" && heightField.text != "" {
-            savePresetButton.isEnabled = true;
+        if heightField.text!.isEmpty || widthField.text!.isEmpty {
+            self.savePresetButton.isEnabled = false
+            savePresetButton.alpha = 0.5;
+        } else {
+            self.savePresetButton.isEnabled = true
             savePresetButton.alpha = 1.0;
         }
     }
+    
+    
     @IBAction func savePresetButtonTapped(_ sender: StandardButton) {
+        
+        
         let width = widthField.text
         let height = heightField.text
         NotificationCenter.default.post(name: Notification.Name( "widthHeightEntered"), object: nil)
         
         NotificationCenter.default.post(name: Notification.Name( "addWidthHeighttoTable"), object: nil)
-        
         
         UserDefaults.standard.set(width, forKey: "width")
         UserDefaults.standard.set(height, forKey: "height")

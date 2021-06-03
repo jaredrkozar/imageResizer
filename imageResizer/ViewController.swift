@@ -14,17 +14,16 @@ class StandardButton: UIButton {
         #if !targetEnvironment(macCatalyst)
             self.layer.masksToBounds = true
             self.layer.cornerCurve = .continuous
-            self.backgroundColor = UIColor(named: "AccentColor")
             self.layer.cornerRadius = 5.0
-        #elseif targetEnvironment(macCatalyst)
-            self.backgroundColor = UIColor.white
+        self.layer.backgroundColor = UIColor(named: "AccentColor")?.cgColor
+        self.titleLabel?.textColor = UIColor.white
         #endif
     }
 }
 
 class ViewController: UIViewController, PHPickerViewControllerDelegate, UITableViewDataSource, UITableViewDelegate {
 
-    var presets = [String]()
+    var presets = ["960 x 720"]
     
     var selectedPresets = Set<Int>()
     
@@ -33,7 +32,7 @@ class ViewController: UIViewController, PHPickerViewControllerDelegate, UITableV
     
     @IBOutlet var imageView: UIImageView!
     
-    @IBOutlet var resizeImageButton: UIButton!
+    @IBOutlet var resizeImageButton: StandardButton!
     
     @IBOutlet var aspectRatioLocked: UISwitch!
 
@@ -50,16 +49,16 @@ class ViewController: UIViewController, PHPickerViewControllerDelegate, UITableV
         // Do any additional setup after loading the view.
     
         title = "Image Resizer"
-        
-        NotificationCenter.default.addObserver(self, selector: #selector(isImageSelected(_:)), name: NSNotification.Name( "widthHeightEntered"), object: nil)
-        
-        NotificationCenter.default.addObserver(self, selector: #selector(addtoTable(_:)), name: NSNotification.Name( "addWidthHeighttoTable"), object: nil)
-        
+
         if imageView.image == nil {
             imageView.image = UIImage(systemName: "photo")
             resizeImageButton.isEnabled = false;
             resizeImageButton.alpha = 0.5
         }
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(isImageSelected(_:)), name: NSNotification.Name( "widthHeightEntered"), object: nil)
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(addtoTable(_:)), name: NSNotification.Name( "addWidthHeighttoTable"), object: nil)
         
         presetCellsView.delegate = self
         presetCellsView.dataSource = self
@@ -98,10 +97,16 @@ class ViewController: UIViewController, PHPickerViewControllerDelegate, UITableV
         present(picker, animated: true)
     }
     
+    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        return "Presets"
+    }
+    
     @objc func addtoTable(_ notification: Notification) {
         let dimensions = String("\(heightnum) x \(widthnum)")
+        print(dimensions)
         presets.append(dimensions)
     }
+    
     @objc func isImageSelected(_ notification: Notification) {
         if imageView.image != UIImage(systemName: "photo") {
             resizeImageButton.isEnabled = true;
@@ -118,12 +123,14 @@ class ViewController: UIViewController, PHPickerViewControllerDelegate, UITableV
                 DispatchQueue.main.async {
                     guard let self = self, let image = image as? UIImage, self.imageView.image == previousImage else { return }
                     self.imageView.image = image
+                    NotificationCenter.default.post(name: Notification.Name( "widthHeightEntered"), object: nil)
+                    
                 }
             }
         }
         picker.dismiss(animated: true, completion: nil)
     }
-
+    
     @IBAction func resizeButtonTapped(_ sender: Any) {
         if aspectRatioLocked.isOn {
             resizeImageWithAspectRatio()
