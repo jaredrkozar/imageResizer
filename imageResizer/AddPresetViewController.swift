@@ -46,12 +46,14 @@ class AddPresetViewController: UIViewController, UIPopoverPresentationController
         
         let width = widthField.text
         let height = heightField.text
-        NotificationCenter.default.post(name: Notification.Name( "widthHeightEntered"), object: nil)
-        
-        NotificationCenter.default.post(name: Notification.Name( "addWidthHeighttoTable"), object: nil)
         
         UserDefaults.standard.set(width, forKey: "width")
         UserDefaults.standard.set(height, forKey: "height")
+        
+        NotificationCenter.default.post(name: Notification.Name( "widthHeightEntered"), object: nil)
+        
+        NotificationCenter.default.post(name: Notification.Name( "addWidthHeighttoTable"), object: nil)
+    
         dismiss(animated: true, completion: nil)
         
     }

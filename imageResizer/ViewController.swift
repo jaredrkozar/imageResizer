@@ -64,6 +64,19 @@ class ViewController: UIViewController, PHPickerViewControllerDelegate, UITableV
         presetCellsView.dataSource = self
     }
     
+    @objc func addtoTable(_ notification: Notification) {
+        let heightnum = UserDefaults.standard.integer(forKey: "height")
+        let widthnum = UserDefaults.standard.integer(forKey: "width")
+        let dimensions = String("\(heightnum) x \(widthnum)")
+        
+        presets.insert(dimensions, at: 0)
+
+        let indexPath = IndexPath(row: 0, section: 0)
+        presetCellsView.insertRows(at: [indexPath], with: .automatic)
+
+    }
+    
+    
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
         return 1
     }
@@ -99,12 +112,6 @@ class ViewController: UIViewController, PHPickerViewControllerDelegate, UITableV
     
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         return "Presets"
-    }
-    
-    @objc func addtoTable(_ notification: Notification) {
-        let dimensions = String("\(heightnum) x \(widthnum)")
-        print(dimensions)
-        presets.append(dimensions)
     }
     
     @objc func isImageSelected(_ notification: Notification) {
