@@ -23,9 +23,9 @@ class StandardButton: UIButton {
 
 class ViewController: UIViewController, PHPickerViewControllerDelegate, UITableViewDataSource, UITableViewDelegate {
 
-    var presets = ["960 x 720"]
+    var presets = [String]()
     
-    var selectedPresets = Set<Int>()
+    var selectedPresets = [String]()
     
     var newImage = UIImage()
     // create a set of integer type
@@ -50,8 +50,7 @@ class ViewController: UIViewController, PHPickerViewControllerDelegate, UITableV
     
         title = "Image Resizer"
 
-        if imageView.image == nil {
-            imageView.image = UIImage(systemName: "photo")
+        if imageView.image == UIImage(systemName: "photo") {
             resizeImageButton.isEnabled = false;
             resizeImageButton.alpha = 0.5
         }
@@ -64,16 +63,16 @@ class ViewController: UIViewController, PHPickerViewControllerDelegate, UITableV
         presetCellsView.dataSource = self
     }
     
+    //Table code
+    
     @objc func addtoTable(_ notification: Notification) {
         let heightnum = UserDefaults.standard.integer(forKey: "height")
         let widthnum = UserDefaults.standard.integer(forKey: "width")
         let dimensions = String("\(heightnum) x \(widthnum)")
         
         presets.insert(dimensions, at: 0)
-
         let indexPath = IndexPath(row: 0, section: 0)
         presetCellsView.insertRows(at: [indexPath], with: .automatic)
-
     }
     
     
@@ -84,7 +83,6 @@ class ViewController: UIViewController, PHPickerViewControllerDelegate, UITableV
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return presets.count
     }
-
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "presetCell", for: indexPath)
@@ -95,12 +93,22 @@ class ViewController: UIViewController, PHPickerViewControllerDelegate, UITableV
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
         tableView.cellForRow(at: indexPath as IndexPath)?.accessoryType = .checkmark
+        self.selectedPresets.append(presets[indexPath.row])
+    
+        NotificationCenter.default.post(name: Notification.Name( "widthHeightEntered"), object: nil)
     }
     
     func tableView(_ tableView: UITableView, didDeselectRowAt indexPath: IndexPath) {
         tableView.cellForRow(at: indexPath as IndexPath)?.accessoryType = .none
+        
     }
-
+    
+    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        return "Presets"
+    }
+    
+    //Button code
+    
     @IBAction func importButtonTapped(_ sender: UIBarButtonItem) {
         var configuration = PHPickerConfiguration()
         configuration.filter = .images
@@ -110,82 +118,16 @@ class ViewController: UIViewController, PHPickerViewControllerDelegate, UITableV
         present(picker, animated: true)
     }
     
-    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        return "Presets"
-    }
-    
-    @objc func isImageSelected(_ notification: Notification) {
-        if imageView.image != UIImage(systemName: "photo") {
-            resizeImageButton.isEnabled = true;
-            resizeImageButton.alpha = 1.0;
-        }
-    }
-    
-    func picker(_ picker: PHPickerViewController, didFinishPicking results: [PHPickerResult]) {
-
-        if let itemProvider = results.first?.itemProvider, itemProvider.canLoadObject(ofClass: UIImage.self) {
-            
-            let previousImage = imageView.image
-            itemProvider.loadObject(ofClass: UIImage.self) { [weak self] image, error in
-                DispatchQueue.main.async {
-                    guard let self = self, let image = image as? UIImage, self.imageView.image == previousImage else { return }
-                    self.imageView.image = image
-                    NotificationCenter.default.post(name: Notification.Name( "widthHeightEntered"), object: nil)
-                    
-                }
-            }
-        }
-        picker.dismiss(animated: true, completion: nil)
-    }
     
     @IBAction func resizeButtonTapped(_ sender: Any) {
         if aspectRatioLocked.isOn {
             resizeImageWithAspectRatio()
         } else {
+            print(selectedPresets)
             resizeImage()
         }
     }
-        
-    func resizeImage() {
-        let heightnum = Double(heightnum)
-        let widthnum = Double(widthnum)
-        
-        if let image = imageView.image {
-            UIGraphicsBeginImageContextWithOptions(CGSize(width: widthnum, height: heightnum), false, 0.0)
-            image.draw(in: CGRect(x: 0, y: 0, width: widthnum, height: heightnum))
-            newImage = UIGraphicsGetImageFromCurrentImageContext()!
-            UIGraphicsEndImageContext()
-            imageView.image = newImage
-        }
-        
-    }
     
-    func resizeImageWithAspectRatio() {
-        
-        var image = imageView.image
-        let heightnum = Double(heightnum)
-        let widthnum = Double(widthnum)
-        
-        
-        let widthRatio  = widthnum  / Double(image!.size.width)
-        
-        let heightRatio = heightnum / Double(image!.size.height)
-
-        var newSize: CGSize
-        if(widthRatio > heightRatio) {
-            newSize = CGSize(width: Double(image!.size.width) * heightRatio, height: Double(Int(image!.size.height)) * heightRatio)
-        } else {
-            newSize = CGSize(width: Double(image!.size.width) * widthRatio, height: Double(image!.size.height) * widthRatio)
-        }
-
-        if let image = imageView.image {
-            UIGraphicsBeginImageContextWithOptions(newSize, false, 1.0)
-            image.draw(in: CGRect(origin: .zero, size: newSize))
-            let newImage = UIGraphicsGetImageFromCurrentImageContext()
-            UIGraphicsEndImageContext()
-            imageView.image = newImage
-        }
-    }
     
     @IBAction func shareButtonTapped(_ sender: UIBarButtonItem) {
         
@@ -198,5 +140,78 @@ class ViewController: UIViewController, PHPickerViewControllerDelegate, UITableV
         vc.popoverPresentationController?.barButtonItem = navigationItem.leftBarButtonItem
         present(vc, animated: true)
     }
-}
+    
+    //Image Picker
+    
+    func picker(_ picker: PHPickerViewController, didFinishPicking results: [PHPickerResult]) {
 
+        if let itemProvider = results.first?.itemProvider, itemProvider.canLoadObject(ofClass: UIImage.self) {
+            
+            let previousImage = imageView.image
+            itemProvider.loadObject(ofClass: UIImage.self) { [weak self] image, error in
+                DispatchQueue.main.async {
+                    guard let self = self, let image = image as? UIImage, self.imageView.image == previousImage else { return }
+                    self.imageView.image = image
+                }
+            }
+        }
+        picker.dismiss(animated: true, completion: nil)
+    }
+    
+    //Image Selection
+    @objc func isImageSelected(_ notification: Notification) {
+        if imageView.image != UIImage(systemName: "photo") {
+            resizeImageButton.isEnabled = true;
+            resizeImageButton.alpha = 1.0;
+        }
+    }
+    
+    //Image Resizing Code
+        
+    func resizeImage() {
+        
+        for dimension in selectedPresets {
+            
+            let HeightWidthArr = dimension.components(separatedBy: " x ")
+            
+            let heightnum = Double(HeightWidthArr[0])! / 2
+            let widthnum = Double(HeightWidthArr[1])! / 2
+
+            if let image = imageView.image {
+                UIGraphicsBeginImageContextWithOptions(CGSize(width: widthnum, height: heightnum), false, 0.0)
+                image.draw(in: CGRect(x: 0, y: 0, width: widthnum, height: heightnum))
+                newImage = UIGraphicsGetImageFromCurrentImageContext()!
+                UIGraphicsEndImageContext()
+                imageView.image = newImage
+            }
+        }
+    }
+    
+    func resizeImageWithAspectRatio() {
+       
+        for dimension in selectedPresets {
+            
+            let HeightWidthArr = dimension.components(separatedBy: " x ")
+            
+            let heightnum = Double(HeightWidthArr[0])!
+            let widthnum = Double(HeightWidthArr[1])!
+            let image = imageView.image
+            let widthRatio  = widthnum  / Double(image!.size.width)
+            let heightRatio = heightnum / Double(image!.size.height)
+
+            var newSize: CGSize
+            
+            if(widthRatio > heightRatio) {
+                newSize = CGSize(width: Double(image!.size.width) * heightRatio, height: Double(Int(image!.size.height)) * heightRatio)
+            } else {
+                newSize = CGSize(width: Double(image!.size.width) * widthRatio, height: Double(image!.size.height) * widthRatio)
+            }
+
+            UIGraphicsBeginImageContextWithOptions(newSize, false, 1.0)
+            image!.draw(in: CGRect(origin: .zero, size: newSize))
+            let newImage = UIGraphicsGetImageFromCurrentImageContext()
+            UIGraphicsEndImageContext()
+            imageView.image = newImage
+        }
+    }
+}
