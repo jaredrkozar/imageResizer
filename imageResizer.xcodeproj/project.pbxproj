@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		7F4F8548266C8F4A00D2CB2A /* resizedImagesController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F4F8547266C8F4A00D2CB2A /* resizedImagesController.swift */; };
+		7F4F854A266C90F800D2CB2A /* ImageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F4F8549266C90F800D2CB2A /* ImageCell.swift */; };
+		7F4F854C266C962300D2CB2A /* Images.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F4F854B266C962300D2CB2A /* Images.swift */; };
 		7F95C9F22666BC7500A8F7D8 /* AddPresetViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F95C9F12666BC7400A8F7D8 /* AddPresetViewController.swift */; };
 		7FEF76BF265F0F9D007E6043 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FEF76BE265F0F9D007E6043 /* AppDelegate.swift */; };
 		7FEF76C1265F0F9D007E6043 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FEF76C0265F0F9D007E6043 /* SceneDelegate.swift */; };
@@ -15,10 +18,12 @@
 		7FEF76C9265F0F9D007E6043 /* imageResizer.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 7FEF76C7265F0F9D007E6043 /* imageResizer.xcdatamodeld */; };
 		7FEF76CB265F0F9E007E6043 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7FEF76CA265F0F9E007E6043 /* Assets.xcassets */; };
 		7FEF76CE265F0F9E007E6043 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7FEF76CC265F0F9E007E6043 /* LaunchScreen.storyboard */; };
-		7FEF76D7265FEDDC007E6043 /* noimage.png in Resources */ = {isa = PBXBuildFile; fileRef = 7FEF76D6265FEDDC007E6043 /* noimage.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		7F4F8547266C8F4A00D2CB2A /* resizedImagesController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = resizedImagesController.swift; sourceTree = "<group>"; };
+		7F4F8549266C90F800D2CB2A /* ImageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageCell.swift; sourceTree = "<group>"; };
+		7F4F854B266C962300D2CB2A /* Images.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Images.swift; sourceTree = "<group>"; };
 		7F95C9F12666BC7400A8F7D8 /* AddPresetViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddPresetViewController.swift; sourceTree = "<group>"; };
 		7FEF76BB265F0F9D007E6043 /* imageResizer.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = imageResizer.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		7FEF76BE265F0F9D007E6043 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -29,7 +34,6 @@
 		7FEF76CA265F0F9E007E6043 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		7FEF76CD265F0F9E007E6043 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		7FEF76CF265F0F9E007E6043 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		7FEF76D6265FEDDC007E6043 /* noimage.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = noimage.png; sourceTree = "<group>"; };
 		7FEF76D82661A7B2007E6043 /* imageResizer.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = imageResizer.entitlements; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -68,12 +72,14 @@
 				7FEF76C0265F0F9D007E6043 /* SceneDelegate.swift */,
 				7FEF76C2265F0F9D007E6043 /* ViewController.swift */,
 				7FEF76C4265F0F9D007E6043 /* Main.storyboard */,
+				7F4F8547266C8F4A00D2CB2A /* resizedImagesController.swift */,
+				7F4F8549266C90F800D2CB2A /* ImageCell.swift */,
+				7F4F854B266C962300D2CB2A /* Images.swift */,
 				7F95C9F12666BC7400A8F7D8 /* AddPresetViewController.swift */,
 				7FEF76CA265F0F9E007E6043 /* Assets.xcassets */,
 				7FEF76CC265F0F9E007E6043 /* LaunchScreen.storyboard */,
 				7FEF76CF265F0F9E007E6043 /* Info.plist */,
 				7FEF76C7265F0F9D007E6043 /* imageResizer.xcdatamodeld */,
-				7FEF76D6265FEDDC007E6043 /* noimage.png */,
 			);
 			path = imageResizer;
 			sourceTree = "<group>";
@@ -137,7 +143,6 @@
 			files = (
 				7FEF76CE265F0F9E007E6043 /* LaunchScreen.storyboard in Resources */,
 				7FEF76CB265F0F9E007E6043 /* Assets.xcassets in Resources */,
-				7FEF76D7265FEDDC007E6043 /* noimage.png in Resources */,
 				7FEF76C6265F0F9D007E6043 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -149,10 +154,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7F4F8548266C8F4A00D2CB2A /* resizedImagesController.swift in Sources */,
 				7FEF76C9265F0F9D007E6043 /* imageResizer.xcdatamodeld in Sources */,
 				7FEF76C3265F0F9D007E6043 /* ViewController.swift in Sources */,
 				7F95C9F22666BC7500A8F7D8 /* AddPresetViewController.swift in Sources */,
 				7FEF76BF265F0F9D007E6043 /* AppDelegate.swift in Sources */,
+				7F4F854C266C962300D2CB2A /* Images.swift in Sources */,
+				7F4F854A266C90F800D2CB2A /* ImageCell.swift in Sources */,
 				7FEF76C1265F0F9D007E6043 /* SceneDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

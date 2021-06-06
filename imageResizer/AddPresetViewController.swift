@@ -22,6 +22,7 @@ class AddPresetViewController: UIViewController, UIPopoverPresentationController
         super.viewDidLoad()
         title = "Add Preset"
         // Do any additional setup after loading the view.
+        self.preferredContentSize = CGSize(width: 400, height: 250)
         
         savePresetButton.isEnabled = false
         savePresetButton.alpha = 0.5;

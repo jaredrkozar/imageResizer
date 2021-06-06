@@ -21,7 +21,7 @@ class StandardButton: UIButton {
     }
 }
 
-class ViewController: UIViewController, PHPickerViewControllerDelegate, UITableViewDataSource, UITableViewDelegate {
+class ViewController: UIViewController, PHPickerViewControllerDelegate, UITableViewDataSource, UITableViewDelegate, UIPopoverPresentationControllerDelegate {
 
     var presets = [String]()
     
@@ -123,7 +123,6 @@ class ViewController: UIViewController, PHPickerViewControllerDelegate, UITableV
         if aspectRatioLocked.isOn {
             resizeImageWithAspectRatio()
         } else {
-            print(selectedPresets)
             resizeImage()
         }
     }
@@ -182,7 +181,7 @@ class ViewController: UIViewController, PHPickerViewControllerDelegate, UITableV
                 image.draw(in: CGRect(x: 0, y: 0, width: widthnum, height: heightnum))
                 newImage = UIGraphicsGetImageFromCurrentImageContext()!
                 UIGraphicsEndImageContext()
-                imageView.image = newImage
+                return newImage
             }
         }
     }

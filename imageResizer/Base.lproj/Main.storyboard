@@ -8,13 +8,14 @@
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="UIMenu" message="Requires Xcode 11 or later." minToolsVersion="11.0" requiredIntegratedClassName="UICommandDiff"/>
+        <capability name="collection view cell content view" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
         <!--View Controller-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <viewController id="BYZ-38-t0r" customClass="ViewController" customModule="imageResizer" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="ViewController" id="BYZ-38-t0r" customClass="ViewController" customModule="imageResizer" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
                         <rect key="frame" x="0.0" y="0.0" width="1024" height="768"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -62,7 +63,7 @@
                                 <fontDescription key="fontDescription" type="system" pointSize="18"/>
                                 <state key="normal" title="Add Preset"/>
                                 <connections>
-                                    <segue destination="a27-Qn-aZv" kind="popoverPresentation" popoverAnchorView="DPn-Xj-Lhc" id="y7q-dS-Mlm">
+                                    <segue destination="EF8-QT-B4i" kind="popoverPresentation" popoverAnchorView="DPn-Xj-Lhc" id="SGy-PH-Wve">
                                         <popoverArrowDirection key="popoverArrowDirection" up="YES" down="YES" left="YES" right="YES"/>
                                     </segue>
                                 </connections>
@@ -78,6 +79,7 @@
                                 </state>
                                 <connections>
                                     <action selector="resizeButtonTapped:" destination="BYZ-38-t0r" eventType="touchUpInside" id="GDk-RU-xiJ"/>
+                                    <segue destination="OCL-RY-PVi" kind="presentation" id="nfS-BV-D9W"/>
                                 </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Aspect Ratio Locked" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="FvR-Ou-073">
@@ -214,7 +216,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Wr4-YF-Akr" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2337.890625" y="36.71875"/>
+            <point key="canvasLocation" x="2561.1328125" y="61.71875"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="J05-0q-RbD">
@@ -255,6 +257,9 @@
                                 </command>
                                 <command title="Add Preset" input="p" anchor="com.apple.menu.new-scene" id="0z5-re-LOx">
                                     <keyModifierFlags key="modifierFlags" command="YES"/>
+                                    <connections>
+                                        <action selector="savePresetButtonTapped:" destination="kox-cN-g3D" id="XoH-uC-2g8"/>
+                                    </connections>
                                 </command>
                             </children>
                         </menu>
@@ -268,22 +273,92 @@
             <point key="canvasLocation" x="2249" y="-420"/>
         </scene>
         <!--Navigation Controller-->
-        <scene sceneID="eBa-xc-r8T">
+        <scene sceneID="4aY-SG-93k">
             <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="a27-Qn-aZv" sceneMemberID="viewController">
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="EF8-QT-B4i" sceneMemberID="viewController">
                     <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="j8k-yL-co6">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="1w6-Kn-Yuj">
                         <rect key="frame" x="0.0" y="13" width="375" height="50"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <nil name="viewControllers"/>
                     <connections>
-                        <segue destination="Gmj-tL-yLc" kind="relationship" relationship="rootViewController" id="5l8-f8-jxL"/>
+                        <segue destination="Gmj-tL-yLc" kind="relationship" relationship="rootViewController" id="36s-Wy-RBF"/>
                     </connections>
                 </navigationController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="yqu-Up-Bcw" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="WOu-fi-SEY" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1613.671875" y="36.71875"/>
+            <point key="canvasLocation" x="1836.9140624999998" y="61.71875"/>
+        </scene>
+        <!--Resized Images Controller-->
+        <scene sceneID="tL7-xT-HxX">
+            <objects>
+                <collectionViewController id="ThJ-0r-BAj" customClass="resizedImagesController" customModule="imageResizer" customModuleProvider="target" sceneMemberID="viewController">
+                    <collectionView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" id="j7H-2t-yYC">
+                        <rect key="frame" x="0.0" y="0.0" width="704" height="728"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <collectionViewFlowLayout key="collectionViewLayout" automaticEstimatedItemSize="YES" minimumLineSpacing="10" minimumInteritemSpacing="10" id="dai-gu-NDO">
+                            <size key="itemSize" width="254" height="291"/>
+                            <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                            <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                            <inset key="sectionInset" minX="15" minY="15" maxX="15" maxY="15"/>
+                        </collectionViewFlowLayout>
+                        <cells>
+                            <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="person" id="n0L-pB-ON2" customClass="ImageCell" customModule="imageResizer" customModuleProvider="target">
+                                <rect key="frame" x="15" y="15" width="254" height="291"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="OCc-9B-7VB">
+                                    <rect key="frame" x="0.0" y="0.0" width="254" height="291"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="IYQ-Lk-Lds">
+                                            <rect key="frame" x="22" y="15" width="210" height="200"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        </imageView>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="e2r-2x-fpT">
+                                            <rect key="frame" x="101" y="234" width="60" height="29"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                            <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="24"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                    </subviews>
+                                </collectionViewCellContentView>
+                                <size key="customSize" width="254" height="291"/>
+                                <connections>
+                                    <outlet property="dimensions" destination="e2r-2x-fpT" id="gSx-Tb-qi7"/>
+                                    <outlet property="imageView" destination="IYQ-Lk-Lds" id="CZh-P3-key"/>
+                                </connections>
+                            </collectionViewCell>
+                        </cells>
+                        <connections>
+                            <outlet property="dataSource" destination="ThJ-0r-BAj" id="NWV-KS-eHR"/>
+                            <outlet property="delegate" destination="ThJ-0r-BAj" id="iOM-sn-RaH"/>
+                        </connections>
+                    </collectionView>
+                    <navigationItem key="navigationItem" id="FEs-Rj-ZDr"/>
+                </collectionViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="QwY-Ch-6cE" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1581.4453125" y="783.59375"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="fka-ux-v6c">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="OCL-RY-PVi" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="SDQ-WR-dXC">
+                        <rect key="frame" x="0.0" y="0.0" width="704" height="56"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="ThJ-0r-BAj" kind="relationship" relationship="rootViewController" id="qKg-Ip-IPY"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="xfi-dG-Wsb" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="866" y="823"/>
         </scene>
     </scenes>
     <resources>
