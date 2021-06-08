@@ -22,14 +22,12 @@ class StandardButton: UIButton {
 }
 
 class ViewController: UIViewController, PHPickerViewControllerDelegate, UITableViewDataSource, UITableViewDelegate, UIPopoverPresentationControllerDelegate {
-
-    var presets = [String]()
+    var imageDetails = [Images]()
     
+    var presets = [String]()
     var selectedPresets = [String]()
     
     var newImage = UIImage()
-    // create a set of integer type
-    
     @IBOutlet var imageView: UIImageView!
     
     @IBOutlet var resizeImageButton: StandardButton!
@@ -38,10 +36,6 @@ class ViewController: UIViewController, PHPickerViewControllerDelegate, UITableV
 
     @IBOutlet var presetCellsView: UITableView!
     
-    var heightnum = UserDefaults.standard.integer(forKey: "height")
-    
-    var widthnum = UserDefaults.standard.integer(forKey: "width")
-
     let nc = NotificationCenter.default
     
     override func viewDidLoad() {
@@ -54,6 +48,8 @@ class ViewController: UIViewController, PHPickerViewControllerDelegate, UITableV
             resizeImageButton.isEnabled = false;
             resizeImageButton.alpha = 0.5
         }
+        
+        presetCellsView.allowsMultipleSelection = true
         
         NotificationCenter.default.addObserver(self, selector: #selector(isImageSelected(_:)), name: NSNotification.Name( "widthHeightEntered"), object: nil)
         
@@ -70,9 +66,11 @@ class ViewController: UIViewController, PHPickerViewControllerDelegate, UITableV
         let widthnum = UserDefaults.standard.integer(forKey: "width")
         let dimensions = String("\(heightnum) x \(widthnum)")
         
-        presets.insert(dimensions, at: 0)
-        let indexPath = IndexPath(row: 0, section: 0)
+        presets.append(dimensions)
+        let indexPath = IndexPath(row: (self.presets.count - 1), section: 0)
         presetCellsView.insertRows(at: [indexPath], with: .automatic)
+        
+        UserDefaults.standard.set(presets, forKey: "presets")
     }
     
     
@@ -106,6 +104,7 @@ class ViewController: UIViewController, PHPickerViewControllerDelegate, UITableV
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         return "Presets"
     }
+    
     
     //Button code
     
@@ -151,6 +150,7 @@ class ViewController: UIViewController, PHPickerViewControllerDelegate, UITableV
                 DispatchQueue.main.async {
                     guard let self = self, let image = image as? UIImage, self.imageView.image == previousImage else { return }
                     self.imageView.image = image
+                    NotificationCenter.default.post(name: Notification.Name( "widthHeightEntered"), object: nil)
                 }
             }
         }
@@ -159,7 +159,7 @@ class ViewController: UIViewController, PHPickerViewControllerDelegate, UITableV
     
     //Image Selection
     @objc func isImageSelected(_ notification: Notification) {
-        if imageView.image != UIImage(systemName: "photo") {
+        if imageView.image != UIImage(systemName: "photo") && selectedPresets.count  <= 1 {
             resizeImageButton.isEnabled = true;
             resizeImageButton.alpha = 1.0;
         }
@@ -181,7 +181,16 @@ class ViewController: UIViewController, PHPickerViewControllerDelegate, UITableV
                 image.draw(in: CGRect(x: 0, y: 0, width: widthnum, height: heightnum))
                 newImage = UIGraphicsGetImageFromCurrentImageContext()!
                 UIGraphicsEndImageContext()
-                return newImage
+                imageView.image = newImage
+                
+                let cell = Images(dimensions: "Unknown", image: newImage)
+                imageDetails.append(cell)
+                
+                if let vc = storyboard?.instantiateViewController(withIdentifier: "Detail") as? resizedImagesController {
+                    vc.dimension = dimension
+                    vc.cellImage = imageView.image
+                    present(vc, animated: true, completion: nil)
+                }
             }
         }
     }
@@ -211,6 +220,15 @@ class ViewController: UIViewController, PHPickerViewControllerDelegate, UITableV
             let newImage = UIGraphicsGetImageFromCurrentImageContext()
             UIGraphicsEndImageContext()
             imageView.image = newImage
+            
+            let cell = Images(dimensions: "Unknown", image: newImage!)
+            imageDetails.append(cell)
+            
+            if let vc = storyboard?.instantiateViewController(withIdentifier: "Detail") as? resizedImagesController {
+                vc.dimension = dimension
+                vc.cellImage = imageView.image
+                present(vc, animated: true, completion: nil)
+            }
         }
     }
 }
