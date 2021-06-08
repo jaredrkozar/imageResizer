@@ -181,14 +181,13 @@ class ViewController: UIViewController, PHPickerViewControllerDelegate, UITableV
                 image.draw(in: CGRect(x: 0, y: 0, width: widthnum, height: heightnum))
                 newImage = UIGraphicsGetImageFromCurrentImageContext()!
                 UIGraphicsEndImageContext()
-                imageView.image = newImage
                 
                 let cell = Images(dimensions: "Unknown", image: newImage)
                 imageDetails.append(cell)
                 
                 if let vc = storyboard?.instantiateViewController(withIdentifier: "Detail") as? resizedImagesController {
                     vc.dimension = dimension
-                    vc.cellImage = imageView.image
+                    vc.cellImage = newImage
                     present(vc, animated: true, completion: nil)
                 }
             }
@@ -219,14 +218,13 @@ class ViewController: UIViewController, PHPickerViewControllerDelegate, UITableV
             image!.draw(in: CGRect(origin: .zero, size: newSize))
             let newImage = UIGraphicsGetImageFromCurrentImageContext()
             UIGraphicsEndImageContext()
-            imageView.image = newImage
             
             let cell = Images(dimensions: "Unknown", image: newImage!)
             imageDetails.append(cell)
             
             if let vc = storyboard?.instantiateViewController(withIdentifier: "Detail") as? resizedImagesController {
                 vc.dimension = dimension
-                vc.cellImage = imageView.image
+                vc.cellImage = newImage
                 present(vc, animated: true, completion: nil)
             }
         }
