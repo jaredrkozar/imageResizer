@@ -19,16 +19,12 @@ class resizedImagesController: UICollectionViewController {
         title = "Resized Images"
         
         // Do any additional setup after loading the view.
-        navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addNewPhoto))
-        
+
         let cell = Images(dimensions: dimension, image: cellImage)
         imageDetails.append(cell)
         collectionView.reloadData()
     }
     
-    @objc func addNewPhoto() {
-        print("Hell")
-    }
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return imageDetails.count
     }
@@ -37,7 +33,6 @@ class resizedImagesController: UICollectionViewController {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "image", for: indexPath) as? ImageCell else {
             fatalError("Unable to dequeue PersonCell.")
         }
-
         
         let image = imageDetails[indexPath.item]
 
