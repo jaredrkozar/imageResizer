@@ -31,7 +31,7 @@ class resizedImagesController: UICollectionViewController {
 
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "image", for: indexPath) as? ImageCell else {
-            fatalError("Unable to dequeue PersonCell.")
+            fatalError("Unable to dequeue the image cell.")
         }
         
         let image = imageDetails[indexPath.item]
@@ -39,8 +39,7 @@ class resizedImagesController: UICollectionViewController {
         cell.dimensions.text = image.dimensions
 
         cell.imageView.image = image.image
-        
-        // if we're still here it means we got a PersonCell, so we can return it
+
         return cell
     }
     
