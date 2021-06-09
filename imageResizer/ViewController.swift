@@ -48,8 +48,8 @@ class ViewController: UIViewController, PHPickerViewControllerDelegate, UITableV
             resizeImageButton.isEnabled = false;
             resizeImageButton.alpha = 0.5
         }
-        
-        presetCellsView.allowsMultipleSelection = true
+    
+        self.presetCellsView.allowsMultipleSelection = true
         
         NotificationCenter.default.addObserver(self, selector: #selector(isImageSelected(_:)), name: NSNotification.Name( "widthHeightEntered"), object: nil)
         
@@ -159,7 +159,7 @@ class ViewController: UIViewController, PHPickerViewControllerDelegate, UITableV
     
     //Image Selection
     @objc func isImageSelected(_ notification: Notification) {
-        if imageView.image != UIImage(systemName: "photo") && selectedPresets.count  <= 1 {
+        if imageView.image != UIImage(systemName: "photo") && selectedPresets.count  >= 1 {
             resizeImageButton.isEnabled = true;
             resizeImageButton.alpha = 1.0;
         }
@@ -181,9 +181,6 @@ class ViewController: UIViewController, PHPickerViewControllerDelegate, UITableV
                 image.draw(in: CGRect(x: 0, y: 0, width: widthnum, height: heightnum))
                 newImage = UIGraphicsGetImageFromCurrentImageContext()!
                 UIGraphicsEndImageContext()
-                
-                let cell = Images(dimensions: "Unknown", image: newImage)
-                imageDetails.append(cell)
                 
                 if let vc = storyboard?.instantiateViewController(withIdentifier: "Detail") as? resizedImagesController {
                     vc.dimension = dimension
@@ -218,9 +215,6 @@ class ViewController: UIViewController, PHPickerViewControllerDelegate, UITableV
             image!.draw(in: CGRect(origin: .zero, size: newSize))
             let newImage = UIGraphicsGetImageFromCurrentImageContext()
             UIGraphicsEndImageContext()
-            
-            let cell = Images(dimensions: "Unknown", image: newImage!)
-            imageDetails.append(cell)
             
             if let vc = storyboard?.instantiateViewController(withIdentifier: "Detail") as? resizedImagesController {
                 vc.dimension = dimension
