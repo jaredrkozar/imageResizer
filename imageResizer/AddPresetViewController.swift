@@ -8,7 +8,7 @@
 import UIKit
 
 
-class AddPresetViewController: UIViewController, UIPopoverPresentationControllerDelegate {
+class AddPresetViewController: UIViewController {
 
     @IBOutlet var heightField: UITextField!
     
@@ -17,17 +17,28 @@ class AddPresetViewController: UIViewController, UIPopoverPresentationController
     @IBOutlet var savePresetButton: StandardButton!
     
     let nc = NotificationCenter.default
+    var height = String()
+    var width = String()
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        title = "Add Preset"
+        
         // Do any additional setup after loading the view.
         self.preferredContentSize = CGSize(width: 400, height: 250)
-        
-        savePresetButton.isEnabled = false
+        self.savePresetButton.isEnabled = false
         savePresetButton.alpha = 0.5;
         
-        
+        widthField.text = width
+        heightField.text = height
+    }
+    
+    override func viewWillLayoutSubviews() {
+       let width = self.view.frame.width
+       let navigationBar: UINavigationBar = UINavigationBar(frame: CGRect(x: 0, y: 0, width: width, height: 60))
+       self.view.addSubview(navigationBar);
+       let navigationItem = UINavigationItem(title: "Add Preset")
+
+       navigationBar.setItems([navigationItem], animated: false)
     }
     
     @IBAction func checkText(_ sender: Any) {

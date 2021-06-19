@@ -34,6 +34,9 @@
                                 </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="18"/>
                                 <state key="normal" title="Edit"/>
+                                <connections>
+                                    <action selector="editButtonPressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="aGQ-2r-wAB"/>
+                                </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="DPn-Xj-Lhc">
                                 <rect key="frame" x="901" y="73" width="89" height="34"/>
@@ -43,9 +46,7 @@
                                 <fontDescription key="fontDescription" type="system" pointSize="18"/>
                                 <state key="normal" title="Add Preset"/>
                                 <connections>
-                                    <segue destination="Gxx-mN-Byc" kind="popoverPresentation" popoverAnchorView="DPn-Xj-Lhc" id="uLO-vj-qUY">
-                                        <popoverArrowDirection key="popoverArrowDirection" up="YES" down="YES" left="YES" right="YES"/>
-                                    </segue>
+                                    <action selector="addPresetButton:" destination="BYZ-38-t0r" eventType="touchUpInside" id="sYT-i6-NoT"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" reversesTitleShadowWhenHighlighted="YES" lineBreakMode="middleTruncation" pointerInteraction="YES" translatesAutoresizingMaskIntoConstraints="NO" id="k6o-pn-FLc" customClass="StandardButton" customModule="imageResizer" customModuleProvider="target">
@@ -78,6 +79,13 @@
                                     <constraint firstAttribute="height" constant="336" id="WFH-ll-oAt"/>
                                     <constraint firstAttribute="width" secondItem="yCX-Xf-KGV" secondAttribute="height" multiplier="7:6" id="pRj-QL-nWT"/>
                                 </constraints>
+                                <label key="tableFooterView" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" adjustsFontForContentSizeCategory="YES" id="P6a-Ml-K0n">
+                                    <rect key="frame" x="0.0" y="130.5" width="392" height="128"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    <fontDescription key="fontDescription" style="UICTFontTextStyleTitle2"/>
+                                    <nil key="textColor"/>
+                                    <nil key="highlightedColor"/>
+                                </label>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="presetCell" textLabel="2pf-dP-CwV" rowHeight="63" style="IBUITableViewCellStyleDefault" id="fPb-fJ-3rB">
                                         <rect key="frame" x="16" y="49.5" width="360" height="63"/>
@@ -134,8 +142,10 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
+                        <outlet property="addPresetButton" destination="DPn-Xj-Lhc" id="oEm-IG-nJf"/>
                         <outlet property="aspectRatioLocked" destination="1bQ-gc-he3" id="CIE-dj-x8n"/>
                         <outlet property="imageView" destination="Iue-9H-XWq" id="H0l-OM-qmi"/>
+                        <outlet property="noPresetsLabel" destination="P6a-Ml-K0n" id="2FX-7P-1PC"/>
                         <outlet property="presetCellsView" destination="yCX-Xf-KGV" id="TZS-gs-hqo"/>
                         <outlet property="resizeImageButton" destination="k6o-pn-FLc" id="QEd-zW-RuA"/>
                     </connections>
@@ -169,32 +179,23 @@
             </objects>
             <point key="canvasLocation" x="1289.6484375" y="917.96875"/>
         </scene>
-        <!--Add Preset View Controller-->
+        <!--Add Preset-->
         <scene sceneID="M4L-a8-s3f">
             <objects>
-                <viewController storyboardIdentifier="addPreset" id="Gmj-tL-yLc" customClass="AddPresetViewController" customModule="imageResizer" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="addPreset" title="Add Preset" id="Gmj-tL-yLc" customClass="AddPresetViewController" customModule="imageResizer" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="HhB-FA-FrD">
-                        <rect key="frame" x="0.0" y="0.0" width="400" height="338"/>
+                        <rect key="frame" x="0.0" y="0.0" width="1024" height="768"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <textField opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Width" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="gvV-5y-t6I">
-                                <rect key="frame" x="255" y="149" width="97" height="34"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="15"/>
-                                <textInputTraits key="textInputTraits" keyboardType="numberPad"/>
-                                <connections>
-                                    <action selector="checkText:" destination="Gmj-tL-yLc" eventType="editingChanged" id="LEv-Xb-TZS"/>
-                                </connections>
-                            </textField>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Height" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="C6k-vO-BBn">
-                                <rect key="frame" x="55" y="86" width="51" height="21"/>
+                                <rect key="frame" x="48" y="82" width="51" height="21"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" reversesTitleShadowWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Hau-lL-smB" customClass="StandardButton" customModule="imageResizer" customModuleProvider="target">
-                                <rect key="frame" x="55" y="229" width="297" height="36"/>
+                                <rect key="frame" x="50" y="205" width="297" height="36"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" weight="medium" pointSize="20"/>
                                 <state key="normal" title="Save Preset">
@@ -205,19 +206,28 @@
                                 </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Width" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="UKV-vX-GYa">
-                                <rect key="frame" x="55" y="156" width="46" height="21"/>
+                                <rect key="frame" x="50" y="146" width="46" height="21"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <textField opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Height" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="RsX-Nw-zeZ">
-                                <rect key="frame" x="255" y="79" width="97" height="34"/>
+                                <rect key="frame" x="250" y="75" width="97" height="34"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                 <textInputTraits key="textInputTraits" keyboardType="numberPad"/>
                                 <connections>
-                                    <action selector="checkText:" destination="Gmj-tL-yLc" eventType="editingChanged" id="VRZ-DX-9BB"/>
+                                    <action selector="checkText:" destination="Gmj-tL-yLc" eventType="editingChanged" id="IeW-C7-Nca"/>
+                                </connections>
+                            </textField>
+                            <textField opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Width" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="gvV-5y-t6I">
+                                <rect key="frame" x="250" y="139" width="97" height="34"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                <textInputTraits key="textInputTraits" keyboardType="numberPad"/>
+                                <connections>
+                                    <action selector="checkText:" destination="Gmj-tL-yLc" eventType="editingChanged" id="NbZ-qn-9X1"/>
                                 </connections>
                             </textField>
                         </subviews>
@@ -234,7 +244,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Wr4-YF-Akr" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2198" y="112"/>
+            <point key="canvasLocation" x="2239" y="113"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="J05-0q-RbD">
@@ -276,10 +286,13 @@
                                 <command title="Add Preset" input="p" anchor="com.apple.menu.new-scene" id="0z5-re-LOx">
                                     <keyModifierFlags key="modifierFlags" command="YES"/>
                                     <connections>
-                                        <action selector="savePresetButtonTapped:" destination="kox-cN-g3D" id="XoH-uC-2g8"/>
+                                        <action selector="addPresetButton:" destination="kox-cN-g3D" id="TAQ-XP-TGA"/>
                                     </connections>
                                 </command>
                             </children>
+                            <systemMenuChildDeletions>
+                                <menuDeletion anchor="com.apple.menu.open-recent"/>
+                            </systemMenuChildDeletions>
                         </menu>
                     </children>
                     <systemMenuChildDeletions>
@@ -288,7 +301,7 @@
                 </menu>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="kox-cN-g3D" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2249" y="-420"/>
+            <point key="canvasLocation" x="830" y="-507"/>
         </scene>
         <!--Resized Image-->
         <scene sceneID="tL7-xT-HxX">
@@ -350,27 +363,9 @@
             <point key="canvasLocation" x="3765.2343749999995" y="982.8125"/>
         </scene>
         <!--Navigation Controller-->
-        <scene sceneID="EzS-qm-eri">
-            <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="Gxx-mN-Byc" sceneMemberID="viewController">
-                    <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="Glh-FR-qp5">
-                        <rect key="frame" x="0.0" y="13" width="375" height="50"/>
-                        <autoresizingMask key="autoresizingMask"/>
-                    </navigationBar>
-                    <nil name="viewControllers"/>
-                    <connections>
-                        <segue destination="Gmj-tL-yLc" kind="relationship" relationship="rootViewController" id="JLK-jg-BhL"/>
-                    </connections>
-                </navigationController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="pcC-ck-CAn" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="1509" y="112"/>
-        </scene>
-        <!--Navigation Controller-->
         <scene sceneID="gu5-In-dS6">
             <objects>
-                <navigationController storyboardIdentifier="ResizeNavController" automaticallyAdjustsScrollViewInsets="NO" id="epm-Dl-tyF" sceneMemberID="viewController">
+                <navigationController storyboardIdentifier="resizedImageNavBar" automaticallyAdjustsScrollViewInsets="NO" id="epm-Dl-tyF" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="v5v-hV-mlL">
                         <rect key="frame" x="0.0" y="0.0" width="1024" height="50"/>
@@ -384,6 +379,24 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="7Bf-2H-kph" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="3041.015625" y="982.8125"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="HXx-kT-EBX">
+            <objects>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Tye-tA-csj" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+                <navigationController storyboardIdentifier="AddPresetNavBar" automaticallyAdjustsScrollViewInsets="NO" id="K1j-4U-DQ2" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="G5h-OL-8i4">
+                        <rect key="frame" x="0.0" y="0.0" width="1024" height="50"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="Gmj-tL-yLc" kind="relationship" relationship="rootViewController" id="Gq1-aI-Pa6"/>
+                    </connections>
+                </navigationController>
+            </objects>
+            <point key="canvasLocation" x="1491" y="76"/>
         </scene>
     </scenes>
     <resources>

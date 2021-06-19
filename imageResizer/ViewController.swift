@@ -8,7 +8,6 @@
 import UIKit
 import PhotosUI
 
-
 class StandardButton: UIButton {
     override func draw(_ rect: CGRect) {
         #if !targetEnvironment(macCatalyst)
@@ -22,19 +21,24 @@ class StandardButton: UIButton {
 }
 
 class ViewController: UIViewController, PHPickerViewControllerDelegate, UITableViewDataSource, UITableViewDelegate, UIPopoverPresentationControllerDelegate {
+    
     var imageDetails = [Images]()
     
     var presets = [String]()
     var selectedPresets = [String]()
-    
     var newImage = UIImage()
-    @IBOutlet var imageView: UIImageView!
     
+    @IBOutlet var noPresetsLabel: UILabel!
+
+    @IBOutlet var imageView: UIImageView!
+
     @IBOutlet var resizeImageButton: StandardButton!
     
     @IBOutlet var aspectRatioLocked: UISwitch!
 
     @IBOutlet var presetCellsView: UITableView!
+    
+    @IBOutlet var addPresetButton: UIButton!
     
     let nc = NotificationCenter.default
     
@@ -43,7 +47,8 @@ class ViewController: UIViewController, PHPickerViewControllerDelegate, UITableV
         // Do any additional setup after loading the view.
     
         title = "Image Resizer"
-
+        noPresets()
+        
         if imageView.image == UIImage(systemName: "photo") {
             resizeImageButton.isEnabled = false;
             resizeImageButton.alpha = 0.5
@@ -69,10 +74,17 @@ class ViewController: UIViewController, PHPickerViewControllerDelegate, UITableV
         presets.append(dimensions)
         let indexPath = IndexPath(row: (self.presets.count - 1), section: 0)
         presetCellsView.insertRows(at: [indexPath], with: .automatic)
-        
+        noPresets()
         UserDefaults.standard.set(presets, forKey: "presets")
     }
     
+    func noPresets() {
+        if presets.count == 0 {
+            noPresetsLabel.text = "No presets available. Add a preset thing the 'Add Preset' button above and you'll see them here."
+        } else {
+            noPresetsLabel.text = ""
+        }
+    }
     
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
         return 1
@@ -128,6 +140,29 @@ class ViewController: UIViewController, PHPickerViewControllerDelegate, UITableV
         }
     }
     
+    @IBAction func addPresetButton(_ sender: Any) {
+        if let vc = storyboard?.instantiateViewController(withIdentifier: "addPreset") as? AddPresetViewController {
+            self.navigationController?.modalPresentationStyle = .popover
+                 
+            vc.modalPresentationStyle = UIModalPresentationStyle.popover
+            vc.preferredContentSize = CGSize(width: 400, height: 400)
+               
+            
+            present(vc, animated: true, completion: nil)
+               
+            let popoverPresentationController = vc.popoverPresentationController
+            popoverPresentationController?.sourceView = addPresetButton
+            popoverPresentationController?.permittedArrowDirections = UIPopoverArrowDirection.up
+            popoverPresentationController?.sourceRect = CGRect(x: 30, y: 0, width: 0, height: 25)
+        }
+        
+    }
+    
+    @IBAction func editButtonPressed(_ sender: Any) {
+        
+
+    }
+    
     
     @IBAction func shareButtonTapped(_ sender: UIBarButtonItem) {
         
@@ -164,6 +199,7 @@ class ViewController: UIViewController, PHPickerViewControllerDelegate, UITableV
         if imageView.image != UIImage(systemName: "photo") && selectedPresets.count  >= 1 {
             resizeImageButton.isEnabled = true;
             resizeImageButton.alpha = 1.0;
+            
         }
     }
     
@@ -192,7 +228,6 @@ class ViewController: UIViewController, PHPickerViewControllerDelegate, UITableV
     
     func resizeImageWithAspectRatio(dimension: String) {
        
-        print(selectedPresets)
         let HeightWidthArr = dimension.components(separatedBy: " x ")
         
         let heightnum = Double(HeightWidthArr[0])!
@@ -219,5 +254,51 @@ class ViewController: UIViewController, PHPickerViewControllerDelegate, UITableV
             vc.cellImage = newImage
             present(vc, animated: true, completion: nil)
         }
+    }
+    
+    //Context Menu code
+    
+    func tableView(_ tableView: UITableView, contextMenuConfigurationForRowAt indexPath: IndexPath, point: CGPoint) -> UIContextMenuConfiguration? {
+        let preset = presets[indexPath.row]
+        return UIContextMenuConfiguration(identifier: nil, previewProvider: nil) { _ in
+            let editAction = UIAction(
+              title: "Edit",
+              image: UIImage(systemName: "pencil")) { _ in
+                let HeightWidthArr = preset.components(separatedBy: " x ")
+                
+                let height = Double(HeightWidthArr[0])!
+                let width = Double(HeightWidthArr[1])!
+                print(height)
+                if let vc = self.storyboard?.instantiateViewController(withIdentifier: "addPreset") as? AddPresetViewController {
+                    self.navigationController?.modalPresentationStyle = .popover
+                         
+                    vc.modalPresentationStyle = UIModalPresentationStyle.popover
+                    vc.preferredContentSize = CGSize(width: 400, height: 600)
+                    vc.height = String(height)
+                    vc.width = String(width)
+                     
+                    self.present(vc, animated: true, completion: nil)
+                       
+                    let popoverPresentationController = vc.popoverPresentationController
+                    popoverPresentationController?.sourceView = self.presetCellsView
+                
+                    popoverPresentationController?.sourceRect = CGRect(x: 0, y: 0, width: 0, height: 0)
+                }
+            }
+            
+            let deleteAction = UIAction(
+              title: "Delete",
+              image: UIImage(systemName: "trash"),
+              attributes: .destructive) { _ in
+                self.presets.remove(at: indexPath.row)
+                tableView.reloadData()
+                self.noPresets()
+            }
+            return UIMenu(title: "", children: [editAction, deleteAction])
+        }
+    }
+    
+    func adaptivePresentationStyle(for controller: UIPresentationController, traitCollection: UITraitCollection) -> UIModalPresentationStyle {
+        return .none
     }
 }
