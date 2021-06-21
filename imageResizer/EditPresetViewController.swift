@@ -1,43 +1,48 @@
 //
-//  AddPresetViewController.swift
+//  EditPresetViewController.swift
 //  imageResizer
 //
-//  Created by Jared Kozar on 6/1/21.
+//  Created by Jared Kozar on 6/20/21.
 //
 
 import UIKit
 
+class EditPresetViewController: UIViewController {
 
-class AddPresetViewController: UIViewController {
 
-    @IBOutlet var heightField: UITextField!
+    @IBOutlet var editedHeightField: UITextField!
     
-    @IBOutlet var widthField: UITextField!
+    @IBOutlet var editedWidthField: UITextField!
     
     @IBOutlet var savePresetButton: StandardButton!
-    
     let nc = NotificationCenter.default
-
+    var height = String()
+    var width = String()
+    let editedDimension = 0
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
         self.preferredContentSize = CGSize(width: 400, height: 250)
         self.savePresetButton.isEnabled = false
         savePresetButton.alpha = 0.5;
+        editedWidthField.text = width
+        editedHeightField.text = height
+        
     }
     
     override func viewWillLayoutSubviews() {
        let width = self.view.frame.width
        let navigationBar: UINavigationBar = UINavigationBar(frame: CGRect(x: 0, y: 0, width: width, height: 60))
        self.view.addSubview(navigationBar);
-       let navigationItem = UINavigationItem(title: "Add Preset")
+       let navigationItem = UINavigationItem(title: "Edit Preset")
 
        navigationBar.setItems([navigationItem], animated: false)
     }
     
+    
     @IBAction func checkText(_ sender: Any) {
-        
-        if heightField.text!.isEmpty || widthField.text!.isEmpty {
+        if editedHeightField.text!.isEmpty || editedWidthField.text!.isEmpty {
             self.savePresetButton.isEnabled = false
             savePresetButton.alpha = 0.5;
         } else {
@@ -46,18 +51,15 @@ class AddPresetViewController: UIViewController {
         }
     }
     
-    @IBAction func savePresetButtonTapped(_ sender: StandardButton) {
+    @IBAction func saveEditPresetButtonTapped(_ sender: Any) {
         
-        let width = widthField.text
-        let height = heightField.text
-        UserDefaults.standard.set(width, forKey: "width")
-        UserDefaults.standard.set(height, forKey: "height")
-     
-        NotificationCenter.default.post(name: Notification.Name( "widthHeightEntered"), object: nil)
+        let editedWidth = editedWidthField.text
+        let editedHeight = editedHeightField.text
         
-        NotificationCenter.default.post(name: Notification.Name( "addWidthHeighttoTable"), object: nil)
-    
+        let editedDimension = "\(editedHeight!) x \(editedWidth!)"
+        UserDefaults.standard.set(editedDimension, forKey: "editedDimension")
         dismiss(animated: true, completion: nil)
         
+        NotificationCenter.default.post(name: Notification.Name( "editedPreset"), object: nil)
     }
 }

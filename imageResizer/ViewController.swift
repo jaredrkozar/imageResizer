@@ -23,7 +23,6 @@ class StandardButton: UIButton {
 class ViewController: UIViewController, PHPickerViewControllerDelegate, UITableViewDataSource, UITableViewDelegate, UIPopoverPresentationControllerDelegate {
     
     var imageDetails = [Images]()
-    
     var presets = [String]()
     var selectedPresets = [String]()
     var newImage = UIImage()
@@ -60,6 +59,8 @@ class ViewController: UIViewController, PHPickerViewControllerDelegate, UITableV
         
         NotificationCenter.default.addObserver(self, selector: #selector(addtoTable(_:)), name: NSNotification.Name( "addWidthHeighttoTable"), object: nil)
         
+        NotificationCenter.default.addObserver(self, selector: #selector(editedPreset(_:)), name: NSNotification.Name( "editedPreset"), object: nil)
+        
         presetCellsView.delegate = self
         presetCellsView.dataSource = self
     }
@@ -76,6 +77,7 @@ class ViewController: UIViewController, PHPickerViewControllerDelegate, UITableV
         presetCellsView.insertRows(at: [indexPath], with: .automatic)
         noPresets()
         UserDefaults.standard.set(presets, forKey: "presets")
+        
     }
     
     func noPresets() {
@@ -147,7 +149,6 @@ class ViewController: UIViewController, PHPickerViewControllerDelegate, UITableV
             vc.modalPresentationStyle = UIModalPresentationStyle.popover
             vc.preferredContentSize = CGSize(width: 400, height: 400)
                
-            
             present(vc, animated: true, completion: nil)
                
             let popoverPresentationController = vc.popoverPresentationController
@@ -158,12 +159,7 @@ class ViewController: UIViewController, PHPickerViewControllerDelegate, UITableV
         
     }
     
-    @IBAction func editButtonPressed(_ sender: Any) {
-        
-
-    }
-    
-    
+  
     @IBAction func shareButtonTapped(_ sender: UIBarButtonItem) {
         
         guard let selectedImage = imageView.image?.jpegData(compressionQuality: 1.0) else {
@@ -260,23 +256,23 @@ class ViewController: UIViewController, PHPickerViewControllerDelegate, UITableV
     
     func tableView(_ tableView: UITableView, contextMenuConfigurationForRowAt indexPath: IndexPath, point: CGPoint) -> UIContextMenuConfiguration? {
         let preset = presets[indexPath.row]
+        let row = indexPath.row
+        print(row)
+        UserDefaults.standard.set(row, forKey: "row")
         return UIContextMenuConfiguration(identifier: nil, previewProvider: nil) { _ in
             let editAction = UIAction(
               title: "Edit",
-              image: UIImage(systemName: "pencil")) { _ in
+                image: UIImage(systemName: "pencil")) { [self] _ in
                 let HeightWidthArr = preset.components(separatedBy: " x ")
-                
                 let height = Double(HeightWidthArr[0])!
                 let width = Double(HeightWidthArr[1])!
-                print(height)
-                if let vc = self.storyboard?.instantiateViewController(withIdentifier: "addPreset") as? AddPresetViewController {
+                if let vc = self.storyboard?.instantiateViewController(withIdentifier: "editPreset") as? EditPresetViewController {
                     self.navigationController?.modalPresentationStyle = .popover
-                         
+                    
                     vc.modalPresentationStyle = UIModalPresentationStyle.popover
                     vc.preferredContentSize = CGSize(width: 400, height: 600)
-                    vc.height = String(height)
-                    vc.width = String(width)
-                     
+                    vc.height = String(Int(height))
+                    vc.width = String(Int(width))
                     self.present(vc, animated: true, completion: nil)
                        
                     let popoverPresentationController = vc.popoverPresentationController
@@ -298,7 +294,11 @@ class ViewController: UIViewController, PHPickerViewControllerDelegate, UITableV
         }
     }
     
-    func adaptivePresentationStyle(for controller: UIPresentationController, traitCollection: UITraitCollection) -> UIModalPresentationStyle {
-        return .none
+    @objc func editedPreset(_ tableView: UITableView) {
+        let row = UserDefaults.standard.integer(forKey: "row")
+        let editedDimensions = UserDefaults.standard.string(forKey: "editedDimension")
+        presets[row] = editedDimensions!
+        self.presetCellsView.reloadData()
     }
+    
 }

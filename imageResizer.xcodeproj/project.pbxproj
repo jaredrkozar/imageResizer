@@ -10,6 +10,7 @@
 		7F4F8548266C8F4A00D2CB2A /* resizedImagesController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F4F8547266C8F4A00D2CB2A /* resizedImagesController.swift */; };
 		7F4F854A266C90F800D2CB2A /* ImageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F4F8549266C90F800D2CB2A /* ImageCell.swift */; };
 		7F4F854C266C962300D2CB2A /* Images.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F4F854B266C962300D2CB2A /* Images.swift */; };
+		7F6E650A267F058000096EED /* EditPresetViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F6E6509267F058000096EED /* EditPresetViewController.swift */; };
 		7F95C9F22666BC7500A8F7D8 /* AddPresetViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F95C9F12666BC7400A8F7D8 /* AddPresetViewController.swift */; };
 		7FEF76BF265F0F9D007E6043 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FEF76BE265F0F9D007E6043 /* AppDelegate.swift */; };
 		7FEF76C1265F0F9D007E6043 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FEF76C0265F0F9D007E6043 /* SceneDelegate.swift */; };
@@ -24,6 +25,7 @@
 		7F4F8547266C8F4A00D2CB2A /* resizedImagesController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = resizedImagesController.swift; sourceTree = "<group>"; };
 		7F4F8549266C90F800D2CB2A /* ImageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageCell.swift; sourceTree = "<group>"; };
 		7F4F854B266C962300D2CB2A /* Images.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Images.swift; sourceTree = "<group>"; };
+		7F6E6509267F058000096EED /* EditPresetViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditPresetViewController.swift; sourceTree = "<group>"; };
 		7F95C9F12666BC7400A8F7D8 /* AddPresetViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddPresetViewController.swift; sourceTree = "<group>"; };
 		7FEF76BB265F0F9D007E6043 /* imageResizer.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = imageResizer.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		7FEF76BE265F0F9D007E6043 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -76,6 +78,7 @@
 				7F4F8549266C90F800D2CB2A /* ImageCell.swift */,
 				7F4F854B266C962300D2CB2A /* Images.swift */,
 				7F95C9F12666BC7400A8F7D8 /* AddPresetViewController.swift */,
+				7F6E6509267F058000096EED /* EditPresetViewController.swift */,
 				7FEF76CA265F0F9E007E6043 /* Assets.xcassets */,
 				7FEF76CC265F0F9E007E6043 /* LaunchScreen.storyboard */,
 				7FEF76CF265F0F9E007E6043 /* Info.plist */,
@@ -156,6 +159,7 @@
 			files = (
 				7F4F8548266C8F4A00D2CB2A /* resizedImagesController.swift in Sources */,
 				7FEF76C9265F0F9D007E6043 /* imageResizer.xcdatamodeld in Sources */,
+				7F6E650A267F058000096EED /* EditPresetViewController.swift in Sources */,
 				7FEF76C3265F0F9D007E6043 /* ViewController.swift in Sources */,
 				7F95C9F22666BC7500A8F7D8 /* AddPresetViewController.swift in Sources */,
 				7FEF76BF265F0F9D007E6043 /* AppDelegate.swift in Sources */,
