@@ -14,8 +14,8 @@ class StandardButton: UIButton {
             self.layer.masksToBounds = true
             self.layer.cornerCurve = .continuous
             self.layer.cornerRadius = 5.0
-        self.layer.backgroundColor = UIColor(named: "AccentColor")?.cgColor
-        self.titleLabel?.textColor = UIColor.white
+            self.layer.backgroundColor = UIColor(named: "AccentColor")?.cgColor
+            self.setTitleColor(.white, for: .normal)
         #endif
     }
 }
@@ -147,14 +147,14 @@ class ViewController: UIViewController, PHPickerViewControllerDelegate, UITableV
             self.navigationController?.modalPresentationStyle = .popover
                  
             vc.modalPresentationStyle = UIModalPresentationStyle.popover
-            vc.preferredContentSize = CGSize(width: 400, height: 400)
+            vc.preferredContentSize = CGSize(width: 400, height: 450)
                
             present(vc, animated: true, completion: nil)
                
             let popoverPresentationController = vc.popoverPresentationController
             popoverPresentationController?.sourceView = addPresetButton
             popoverPresentationController?.permittedArrowDirections = UIPopoverArrowDirection.up
-            popoverPresentationController?.sourceRect = CGRect(x: 30, y: 0, width: 0, height: 25)
+            popoverPresentationController?.sourceRect = CGRect(x: 30, y: 0, width: 0, height: 5)
         }
         
     }

@@ -33,7 +33,7 @@ class EditPresetViewController: UIViewController {
     
     override func viewWillLayoutSubviews() {
        let width = self.view.frame.width
-       let navigationBar: UINavigationBar = UINavigationBar(frame: CGRect(x: 0, y: 0, width: width, height: 60))
+       let navigationBar: UINavigationBar = UINavigationBar(frame: CGRect(x: 0, y: 4, width: width, height: 60))
        self.view.addSubview(navigationBar);
        let navigationItem = UINavigationItem(title: "Edit Preset")
 
