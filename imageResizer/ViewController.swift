@@ -26,6 +26,8 @@ class ViewController: UIViewController, PHPickerViewControllerDelegate, UITableV
     var presets = [String]()
     var selectedPresets = [String]()
     var newImage = UIImage()
+    var imageArray = [UIImage]()
+    var dimensionArray = [String]()
     
     @IBOutlet var noPresetsLabel: UILabel!
 
@@ -133,13 +135,13 @@ class ViewController: UIViewController, PHPickerViewControllerDelegate, UITableV
     
     
     @IBAction func resizeButtonTapped(_ sender: Any) {
-        for dimension in selectedPresets {
-            if aspectRatioLocked.isOn {
-                resizeImageWithAspectRatio(dimension: dimension)
-            } else {
-                resizeImage(dimension: dimension)
-            }
+    
+        if aspectRatioLocked.isOn {
+            resizeImageWithAspectRatio()
+        } else {
+            resizeImage()
         }
+        
     }
     
     @IBAction func addPresetButton(_ sender: Any) {
@@ -201,53 +203,57 @@ class ViewController: UIViewController, PHPickerViewControllerDelegate, UITableV
     
     //Image Resizing Code
         
-    func resizeImage(dimension: String) {
-        
-        let HeightWidthArr = dimension.components(separatedBy: " x ")
-        
-        let heightnum = Double(HeightWidthArr[0])! / 2
-        let widthnum = Double(HeightWidthArr[1])! / 2
-
-        if let image = imageView.image {
-            UIGraphicsBeginImageContextWithOptions(CGSize(width: widthnum, height: heightnum), false, 0.0)
-            image.draw(in: CGRect(x: 0, y: 0, width: widthnum, height: heightnum))
-            newImage = UIGraphicsGetImageFromCurrentImageContext()!
-            UIGraphicsEndImageContext()
+    func resizeImage() {
+        for dimension in selectedPresets {
+            let HeightWidthArr = dimension.components(separatedBy: " x ")
             
-            if let vc = storyboard?.instantiateViewController(withIdentifier: "Detail") as? resizedImagesController {
-                vc.dimension = dimension
-                vc.cellImage = newImage
-                present(vc, animated: true, completion: nil)
+            let heightnum = Double(HeightWidthArr[0])! / 2
+            let widthnum = Double(HeightWidthArr[1])! / 2
+
+            if let image = imageView.image {
+                UIGraphicsBeginImageContextWithOptions(CGSize(width: widthnum, height: heightnum), false, 0.0)
+                image.draw(in: CGRect(x: 0, y: 0, width: widthnum, height: heightnum))
+                newImage = UIGraphicsGetImageFromCurrentImageContext()!
+                UIGraphicsEndImageContext()
+                let cell = Images(dimensions: dimension, image: newImage)
+                imageDetails.append(cell)
+                
             }
+        }
+        if let vc = storyboard?.instantiateViewController(withIdentifier: "Detail") as? resizedImagesController {
+            vc.imageDetails = imageDetails
+            present(vc, animated: true, completion: nil)
         }
     }
     
-    func resizeImageWithAspectRatio(dimension: String) {
-       
-        let HeightWidthArr = dimension.components(separatedBy: " x ")
-        
-        let heightnum = Double(HeightWidthArr[0])!
-        let widthnum = Double(HeightWidthArr[1])!
-        let image = imageView.image
-        let widthRatio  = widthnum  / Double(image!.size.width)
-        let heightRatio = heightnum / Double(image!.size.height)
+    func resizeImageWithAspectRatio() {
+        for dimension in selectedPresets {
+            let HeightWidthArr = dimension.components(separatedBy: " x ")
+            
+            let heightnum = Double(HeightWidthArr[0])!
+            let widthnum = Double(HeightWidthArr[1])!
+            let image = imageView.image
+            let widthRatio  = widthnum  / Double(image!.size.width)
+            let heightRatio = heightnum / Double(image!.size.height)
 
-        var newSize: CGSize
-        
-        if(widthRatio > heightRatio) {
-            newSize = CGSize(width: Double(image!.size.width) * heightRatio, height: Double(Int(image!.size.height)) * heightRatio)
-        } else {
-            newSize = CGSize(width: Double(image!.size.width) * widthRatio, height: Double(image!.size.height) * widthRatio)
+            var newSize: CGSize
+            
+            if(widthRatio > heightRatio) {
+                newSize = CGSize(width: Double(image!.size.width) * heightRatio, height: Double(Int(image!.size.height)) * heightRatio)
+            } else {
+                newSize = CGSize(width: Double(image!.size.width) * widthRatio, height: Double(image!.size.height) * widthRatio)
+            }
+
+            UIGraphicsBeginImageContextWithOptions(newSize, false, 1.0)
+            image!.draw(in: CGRect(origin: .zero, size: newSize))
+            let newImage = UIGraphicsGetImageFromCurrentImageContext()!
+            UIGraphicsEndImageContext()
+            let cell = Images(dimensions: dimension, image: newImage)
+            imageDetails.append(cell)
         }
-
-        UIGraphicsBeginImageContextWithOptions(newSize, false, 1.0)
-        image!.draw(in: CGRect(origin: .zero, size: newSize))
-        let newImage = UIGraphicsGetImageFromCurrentImageContext()
-        UIGraphicsEndImageContext()
         
         if let vc = storyboard?.instantiateViewController(withIdentifier: "Detail") as? resizedImagesController {
-            vc.dimension = dimension
-            vc.cellImage = newImage
+            vc.imageDetails = imageDetails
             present(vc, animated: true, completion: nil)
         }
     }

@@ -12,6 +12,8 @@ class resizedImagesController: UICollectionViewController {
     var imageDetails = [Images]()
     var cellImage: UIImage!
     var dimension: String = ""
+    var imageArray = [UIImage]()
+    var dimensionArray = [String]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -20,9 +22,18 @@ class resizedImagesController: UICollectionViewController {
         
         // Do any additional setup after loading the view.
 
-        let cell = Images(dimensions: dimension, image: cellImage)
-        imageDetails.append(cell)
+
         collectionView.reloadData()
+    }
+    
+    override func viewWillLayoutSubviews() {
+        let width = self.view.frame.width
+        let navigationBar: UINavigationBar = UINavigationBar(frame: CGRect(x: 0, y: 4, width: width, height: 60))
+        self.view.addSubview(navigationBar);
+        let navigationItem = UINavigationItem(title: "Resized Images")
+        let doneButton = UIBarButtonItem(barButtonSystemItem: UIBarButtonItem.SystemItem.done, target: nil, action: #selector(doneButtonTapped(_:)))
+        navigationItem.rightBarButtonItem = doneButton
+        navigationBar.setItems([navigationItem], animated: false)
     }
     
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -44,7 +55,7 @@ class resizedImagesController: UICollectionViewController {
     }
     
     
-    @IBAction func doneButtonTapped(_ sender: Any) {
+    @objc func doneButtonTapped(_ sender: Any) {
         dismiss(animated: true, completion: nil)
     }
     
