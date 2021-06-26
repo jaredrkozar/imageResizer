@@ -12,28 +12,21 @@ class resizedImagesController: UICollectionViewController {
     var imageDetails = [Images]()
     var cellImage: UIImage!
     var dimension: String = ""
-    var imageArray = [UIImage]()
-    var dimensionArray = [String]()
+    var selectedImages = [UIImage]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         title = "Resized Images"
         
-        // Do any additional setup after loading the view.
-
-
+        let image = UIImage(systemName: "square.and.arrow.up")
+        navigationItem.leftBarButtonItem = UIBarButtonItem(image: image, style: .done, target: nil, action: #selector(shareButtonTapped))
+        
+        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Done", style: .done, target: self, action: #selector(doneButtonTapped))
+        
         collectionView.reloadData()
-    }
-    
-    override func viewWillLayoutSubviews() {
-        let width = self.view.frame.width
-        let navigationBar: UINavigationBar = UINavigationBar(frame: CGRect(x: 0, y: 4, width: width, height: 60))
-        self.view.addSubview(navigationBar);
-        let navigationItem = UINavigationItem(title: "Resized Images")
-        let doneButton = UIBarButtonItem(barButtonSystemItem: UIBarButtonItem.SystemItem.done, target: nil, action: #selector(doneButtonTapped(_:)))
-        navigationItem.rightBarButtonItem = doneButton
-        navigationBar.setItems([navigationItem], animated: false)
+        collectionView.allowsMultipleSelection = true
+
     }
     
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -54,18 +47,36 @@ class resizedImagesController: UICollectionViewController {
         return cell
     }
     
-    
-    @objc func doneButtonTapped(_ sender: Any) {
-        dismiss(animated: true, completion: nil)
+    override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let getImage = imageDetails[indexPath.item]
+        selectedImages.append(getImage.image)
+
+        if let cell = collectionView.cellForItem(at: indexPath) {
+            cell.layer.borderWidth = 3.0
+            cell.layer.borderColor = UIColor(named: "AccentColor")?.cgColor
+            cell.layer.backgroundColor = UIColor(named: "bgColor")?.cgColor
+            cell.layer.cornerRadius = 5.0
+        }
+        
     }
     
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+    override func collectionView(_ collectionView: UICollectionView, didDeselectItemAt indexPath: IndexPath) {
+        if let cell = collectionView.cellForItem(at: indexPath) {
+            cell.layer.backgroundColor = UIColor.systemBackground.cgColor
+            cell.layer.borderWidth = 0.0
+        }
     }
-    //
-
+    
+    @objc func shareButtonTapped(_ sender: UIBarButtonItem) {
+        
+        let items = [imageDetails]
+        let vc = UIActivityViewController(activityItems: items, applicationActivities: [])
+        vc.popoverPresentationController?.barButtonItem = navigationItem.leftBarButtonItem
+        present(vc, animated: true)
+    }
+    
+    @objc func doneButtonTapped(_ sender: UIBarButtonItem) {
+       dismiss(animated: true, completion: nil)
+    }
+    
 }

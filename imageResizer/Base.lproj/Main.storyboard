@@ -3,7 +3,6 @@
     <device id="ipad9_7" orientation="landscape" layout="fullscreen" appearance="light"/>
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="18093"/>
-        <capability name="Image references" minToolsVersion="12.0"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
@@ -117,12 +116,6 @@
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="sXk-se-eJo">
-                        <barButtonItem key="leftBarButtonItem" id="OBZ-7I-d0H">
-                            <imageReference key="image" image="square.and.arrow.up" catalog="system" symbolScale="large"/>
-                            <connections>
-                                <action selector="shareButtonTapped:" destination="BYZ-38-t0r" id="4E6-4M-sY4"/>
-                            </connections>
-                        </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" title="Import Photo" id="cGJ-0b-qEU">
                             <connections>
                                 <action selector="importButtonTapped:" destination="BYZ-38-t0r" id="x87-SP-ztV"/>
@@ -335,7 +328,7 @@
         <!--Resized Image-->
         <scene sceneID="tL7-xT-HxX">
             <objects>
-                <collectionViewController storyboardIdentifier="Detail" id="ThJ-0r-BAj" customClass="resizedImagesController" customModule="imageResizer" customModuleProvider="target" sceneMemberID="viewController">
+                <collectionViewController storyboardIdentifier="Detail" title="Resized Image" id="ThJ-0r-BAj" customClass="resizedImagesController" customModule="imageResizer" customModuleProvider="target" sceneMemberID="viewController">
                     <collectionView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" id="j7H-2t-yYC">
                         <rect key="frame" x="0.0" y="0.0" width="1024" height="768"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -378,29 +371,10 @@
                             <outlet property="delegate" destination="ThJ-0r-BAj" id="iOM-sn-RaH"/>
                         </connections>
                     </collectionView>
-                    <navigationItem key="navigationItem" title="Resized Image" id="FEs-Rj-ZDr"/>
                 </collectionViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="QwY-Ch-6cE" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2229" y="884"/>
-        </scene>
-        <!--Navigation Controller-->
-        <scene sceneID="gu5-In-dS6">
-            <objects>
-                <navigationController storyboardIdentifier="resizedImageNavBar" automaticallyAdjustsScrollViewInsets="NO" id="epm-Dl-tyF" sceneMemberID="viewController">
-                    <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="v5v-hV-mlL">
-                        <rect key="frame" x="0.0" y="0.0" width="1024" height="50"/>
-                        <autoresizingMask key="autoresizingMask"/>
-                    </navigationBar>
-                    <nil name="viewControllers"/>
-                    <connections>
-                        <segue destination="ThJ-0r-BAj" kind="relationship" relationship="rootViewController" id="WXV-h0-cgt"/>
-                    </connections>
-                </navigationController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="7Bf-2H-kph" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="1491" y="884"/>
+            <point key="canvasLocation" x="2282.8125" y="843.75"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="HXx-kT-EBX">
@@ -420,30 +394,11 @@
             </objects>
             <point key="canvasLocation" x="1491" y="76"/>
         </scene>
-        <!--Navigation Controller-->
-        <scene sceneID="xHd-ju-GqC">
-            <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="d3U-BM-Y0C" sceneMemberID="viewController">
-                    <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="ezD-6T-fNq">
-                        <rect key="frame" x="0.0" y="0.0" width="1024" height="50"/>
-                        <autoresizingMask key="autoresizingMask"/>
-                    </navigationBar>
-                    <nil name="viewControllers"/>
-                    <connections>
-                        <segue destination="g4C-SS-IwC" kind="relationship" relationship="rootViewController" id="DDC-YD-M1d"/>
-                    </connections>
-                </navigationController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="0kw-9L-gfM" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="75" y="843.75"/>
-        </scene>
     </scenes>
     <resources>
         <image name="photo" catalog="system" width="128" height="93"/>
-        <image name="square.and.arrow.up" catalog="system" width="115" height="128"/>
         <namedColor name="AccentColor">
-            <color red="0.0" green="0.4779999852180481" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.0" green="0.47843140363693237" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>

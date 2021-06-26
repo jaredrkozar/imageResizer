@@ -220,10 +220,12 @@ class ViewController: UIViewController, PHPickerViewControllerDelegate, UITableV
                 
             }
         }
-        if let vc = storyboard?.instantiateViewController(withIdentifier: "Detail") as? resizedImagesController {
-            vc.imageDetails = imageDetails
-            present(vc, animated: true, completion: nil)
-        }
+        let storyboard : UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
+        let vc : resizedImagesController = storyboard.instantiateViewController(withIdentifier: "Detail") as! resizedImagesController
+        vc.imageDetails = imageDetails
+        let navigationController = UINavigationController(rootViewController: vc)
+
+        self.present(navigationController, animated: true, completion: nil)
     }
     
     func resizeImageWithAspectRatio() {
@@ -252,10 +254,13 @@ class ViewController: UIViewController, PHPickerViewControllerDelegate, UITableV
             imageDetails.append(cell)
         }
         
-        if let vc = storyboard?.instantiateViewController(withIdentifier: "Detail") as? resizedImagesController {
-            vc.imageDetails = imageDetails
-            present(vc, animated: true, completion: nil)
-        }
+        
+        let storyboard : UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
+        let vc : resizedImagesController = storyboard.instantiateViewController(withIdentifier: "Detail") as! resizedImagesController
+        vc.imageDetails = imageDetails
+        let navigationController = UINavigationController(rootViewController: vc)
+
+        self.present(navigationController, animated: true, completion: nil)
     }
     
     //Context Menu code
