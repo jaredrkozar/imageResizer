@@ -21,18 +21,11 @@ class AddPresetViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
-        self.preferredContentSize = CGSize(width: 400, height: 250)
+        self.preferredContentSize = CGSize(width: 400, height: 200)
         self.savePresetButton.isEnabled = false
         savePresetButton.alpha = 0.5;
-    }
-    
-    override func viewWillLayoutSubviews() {
-       let width = self.view.frame.width
-       let navigationBar: UINavigationBar = UINavigationBar(frame: CGRect(x: 0, y: 4, width: width, height: 60))
-       self.view.addSubview(navigationBar);
-       let navigationItem = UINavigationItem(title: "Add Preset")
-
-       navigationBar.setItems([navigationItem], animated: false)
+        
+        title = "Add Preset"
     }
     
     @IBAction func checkText(_ sender: Any) {

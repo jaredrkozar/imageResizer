@@ -145,20 +145,18 @@ class ViewController: UIViewController, PHPickerViewControllerDelegate, UITableV
     }
     
     @IBAction func addPresetButton(_ sender: Any) {
-        if let vc = storyboard?.instantiateViewController(withIdentifier: "addPreset") as? AddPresetViewController {
-            self.navigationController?.modalPresentationStyle = .popover
-                 
-            vc.modalPresentationStyle = UIModalPresentationStyle.popover
-            vc.preferredContentSize = CGSize(width: 400, height: 450)
-               
-            present(vc, animated: true, completion: nil)
-               
-            let popoverPresentationController = vc.popoverPresentationController
-            popoverPresentationController?.sourceView = addPresetButton
-            popoverPresentationController?.permittedArrowDirections = UIPopoverArrowDirection.up
-            popoverPresentationController?.sourceRect = CGRect(x: 30, y: 0, width: 0, height: 5)
-        }
+        let vc : AddPresetViewController = storyboard!.instantiateViewController(withIdentifier: "addPreset") as! AddPresetViewController
+        let navigationController = UINavigationController(rootViewController: vc)
+            
+        navigationController.modalPresentationStyle = UIModalPresentationStyle.popover
+        navigationController.preferredContentSize = CGSize(width: 400, height: 200)
+           
+        self.present(navigationController, animated: true, completion: nil)
         
+        let popoverPresentationController = vc.popoverPresentationController
+       popoverPresentationController?.sourceView = addPresetButton
+       popoverPresentationController?.permittedArrowDirections = UIPopoverArrowDirection.up
+       popoverPresentationController?.sourceRect = CGRect(x: 30, y: 20, width: 0, height: 5)
     }
     
   
@@ -272,25 +270,28 @@ class ViewController: UIViewController, PHPickerViewControllerDelegate, UITableV
         UserDefaults.standard.set(row, forKey: "row")
         return UIContextMenuConfiguration(identifier: nil, previewProvider: nil) { _ in
             let editAction = UIAction(
-              title: "Edit",
-                image: UIImage(systemName: "pencil")) { [self] _ in
+              title: "Edit", image: UIImage(systemName: "pencil")) { [self] _ in
+                
                 let HeightWidthArr = preset.components(separatedBy: " x ")
                 let height = Double(HeightWidthArr[0])!
                 let width = Double(HeightWidthArr[1])!
-                if let vc = self.storyboard?.instantiateViewController(withIdentifier: "editPreset") as? EditPresetViewController {
-                    self.navigationController?.modalPresentationStyle = .popover
-                    
-                    vc.modalPresentationStyle = UIModalPresentationStyle.popover
-                    vc.preferredContentSize = CGSize(width: 400, height: 600)
-                    vc.height = String(Int(height))
-                    vc.width = String(Int(width))
-                    self.present(vc, animated: true, completion: nil)
-                       
-                    let popoverPresentationController = vc.popoverPresentationController
-                    popoverPresentationController?.sourceView = self.presetCellsView
                 
-                    popoverPresentationController?.sourceRect = CGRect(x: 0, y: 0, width: 0, height: 0)
-                }
+                let vc : EditPresetViewController = storyboard!.instantiateViewController(withIdentifier: "editPreset") as! EditPresetViewController
+                let navigationController = UINavigationController(rootViewController: vc)
+                    
+                navigationController.modalPresentationStyle = UIModalPresentationStyle.popover
+                navigationController.preferredContentSize = CGSize(width: 400, height: 200)
+                vc.height = String(Int(height))
+                vc.width = String(Int(width))
+                   
+                self.present(navigationController, animated: true, completion: nil)
+                       
+                let popoverPresentationController = vc.popoverPresentationController
+                
+                popoverPresentationController?.sourceView = self.presetCellsView
+
+                popoverPresentationController?.sourceRect = CGRect(x: 0, y: 0, width: 0, height: 0)
+                
             }
             
             let deleteAction = UIAction(
