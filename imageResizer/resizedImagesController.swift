@@ -69,8 +69,8 @@ class resizedImagesController: UICollectionViewController, UIPopoverPresentation
     
     override func collectionView(_ collectionView: UICollectionView, didDeselectItemAt indexPath: IndexPath) {
         
-        let imagetoAdd = imageDetails[indexPath.item]
-        let imageRemove = selectedImages.firstIndex(of: imagetoAdd.image)!
+        let imagetoRemove = imageDetails[indexPath.item]
+        let imageRemove = selectedImages.firstIndex(of: imagetoRemove.image)!
         selectedImages.remove(at: imageRemove)
         
         checkImages()
