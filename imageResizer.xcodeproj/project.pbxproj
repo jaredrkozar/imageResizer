@@ -70,6 +70,7 @@
 			isa = PBXGroup;
 			children = (
 				7FEF76BD265F0F9D007E6043 /* imageResizer */,
+				7FE2B10F2688E74F00F4E3C6 /* Images */,
 				7FEF76BC265F0F9D007E6043 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -85,7 +86,6 @@
 		7FEF76BD265F0F9D007E6043 /* imageResizer */ = {
 			isa = PBXGroup;
 			children = (
-				7FE2B10F2688E74F00F4E3C6 /* Images */,
 				7FEF76D82661A7B2007E6043 /* imageResizer.entitlements */,
 				7FEF76BE265F0F9D007E6043 /* AppDelegate.swift */,
 				7FEF76C0265F0F9D007E6043 /* SceneDelegate.swift */,
