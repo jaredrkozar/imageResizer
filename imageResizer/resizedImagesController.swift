@@ -12,7 +12,7 @@ class resizedImagesController: UICollectionViewController {
     var imageDetails = [Images]()
     var cellImage: UIImage!
     var dimension: String = ""
-    var selectedImages: UIImage!
+    var selectedImages = [UIImage]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -24,6 +24,7 @@ class resizedImagesController: UICollectionViewController {
         let image = UIImage(systemName: "square.and.arrow.up")
         navigationItem.leftBarButtonItem = UIBarButtonItem(image: image, style: .done, target: self, action: #selector(shareButtonTapped))
         
+        checkImages()
         collectionView.reloadData()
         collectionView.allowsMultipleSelection = true
     }
@@ -48,8 +49,9 @@ class resizedImagesController: UICollectionViewController {
     
     override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let getImage = imageDetails[indexPath.item]
-        selectedImages = getImage.image
-
+        selectedImages.append(getImage.image)
+        checkImages()
+        
         if let cell = collectionView.cellForItem(at: indexPath) {
             cell.layer.borderWidth = 3.0
             cell.layer.borderColor = UIColor(named: "AccentColor")?.cgColor
@@ -60,6 +62,9 @@ class resizedImagesController: UICollectionViewController {
     }
     
     override func collectionView(_ collectionView: UICollectionView, didDeselectItemAt indexPath: IndexPath) {
+        selectedImages.remove(at: indexPath.item)
+        checkImages()
+        
         if let cell = collectionView.cellForItem(at: indexPath) {
             cell.layer.backgroundColor = UIColor.systemBackground.cgColor
             cell.layer.borderWidth = 0.0
@@ -68,12 +73,20 @@ class resizedImagesController: UICollectionViewController {
     
     @objc func shareButtonTapped(_ sender: UIBarButtonItem) {
           
-        let vc = UIActivityViewController(activityItems: [selectedImages], applicationActivities: [])
+        let vc = UIActivityViewController(activityItems: selectedImages, applicationActivities: [])
         vc.popoverPresentationController?.barButtonItem = navigationItem.leftBarButtonItem
         present(vc, animated: true)
       }
     
     @objc func doneButtonTapped(_ sender: UIBarButtonItem) {
        dismiss(animated: true, completion: nil)
+    }
+    
+    func checkImages() {
+        if selectedImages.count == 0 {
+            navigationItem.leftBarButtonItem?.isEnabled = false
+        } else {
+            navigationItem.leftBarButtonItem?.isEnabled = true
+        }
     }
 }
