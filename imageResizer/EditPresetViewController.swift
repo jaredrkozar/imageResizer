@@ -23,7 +23,7 @@ class EditPresetViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
-        self.preferredContentSize = CGSize(width: 400, height: 200)
+
         self.savePresetButton.isEnabled = false
         savePresetButton.alpha = 0.5;
         editedWidthField.text = width

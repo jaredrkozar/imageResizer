@@ -84,7 +84,7 @@ class ViewController: UIViewController, PHPickerViewControllerDelegate, UITableV
     
     func noPresets() {
         if presets.count == 0 {
-            noPresetsLabel.text = "No presets available. Add a preset thing the 'Add Preset' button above and you'll see them here."
+            noPresetsLabel.text = "No presets available. Add a preset using the 'Add Preset' button above and you'll see them here."
         } else {
             noPresetsLabel.text = ""
         }
@@ -114,7 +114,11 @@ class ViewController: UIViewController, PHPickerViewControllerDelegate, UITableV
     
     func tableView(_ tableView: UITableView, didDeselectRowAt indexPath: IndexPath) {
         tableView.cellForRow(at: indexPath as IndexPath)?.accessoryType = .none
-        selectedPresets.remove(at: indexPath.row)
+        if selectedPresets.count == 1 {
+            return
+        } else {
+            selectedPresets.remove(at: indexPath.row)
+        }
     }
     
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
@@ -158,7 +162,6 @@ class ViewController: UIViewController, PHPickerViewControllerDelegate, UITableV
        popoverPresentationController?.permittedArrowDirections = UIPopoverArrowDirection.up
        popoverPresentationController?.sourceRect = CGRect(x: 30, y: 20, width: 0, height: 5)
     }
-    
   
     @IBAction func shareButtonTapped(_ sender: UIBarButtonItem) {
         
@@ -312,5 +315,4 @@ class ViewController: UIViewController, PHPickerViewControllerDelegate, UITableV
         presets[row] = editedDimensions!
         self.presetCellsView.reloadData()
     }
-    
 }
