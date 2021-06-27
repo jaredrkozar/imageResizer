@@ -72,11 +72,9 @@ class ViewController: UIViewController, PHPickerViewControllerDelegate, UITableV
     //Table code
     
     @objc func addtoTable(_ notification: Notification) {
-        let heightnum = UserDefaults.standard.integer(forKey: "height")
-        let widthnum = UserDefaults.standard.integer(forKey: "width")
-        let dimensions = String("\(heightnum) x \(widthnum)")
-        
-        presets.append(dimensions)
+        let dimension = UserDefaults.standard.string(forKey: "dimension")
+        print(dimension!)
+        presets.append(dimension!)
         let indexPath = IndexPath(row: (self.presets.count - 1), section: 0)
         presetCellsView.insertRows(at: [indexPath], with: .automatic)
         noPresets()
