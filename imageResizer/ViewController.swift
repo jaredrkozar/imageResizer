@@ -63,10 +63,12 @@ class ViewController: UIViewController, PHPickerViewControllerDelegate, UITableV
         
         NotificationCenter.default.addObserver(self, selector: #selector(editedPreset(_:)), name: NSNotification.Name( "editedPreset"), object: nil)
         
+        NotificationCenter.default.addObserver(self, selector: #selector(emptyImagesArray(_:)), name: NSNotification.Name( "emptyImagesArray"), object: nil)
+        
         presetCellsView.delegate = self
         presetCellsView.dataSource = self
     }
-    
+
     //Table code
     
     @objc func addtoTable(_ notification: Notification) {
@@ -221,6 +223,7 @@ class ViewController: UIViewController, PHPickerViewControllerDelegate, UITableV
                 
             }
         }
+        
         let storyboard : UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
         let vc : resizedImagesController = storyboard.instantiateViewController(withIdentifier: "Detail") as! resizedImagesController
         vc.imageDetails = imageDetails
@@ -314,5 +317,14 @@ class ViewController: UIViewController, PHPickerViewControllerDelegate, UITableV
         let editedDimensions = UserDefaults.standard.string(forKey: "editedDimension")
         presets[row] = editedDimensions!
         self.presetCellsView.reloadData()
+    }
+    
+    @objc func emptyImagesArray(_ notification: Notification) {
+        imageDetails.removeAll()
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        imageDetails.removeAll()
+
     }
 }

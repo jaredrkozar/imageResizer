@@ -7,7 +7,7 @@
 
 import UIKit
 
-class resizedImagesController: UICollectionViewController {
+class resizedImagesController: UICollectionViewController, UIPopoverPresentationControllerDelegate {
 
     var imageDetails = [Images]()
     var cellImage: UIImage!
@@ -27,8 +27,13 @@ class resizedImagesController: UICollectionViewController {
         checkImages()
         collectionView.reloadData()
         collectionView.allowsMultipleSelection = true
+        presentationController?.delegate = self
     }
     
+    func presentationControllerWillDismiss(_ presentationController: UIPresentationController) {
+        NotificationCenter.default.post(name: Notification.Name( "emptyImagesArray"), object: nil)
+        dismiss(animated: true, completion: nil)
+    }
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return imageDetails.count
     }
@@ -48,8 +53,9 @@ class resizedImagesController: UICollectionViewController {
     }
     
     override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let getImage = imageDetails[indexPath.item]
-        selectedImages.append(getImage.image)
+        
+        let imagetoAdd = imageDetails[indexPath.item]
+        selectedImages.append(imagetoAdd.image)
         checkImages()
         
         if let cell = collectionView.cellForItem(at: indexPath) {
@@ -62,11 +68,15 @@ class resizedImagesController: UICollectionViewController {
     }
     
     override func collectionView(_ collectionView: UICollectionView, didDeselectItemAt indexPath: IndexPath) {
-        selectedImages.remove(at: indexPath.item)
+        
+        let imagetoAdd = imageDetails[indexPath.item]
+        let imageRemove = selectedImages.firstIndex(of: imagetoAdd.image)!
+        selectedImages.remove(at: imageRemove)
+        
         checkImages()
         
         if let cell = collectionView.cellForItem(at: indexPath) {
-            cell.layer.backgroundColor = UIColor.systemBackground.cgColor
+            cell.layer.backgroundColor = UIColor.secondarySystemGroupedBackground.cgColor
             cell.layer.borderWidth = 0.0
         }
     }
@@ -79,7 +89,8 @@ class resizedImagesController: UICollectionViewController {
       }
     
     @objc func doneButtonTapped(_ sender: UIBarButtonItem) {
-       dismiss(animated: true, completion: nil)
+        NotificationCenter.default.post(name: Notification.Name( "emptyImagesArray"), object: nil)
+        dismiss(animated: true, completion: nil)
     }
     
     func checkImages() {

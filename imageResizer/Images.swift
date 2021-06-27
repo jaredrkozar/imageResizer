@@ -9,7 +9,7 @@ import UIKit
 
 class Images: NSObject {
 
-    var dimensions: String = "LL"
+    var dimensions: String = ""
     var image: UIImage
     
     init(dimensions: String, image: UIImage) {
