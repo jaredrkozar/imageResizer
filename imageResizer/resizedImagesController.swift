@@ -7,7 +7,7 @@
 
 import UIKit
 
-class resizedImagesController: UICollectionViewController, UIPopoverPresentationControllerDelegate {
+class resizedImagesController: UICollectionViewController, UIAdaptivePresentationControllerDelegate {
 
     var imageDetails = [Images]()
     var cellImage: UIImage!
@@ -27,7 +27,8 @@ class resizedImagesController: UICollectionViewController, UIPopoverPresentation
         checkImages()
         collectionView.reloadData()
         collectionView.allowsMultipleSelection = true
-        presentationController?.delegate = self
+        
+        self.navigationController?.presentationController?.delegate = self
     }
     
     func presentationControllerWillDismiss(_ presentationController: UIPresentationController) {
@@ -99,5 +100,9 @@ class resizedImagesController: UICollectionViewController, UIPopoverPresentation
         } else {
             navigationItem.leftBarButtonItem?.isEnabled = true
         }
+    }
+    
+    func presentationControllerDidDismiss(_ presentationController: UIPresentationController) {
+        imageDetails.removeAll()
     }
 }

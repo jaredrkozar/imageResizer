@@ -20,7 +20,7 @@ class StandardButton: UIButton {
     }
 }
 
-class ViewController: UIViewController, PHPickerViewControllerDelegate, UITableViewDataSource, UITableViewDelegate, UIPopoverPresentationControllerDelegate {
+class ViewController: UIViewController, PHPickerViewControllerDelegate, UITableViewDataSource, UITableViewDelegate, UIAdaptivePresentationControllerDelegate {
     
     var imageDetails = [Images]()
     var presets = [String]()
@@ -228,7 +228,7 @@ class ViewController: UIViewController, PHPickerViewControllerDelegate, UITableV
         let vc : resizedImagesController = storyboard.instantiateViewController(withIdentifier: "Detail") as! resizedImagesController
         vc.imageDetails = imageDetails
         let navigationController = UINavigationController(rootViewController: vc)
-
+        
         self.present(navigationController, animated: true, completion: nil)
     }
     
@@ -263,7 +263,6 @@ class ViewController: UIViewController, PHPickerViewControllerDelegate, UITableV
         let vc : resizedImagesController = storyboard.instantiateViewController(withIdentifier: "Detail") as! resizedImagesController
         vc.imageDetails = imageDetails
         let navigationController = UINavigationController(rootViewController: vc)
-
         self.present(navigationController, animated: true, completion: nil)
     }
     
@@ -321,10 +320,5 @@ class ViewController: UIViewController, PHPickerViewControllerDelegate, UITableV
     
     @objc func emptyImagesArray(_ notification: Notification) {
         imageDetails.removeAll()
-    }
-    
-    override func viewDidAppear(_ animated: Bool) {
-        imageDetails.removeAll()
-
     }
 }
