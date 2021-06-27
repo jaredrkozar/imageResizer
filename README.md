@@ -1,6 +1,10 @@
 # imageResizer
 
-With imageResizer, you can resize any image with the click of a button! It's perfect for creating app icons of multiple sizes.
+<img src = "Images/ipad-dark-landscape.png" width="300" height="220"> <img src = "Images/ipad-light-portrait.png" width="300" height="400"> 
+
+<img src = "Images/mac-light.png" width="500" height="400">
+
+With imageResizer, you can resize any image with the click of a button! It's available on the iPad and Mac, and is perfect for creating app icons of multiple sizes.
 
 
 #Features
