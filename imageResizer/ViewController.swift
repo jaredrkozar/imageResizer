@@ -57,7 +57,7 @@ class ViewController: UIViewController, PHPickerViewControllerDelegate, UITableV
     
         self.presetCellsView.allowsMultipleSelection = true
         
-        NotificationCenter.default.addObserver(self, selector: #selector(isImageSelected(_:)), name: NSNotification.Name( "widthHeightEntered"), object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(isImageSelected(_:)), name: NSNotification.Name( "isImageSelected"), object: nil)
         
         NotificationCenter.default.addObserver(self, selector: #selector(addtoTable(_:)), name: NSNotification.Name( "addWidthHeighttoTable"), object: nil)
         
@@ -109,16 +109,19 @@ class ViewController: UIViewController, PHPickerViewControllerDelegate, UITableV
         tableView.cellForRow(at: indexPath as IndexPath)?.accessoryType = .checkmark
         self.selectedPresets.append(presets[indexPath.row])
     
-        NotificationCenter.default.post(name: Notification.Name( "widthHeightEntered"), object: nil)
+        NotificationCenter.default.post(name: Notification.Name( "isImageSelected"), object: nil)
     }
     
     func tableView(_ tableView: UITableView, didDeselectRowAt indexPath: IndexPath) {
+        
         tableView.cellForRow(at: indexPath as IndexPath)?.accessoryType = .none
-        if selectedPresets.count == 1 {
-            return
-        } else {
-            selectedPresets.remove(at: indexPath.row)
-        }
+
+        let selectedpresettoRemove = selectedPresets[indexPath.item]
+        let selectedPreset = selectedPresets.firstIndex(of: selectedpresettoRemove)!
+        selectedPresets.remove(at: selectedPreset)
+        
+        NotificationCenter.default.post(name: Notification.Name( "isImageSelected"), object: nil)
+
     }
     
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
@@ -186,7 +189,7 @@ class ViewController: UIViewController, PHPickerViewControllerDelegate, UITableV
                 DispatchQueue.main.async {
                     guard let self = self, let image = image as? UIImage, self.imageView.image == previousImage else { return }
                     self.imageView.image = image
-                    NotificationCenter.default.post(name: Notification.Name( "widthHeightEntered"), object: nil)
+                    NotificationCenter.default.post(name: Notification.Name( "isImageSelected"), object: nil)
                 }
             }
         }
@@ -198,7 +201,9 @@ class ViewController: UIViewController, PHPickerViewControllerDelegate, UITableV
         if imageView.image != UIImage(systemName: "photo") && selectedPresets.count  >= 1 {
             resizeImageButton.isEnabled = true;
             resizeImageButton.alpha = 1.0;
-            
+        } else {
+            resizeImageButton.isEnabled = false;
+            resizeImageButton.alpha = 0.5;
         }
     }
     
@@ -301,7 +306,7 @@ class ViewController: UIViewController, PHPickerViewControllerDelegate, UITableV
               image: UIImage(systemName: "trash"),
               attributes: .destructive) { _ in
                 self.presets.remove(at: indexPath.row)
-                tableView.reloadData()
+                self.presetCellsView.reloadData()
                 self.noPresets()
             }
             return UIMenu(title: "", children: [editAction, deleteAction])
@@ -311,7 +316,12 @@ class ViewController: UIViewController, PHPickerViewControllerDelegate, UITableV
     @objc func editedPreset(_ tableView: UITableView) {
         let row = UserDefaults.standard.integer(forKey: "row")
         let editedDimensions = UserDefaults.standard.string(forKey: "editedDimension")
-        presets[row] = editedDimensions!
+        if(selectedPresets.contains(presets[row])) {
+            selectedPresets[row] = editedDimensions!
+            presets[row] = editedDimensions!
+        } else {
+            presets[row] = editedDimensions!
+        }
         self.presetCellsView.reloadData()
     }
     
