@@ -20,14 +20,14 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="photo" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="Iue-9H-XWq">
-                                <rect key="frame" x="50" y="140" width="284" height="793.5"/>
+                                <rect key="frame" x="50" y="140" width="540" height="17.5"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="540" id="MEq-RV-0tf"/>
                                     <constraint firstAttribute="height" constant="540" id="e1D-Ng-byN"/>
                                 </constraints>
                             </imageView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" reversesTitleShadowWhenHighlighted="YES" lineBreakMode="middleTruncation" pointerInteraction="YES" translatesAutoresizingMaskIntoConstraints="NO" id="k6o-pn-FLc" customClass="StandardButton" customModule="imageResizer" customModuleProvider="target">
-                                <rect key="frame" x="369" y="874" width="365" height="44"/>
+                                <rect key="frame" x="625" y="98" width="365" height="44"/>
                                 <constraints>
                                     <constraint firstAttribute="width" secondItem="k6o-pn-FLc" secondAttribute="height" multiplier="365:44" id="QMJ-hT-g6q"/>
                                     <constraint firstAttribute="width" constant="365" id="hbS-dq-zHR"/>
@@ -41,16 +41,16 @@
                                 </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Aspect Ratio Locked" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="FvR-Ou-073">
-                                <rect key="frame" x="369" y="797.5" width="149" height="19.5"/>
+                                <rect key="frame" x="625" y="21.5" width="149" height="19.5"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="1bQ-gc-he3">
-                                <rect key="frame" x="685" y="789" width="51" height="31"/>
+                                <rect key="frame" x="941" y="13" width="51" height="31"/>
                             </switch>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="insetGrouped" allowsMultipleSelection="YES" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="18" sectionFooterHeight="18" translatesAutoresizingMaskIntoConstraints="NO" id="yCX-Xf-KGV">
-                                <rect key="frame" x="342" y="127" width="392" height="336"/>
+                                <rect key="frame" x="598" y="127" width="392" height="336"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="392" id="TEQ-Lf-OEh"/>
@@ -85,7 +85,7 @@
                                 </prototypes>
                             </tableView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="DPn-Xj-Lhc">
-                                <rect key="frame" x="645" y="102" width="89" height="34"/>
+                                <rect key="frame" x="901" y="102" width="89" height="34"/>
                                 <constraints>
                                     <constraint firstAttribute="width" secondItem="DPn-Xj-Lhc" secondAttribute="height" multiplier="89:34" id="OhS-qT-zGq"/>
                                 </constraints>

@@ -210,24 +210,25 @@ class ViewController: UIViewController, PHPickerViewControllerDelegate, UITableV
             
             let heightnum = Double(HeightWidthArr[0])! / 2
             let widthnum = Double(HeightWidthArr[1])! / 2
-
-            if let image = imageView.image {
+            
+            if let image = self.imageView.image {
                 UIGraphicsBeginImageContextWithOptions(CGSize(width: widthnum, height: heightnum), false, 0.0)
                 image.draw(in: CGRect(x: 0, y: 0, width: widthnum, height: heightnum))
-                newImage = UIGraphicsGetImageFromCurrentImageContext()!
+                self.newImage = UIGraphicsGetImageFromCurrentImageContext()!
                 UIGraphicsEndImageContext()
-                let cell = Images(dimensions: dimension, image: newImage)
-                imageDetails.append(cell)
-                
+                let cell = Images(dimensions: dimension, image: self.newImage)
+                self.imageDetails.append(cell)
             }
+            
         }
         
         let storyboard : UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
         let vc : resizedImagesController = storyboard.instantiateViewController(withIdentifier: "Detail") as! resizedImagesController
-        vc.imageDetails = imageDetails
+        vc.imageDetails = self.imageDetails
         let navigationController = UINavigationController(rootViewController: vc)
         
         self.present(navigationController, animated: true, completion: nil)
+    
     }
     
     func resizeImageWithAspectRatio() {
@@ -236,30 +237,28 @@ class ViewController: UIViewController, PHPickerViewControllerDelegate, UITableV
             
             let heightnum = Double(HeightWidthArr[0])!
             let widthnum = Double(HeightWidthArr[1])!
-            let image = imageView.image
-            let widthRatio  = widthnum  / Double(image!.size.width)
-            let heightRatio = heightnum / Double(image!.size.height)
+            let widthRatio  = widthnum  / Double(imageView.image!.size.width)
+            let heightRatio = heightnum / Double(imageView.image!.size.height)
 
-            var newSize: CGSize
             
+            var newSize: CGSize
             if(widthRatio > heightRatio) {
-                newSize = CGSize(width: Double(image!.size.width) * heightRatio, height: Double(Int(image!.size.height)) * heightRatio)
+                newSize = CGSize(width: Double(self.imageView.image!.size.width) * heightRatio, height: Double(Int(self.imageView.image!.size.height)) * heightRatio)
             } else {
-                newSize = CGSize(width: Double(image!.size.width) * widthRatio, height: Double(image!.size.height) * widthRatio)
+                newSize = CGSize(width: Double(self.imageView.image!.size.width) * widthRatio, height: Double(self.imageView.image!.size.height) * widthRatio)
             }
 
             UIGraphicsBeginImageContextWithOptions(newSize, false, 1.0)
-            image!.draw(in: CGRect(origin: .zero, size: newSize))
+            self.imageView.image!.draw(in: CGRect(origin: .zero, size: newSize))
             let newImage = UIGraphicsGetImageFromCurrentImageContext()!
             UIGraphicsEndImageContext()
             let cell = Images(dimensions: dimension, image: newImage)
-            imageDetails.append(cell)
+            self.imageDetails.append(cell)
         }
-        
         
         let storyboard : UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
         let vc : resizedImagesController = storyboard.instantiateViewController(withIdentifier: "Detail") as! resizedImagesController
-        vc.imageDetails = imageDetails
+        vc.imageDetails = self.imageDetails
         let navigationController = UINavigationController(rootViewController: vc)
         self.present(navigationController, animated: true, completion: nil)
     }
