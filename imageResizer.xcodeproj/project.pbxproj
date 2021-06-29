@@ -12,8 +12,9 @@
 		7F4F854C266C962300D2CB2A /* Images.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F4F854B266C962300D2CB2A /* Images.swift */; };
 		7F6E650A267F058000096EED /* EditPresetViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F6E6509267F058000096EED /* EditPresetViewController.swift */; };
 		7F95C9F22666BC7500A8F7D8 /* AddPresetViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F95C9F12666BC7400A8F7D8 /* AddPresetViewController.swift */; };
-		7FE2B1192688E82900F4E3C6 /* ipad-dark-landscape.png in Resources */ = {isa = PBXBuildFile; fileRef = 7FE2B1162688E82900F4E3C6 /* ipad-dark-landscape.png */; };
-		7FE2B11B2688E82900F4E3C6 /* ipad-light-portrait.png in Resources */ = {isa = PBXBuildFile; fileRef = 7FE2B1182688E82900F4E3C6 /* ipad-light-portrait.png */; };
+		7FE2B138268AB80600F4E3C6 /* ipad-dark-portrait.png in Resources */ = {isa = PBXBuildFile; fileRef = 7FE2B135268AB80600F4E3C6 /* ipad-dark-portrait.png */; };
+		7FE2B139268AB80600F4E3C6 /* ipad-light-landscape.png in Resources */ = {isa = PBXBuildFile; fileRef = 7FE2B136268AB80600F4E3C6 /* ipad-light-landscape.png */; };
+		7FE2B13A268AB80600F4E3C6 /* mac-dark.png in Resources */ = {isa = PBXBuildFile; fileRef = 7FE2B137268AB80600F4E3C6 /* mac-dark.png */; };
 		7FEF76BF265F0F9D007E6043 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FEF76BE265F0F9D007E6043 /* AppDelegate.swift */; };
 		7FEF76C1265F0F9D007E6043 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FEF76C0265F0F9D007E6043 /* SceneDelegate.swift */; };
 		7FEF76C3265F0F9D007E6043 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FEF76C2265F0F9D007E6043 /* ViewController.swift */; };
@@ -29,8 +30,9 @@
 		7F4F854B266C962300D2CB2A /* Images.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Images.swift; sourceTree = "<group>"; };
 		7F6E6509267F058000096EED /* EditPresetViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditPresetViewController.swift; sourceTree = "<group>"; };
 		7F95C9F12666BC7400A8F7D8 /* AddPresetViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddPresetViewController.swift; sourceTree = "<group>"; };
-		7FE2B1162688E82900F4E3C6 /* ipad-dark-landscape.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ipad-dark-landscape.png"; sourceTree = "<group>"; };
-		7FE2B1182688E82900F4E3C6 /* ipad-light-portrait.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ipad-light-portrait.png"; sourceTree = "<group>"; };
+		7FE2B135268AB80600F4E3C6 /* ipad-dark-portrait.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ipad-dark-portrait.png"; sourceTree = "<group>"; };
+		7FE2B136268AB80600F4E3C6 /* ipad-light-landscape.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ipad-light-landscape.png"; sourceTree = "<group>"; };
+		7FE2B137268AB80600F4E3C6 /* mac-dark.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "mac-dark.png"; sourceTree = "<group>"; };
 		7FEF76BB265F0F9D007E6043 /* imageResizer.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = imageResizer.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		7FEF76BE265F0F9D007E6043 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		7FEF76C0265F0F9D007E6043 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -57,8 +59,9 @@
 		7FE2B10F2688E74F00F4E3C6 /* Images */ = {
 			isa = PBXGroup;
 			children = (
-				7FE2B1162688E82900F4E3C6 /* ipad-dark-landscape.png */,
-				7FE2B1182688E82900F4E3C6 /* ipad-light-portrait.png */,
+				7FE2B135268AB80600F4E3C6 /* ipad-dark-portrait.png */,
+				7FE2B136268AB80600F4E3C6 /* ipad-light-landscape.png */,
+				7FE2B137268AB80600F4E3C6 /* mac-dark.png */,
 			);
 			path = Images;
 			sourceTree = "<group>";
@@ -158,11 +161,12 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				7FE2B11B2688E82900F4E3C6 /* ipad-light-portrait.png in Resources */,
+				7FE2B138268AB80600F4E3C6 /* ipad-dark-portrait.png in Resources */,
 				7FEF76CE265F0F9E007E6043 /* LaunchScreen.storyboard in Resources */,
 				7FEF76CB265F0F9E007E6043 /* Assets.xcassets in Resources */,
+				7FE2B13A268AB80600F4E3C6 /* mac-dark.png in Resources */,
 				7FEF76C6265F0F9D007E6043 /* Main.storyboard in Resources */,
-				7FE2B1192688E82900F4E3C6 /* ipad-dark-landscape.png in Resources */,
+				7FE2B139268AB80600F4E3C6 /* ipad-light-landscape.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
