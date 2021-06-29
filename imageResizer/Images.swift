@@ -8,7 +8,8 @@
 import UIKit
 
 class Images: NSObject {
-
+    //sets up the collection view cells array
+    
     var dimensions: String = ""
     var image: UIImage
     

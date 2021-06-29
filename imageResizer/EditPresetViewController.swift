@@ -22,7 +22,7 @@ class EditPresetViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view.
+        //disables the save preset button, and gets the width and height, and fills those values in in their respective text fields
 
         self.savePresetButton.isEnabled = false
         savePresetButton.alpha = 0.5;
@@ -34,6 +34,8 @@ class EditPresetViewController: UIViewController {
     }
     
     @IBAction func checkText(_ sender: Any) {
+        //if the edited height field or edited width fields are empty, the save preset button is disabled, but if both fields have text, they are enabled
+        
         if editedHeightField.text!.isEmpty || editedWidthField.text!.isEmpty {
             self.savePresetButton.isEnabled = false
             savePresetButton.alpha = 0.5;
@@ -44,6 +46,7 @@ class EditPresetViewController: UIViewController {
     }
     
     @IBAction func saveEditPresetButtonTapped(_ sender: Any) {
+        //gets the text in the edited height and width field's UITextField, and  concatenate them together to get the edited  dimension. This dimension is saved, where itreplaces the dimension that was at the cell the user wanted to edit
         
         let editedWidth = editedWidthField.text
         let editedHeight = editedHeightField.text

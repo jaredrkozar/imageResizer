@@ -119,11 +119,6 @@
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="sXk-se-eJo">
-                        <barButtonItem key="leftBarButtonItem" image="square.and.arrow.up" catalog="system" id="gGr-yx-Mrb">
-                            <connections>
-                                <action selector="shareButtonTapped:" destination="BYZ-38-t0r" id="uOQ-yw-PZL"/>
-                            </connections>
-                        </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" title="Import Photo" id="cGJ-0b-qEU">
                             <connections>
                                 <action selector="importButtonTapped:" destination="BYZ-38-t0r" id="x87-SP-ztV"/>
@@ -424,7 +419,6 @@
     </scenes>
     <resources>
         <image name="photo" catalog="system" width="128" height="93"/>
-        <image name="square.and.arrow.up" catalog="system" width="115" height="128"/>
         <namedColor name="AccentColor">
             <color red="0.0" green="0.4779999852180481" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>

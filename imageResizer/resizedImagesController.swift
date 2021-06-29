@@ -17,6 +17,7 @@ class resizedImagesController: UICollectionViewController, UIAdaptivePresentatio
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        //sets up the UIBarButton items and since no images are currently selected, the left bar button items (the share button) is set to false (this is done in the checkImages() function)
         title = "Resized Images"
         
         navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Done", style: .done, target: self, action: #selector(doneButtonTapped))
@@ -25,13 +26,16 @@ class resizedImagesController: UICollectionViewController, UIAdaptivePresentatio
         navigationItem.leftBarButtonItem = UIBarButtonItem(image: image, style: .done, target: self, action: #selector(shareButtonTapped))
         
         checkImages()
+        
+        //reloads the collection view when its being presented, allows multiple selction, and sets the presentation controller delegate to this class.
         collectionView.reloadData()
         collectionView.allowsMultipleSelection = true
-        
         self.navigationController?.presentationController?.delegate = self
     }
     
     func presentationControllerWillDismiss(_ presentationController: UIPresentationController) {
+        //sends a notification to the emptyImagesArray in the main ViewController class to remove all items in the imageDetails array (in case the user adds/removes currently selected presets)
+        
         NotificationCenter.default.post(name: Notification.Name( "emptyImagesArray"), object: nil)
         dismiss(animated: true, completion: nil)
     }
@@ -54,12 +58,14 @@ class resizedImagesController: UICollectionViewController, UIAdaptivePresentatio
     }
     
     override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        //ads the currently selected image to the selectedImages array, and tells the checkImages() function to enable the share button
         
         let imagetoAdd = imageDetails[indexPath.item]
         selectedImages.append(imagetoAdd.image)
         checkImages()
         
         if let cell = collectionView.cellForItem(at: indexPath) {
+            //what a cell looks like when the user selects it
             cell.layer.borderWidth = 3.0
             cell.layer.borderColor = UIColor(named: "AccentColor")?.cgColor
             cell.layer.backgroundColor = UIColor(named: "bgColor")?.cgColor
@@ -69,6 +75,7 @@ class resizedImagesController: UICollectionViewController, UIAdaptivePresentatio
     }
     
     override func collectionView(_ collectionView: UICollectionView, didDeselectItemAt indexPath: IndexPath) {
+        //removes the image from the selectedImages array, and if there are no images in the selectedImages array, tells the checkImages() function to disable the share button
         
         let imagetoRemove = imageDetails[indexPath.item]
         let imageRemove = selectedImages.firstIndex(of: imagetoRemove.image)!
@@ -77,6 +84,7 @@ class resizedImagesController: UICollectionViewController, UIAdaptivePresentatio
         checkImages()
         
         if let cell = collectionView.cellForItem(at: indexPath) {
+            //what a cell looks like when a user deselects it
             cell.layer.backgroundColor = UIColor.secondarySystemGroupedBackground.cgColor
             cell.layer.borderWidth = 0.0
         }
@@ -95,6 +103,7 @@ class resizedImagesController: UICollectionViewController, UIAdaptivePresentatio
     }
     
     func checkImages() {
+        //if there are no images in the selectedImages array, the share button is disabled, if there are images in the selectedImages array, the button is enabled
         if selectedImages.count == 0 {
             navigationItem.leftBarButtonItem?.isEnabled = false
         } else {
@@ -102,7 +111,9 @@ class resizedImagesController: UICollectionViewController, UIAdaptivePresentatio
         }
     }
     
-    func presentationControllerDidDismiss(_ presentationController: UIPresentationController) {
+    func presentationControllerDidDismiss(_ presentationController:
+                                            UIPresentationController) {
+        //removes all images when the presentation controller is swiped down
         imageDetails.removeAll()
     }
 }

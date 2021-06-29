@@ -20,8 +20,8 @@ class AddPresetViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view.
-
+        
+        //disables the save preset button
         self.savePresetButton.isEnabled = false
         savePresetButton.alpha = 0.5;
         
@@ -29,6 +29,7 @@ class AddPresetViewController: UIViewController {
     }
     
     @IBAction func checkText(_ sender: Any) {
+        //if the height field or width fields are empty, the save preset button is disabled, but if both fields have text, they are enabled
         
         if heightField.text!.isEmpty || widthField.text!.isEmpty {
             self.savePresetButton.isEnabled = false
@@ -40,6 +41,7 @@ class AddPresetViewController: UIViewController {
     }
     
     @IBAction func savePresetButtonTapped(_ sender: StandardButton) {
+        //gets the text in the height and width field's UITextField, and  concatenate them together to get the dimension. This dimension is saved, where it's added to the table
         
         let width = widthField.text
         let height = heightField.text
