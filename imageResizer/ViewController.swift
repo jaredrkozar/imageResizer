@@ -23,7 +23,7 @@ class StandardButton: UIButton {
 class ViewController: UIViewController, PHPickerViewControllerDelegate, UITableViewDataSource, UITableViewDelegate, UIAdaptivePresentationControllerDelegate {
     
     var imageDetails = [Images]()
-    var presets = [String]()
+    var presets = UserDefaults.standard.stringArray(forKey: "presets") ?? [String]()
     var selectedPresets = [String]()
     var newImage = UIImage()
     var imageArray = [UIImage]()
@@ -50,7 +50,6 @@ class ViewController: UIViewController, PHPickerViewControllerDelegate, UITableV
         title = "Image Resizer"
         noPresets()
         
-     
         //disables the "Resize Image" button once the app starts
         resizeImageButton.isEnabled = false;
         resizeImageButton.alpha = 0.5
@@ -323,7 +322,9 @@ class ViewController: UIViewController, PHPickerViewControllerDelegate, UITableV
                 attributes: .destructive) { [self] _ in
                 self.presets.remove(at: indexPath.row)
                 self.presetCellsView.reloadData()
-                removeSelectedPreset(indexPath: indexPath, tableView)
+                if selectedPresets.contains(preset) {
+                    removeSelectedPreset(indexPath: indexPath, tableView)
+                }
                 self.noPresets()
                 
             }
@@ -352,6 +353,7 @@ class ViewController: UIViewController, PHPickerViewControllerDelegate, UITableV
     
     func removeSelectedPreset(indexPath: IndexPath, _ tableView: UITableView) {
         //removes currently selected row from the selectedPresets array
+        print(selectedPresets)
         let selectedpresettoRemove = selectedPresets[indexPath.row]
         let selectedPreset = selectedPresets.firstIndex(of: selectedpresettoRemove)!
         selectedPresets.remove(at: selectedPreset)
