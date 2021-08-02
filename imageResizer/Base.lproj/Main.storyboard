@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="18122" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="9fO-JW-53i" initialMenu="829-VQ-39P">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="19115.3" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="9fO-JW-53i" initialMenu="829-VQ-39P">
     <device id="ipad9_7" orientation="portrait" layout="fullscreen" appearance="light"/>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="18093"/>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19107.5"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
@@ -20,7 +21,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="photo" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="Iue-9H-XWq">
-                                <rect key="frame" x="50" y="140" width="284" height="793.5"/>
+                                <rect key="frame" x="50" y="160" width="284" height="773.5"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="540" id="MEq-RV-0tf"/>
                                     <constraint firstAttribute="height" constant="540" id="e1D-Ng-byN"/>
@@ -44,7 +45,7 @@
                                 <rect key="frame" x="685" y="789" width="51" height="31"/>
                             </switch>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="insetGrouped" allowsMultipleSelection="YES" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="18" sectionFooterHeight="18" translatesAutoresizingMaskIntoConstraints="NO" id="yCX-Xf-KGV">
-                                <rect key="frame" x="342" y="127" width="392" height="336"/>
+                                <rect key="frame" x="342" y="147" width="392" height="336"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="392" id="TEQ-Lf-OEh"/>
@@ -52,7 +53,7 @@
                                     <constraint firstAttribute="width" secondItem="yCX-Xf-KGV" secondAttribute="height" multiplier="7:6" id="pRj-QL-nWT"/>
                                 </constraints>
                                 <label key="tableFooterView" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" adjustsFontForContentSizeCategory="YES" id="P6a-Ml-K0n">
-                                    <rect key="frame" x="0.0" y="130.5" width="392" height="128"/>
+                                    <rect key="frame" x="0.0" y="136.5" width="392" height="128"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                     <fontDescription key="fontDescription" style="UICTFontTextStyleTitle2"/>
                                     <color key="textColor" name="gray"/>
@@ -60,7 +61,7 @@
                                 </label>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="presetCell" textLabel="2pf-dP-CwV" rowHeight="63" style="IBUITableViewCellStyleDefault" id="fPb-fJ-3rB">
-                                        <rect key="frame" x="16" y="49.5" width="360" height="63"/>
+                                        <rect key="frame" x="16" y="55.5" width="360" height="63"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="fPb-fJ-3rB" id="XkW-sD-aHR">
                                             <rect key="frame" x="0.0" y="0.0" width="360" height="63"/>
@@ -79,7 +80,7 @@
                                 </prototypes>
                             </tableView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="DPn-Xj-Lhc">
-                                <rect key="frame" x="645" y="102" width="89" height="34"/>
+                                <rect key="frame" x="645" y="122" width="89" height="34"/>
                                 <constraints>
                                     <constraint firstAttribute="width" secondItem="DPn-Xj-Lhc" secondAttribute="height" multiplier="89:34" id="OhS-qT-zGq"/>
                                 </constraints>
@@ -129,6 +130,7 @@
                         <outlet property="addPresetButton" destination="DPn-Xj-Lhc" id="oEm-IG-nJf"/>
                         <outlet property="aspectRatioLocked" destination="1bQ-gc-he3" id="CIE-dj-x8n"/>
                         <outlet property="imageView" destination="Iue-9H-XWq" id="H0l-OM-qmi"/>
+                        <outlet property="importButton" destination="cGJ-0b-qEU" id="rwA-rp-fzK"/>
                         <outlet property="noPresetsLabel" destination="P6a-Ml-K0n" id="2FX-7P-1PC"/>
                         <outlet property="presetCellsView" destination="yCX-Xf-KGV" id="TZS-gs-hqo"/>
                         <outlet property="resizeImageButton" destination="k6o-pn-FLc" id="QEd-zW-RuA"/>
@@ -159,7 +161,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Height" textAlignment="natural" adjustsFontForContentSizeCategory="YES" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="RsX-Nw-zeZ">
-                                <rect key="frame" x="245" y="29" width="97" height="34"/>
+                                <rect key="frame" x="245" y="49" width="97" height="34"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="97" id="ajZ-KI-Acc"/>
                                 </constraints>
@@ -170,7 +172,7 @@
                                 </connections>
                             </textField>
                             <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Width" textAlignment="natural" adjustsFontForContentSizeCategory="YES" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="gvV-5y-t6I">
-                                <rect key="frame" x="249" y="91" width="93" height="34"/>
+                                <rect key="frame" x="249" y="111" width="93" height="34"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="93" id="C4U-tq-drt"/>
                                 </constraints>
@@ -181,7 +183,7 @@
                                 </connections>
                             </textField>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" reversesTitleShadowWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Hau-lL-smB" customClass="StandardButton" customModule="imageResizer" customModuleProvider="target">
-                                <rect key="frame" x="45" y="151" width="297" height="36"/>
+                                <rect key="frame" x="45" y="171" width="297" height="36"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="297" id="3gN-0x-rRt"/>
                                 </constraints>
@@ -230,7 +232,7 @@
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="9fO-JW-53i" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="5Tu-41-ILy">
-                        <rect key="frame" x="0.0" y="0.0" width="768" height="50"/>
+                        <rect key="frame" x="0.0" y="20" width="768" height="50"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <nil name="viewControllers"/>
@@ -251,7 +253,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Height" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="BK8-Ah-KFg">
-                                <rect key="frame" x="245" y="29" width="97" height="34"/>
+                                <rect key="frame" x="245" y="49" width="97" height="34"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="97" id="vh3-az-KIW"/>
                                 </constraints>
@@ -262,7 +264,7 @@
                                 </connections>
                             </textField>
                             <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Width" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="ZmL-VA-FKI">
-                                <rect key="frame" x="249" y="91" width="93" height="34"/>
+                                <rect key="frame" x="249" y="111" width="93" height="34"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="93" id="3Md-a2-BgQ"/>
                                 </constraints>
@@ -279,7 +281,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="oVw-n7-XfC" customClass="StandardButton" customModule="imageResizer" customModuleProvider="target">
-                                <rect key="frame" x="45" y="151" width="297" height="36"/>
+                                <rect key="frame" x="45" y="171" width="297" height="36"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="297" id="8XJ-3u-YCP"/>
                                 </constraints>
