@@ -91,9 +91,36 @@ class ViewController: UIViewController, VNDocumentCameraViewControllerDelegate, 
     
     func setUpImageViewDrop() {
         imageView.isUserInteractionEnabled = true
-        let dropInteraction = UIDropInteraction(delegate: self)
-        view.addInteraction(dropInteraction)
+        imageView.addInteraction(UIDropInteraction(delegate: self))
     }
+    
+    func dropInteraction(_ interaction: UIDropInteraction, performDrop session: UIDropSession) {
+        for dragItem in session.items {
+            dragItem.itemProvider.loadObject(ofClass: UIImage.self, completionHandler: { (obj, err) in
+                
+                if let err = err {
+                    print("Failed to load our dragged item:", err)
+                    return
+                }
+                
+                guard let draggedImage = obj as? UIImage else { return }
+                
+                DispatchQueue.main.async {
+                    self.imageView.image = draggedImage
+                }
+                
+            })
+        }
+    }
+    
+    func dropInteraction(_ interaction: UIDropInteraction, sessionDidUpdate session: UIDropSession) -> UIDropProposal {
+        return UIDropProposal(operation: .copy)
+    }
+    
+    func dropInteraction(_ interaction: UIDropInteraction, canHandle session: UIDropSession) -> Bool {
+        return session.canLoadObjects(ofClass: UIImage.self)
+    }
+    
     
     //Table code
     

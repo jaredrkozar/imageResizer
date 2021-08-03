@@ -45,10 +45,11 @@ class resizedImagesController: UICollectionViewController, UIAdaptivePresentatio
     }
        
     func collectionView(_ collectionView: UICollectionView, itemsForAddingTo session: UIDragSession, at indexPath: IndexPath, point: CGPoint) -> [UIDragItem] {
-        let provider = NSItemProvider(object: imageDetails[indexPath.row].image)
+        let provider = NSItemProvider(object: selectedImages[indexPath.row])
         let dragItem = UIDragItem(itemProvider: provider)
         return [dragItem]
     }
+    
     func presentationControllerWillDismiss(_ presentationController: UIPresentationController) {
         //sends a notification to the emptyImagesArray in the main ViewController class to remove all items in the imageDetails array (in case the user adds/removes currently selected presets)
         
