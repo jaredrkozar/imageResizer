@@ -567,4 +567,11 @@ class ViewController: UIViewController, VNDocumentCameraViewControllerDelegate, 
         let navigationController = UINavigationController(rootViewController: vc)
         self.present(navigationController, animated: true, completion: nil)
     }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        #if targetEnvironment(macCatalyst)
+        navigationController?.setNavigationBarHidden(true, animated: animated)
+        #endif
+        
+    }
 }
