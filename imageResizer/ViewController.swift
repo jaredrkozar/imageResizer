@@ -24,7 +24,7 @@ class StandardButton: UIButton {
     }
 }
 
-class ViewController: UIViewController, VNDocumentCameraViewControllerDelegate, UIImagePickerControllerDelegate, PHPickerViewControllerDelegate & UINavigationControllerDelegate, UIDocumentPickerDelegate, UITableViewDataSource, UITableViewDelegate, UIAdaptivePresentationControllerDelegate {
+class ViewController: UIViewController, VNDocumentCameraViewControllerDelegate, UIImagePickerControllerDelegate, PHPickerViewControllerDelegate & UINavigationControllerDelegate, UIDocumentPickerDelegate, UITableViewDataSource, UITableViewDelegate, UIAdaptivePresentationControllerDelegate, UIDropInteractionDelegate {
     
     var sourcesArray = [UIImage]()
     var imageDetails = [Images]()
@@ -86,6 +86,13 @@ class ViewController: UIViewController, VNDocumentCameraViewControllerDelegate, 
         
         NotificationCenter.default.addObserver(self, selector: #selector(emptyImagesArray(_:)), name: NSNotification.Name( "emptyImagesArray"), object: nil)
         
+        setUpImageViewDrop()
+    }
+    
+    func setUpImageViewDrop() {
+        imageView.isUserInteractionEnabled = true
+        let dropInteraction = UIDropInteraction(delegate: self)
+        view.addInteraction(dropInteraction)
     }
     
     //Table code
@@ -346,7 +353,7 @@ class ViewController: UIViewController, VNDocumentCameraViewControllerDelegate, 
         for pageNumber in 0..<scan.pageCount {
             let image = scan.imageOfPage(at: pageNumber)
             
-            sourcesArray.append(image).resizeImageWithAspectRatio(dimension: "773.5 x 284")
+            sourcesArray.append(image)
         }
         
         controller.dismiss(animated: true)
@@ -484,6 +491,7 @@ class ViewController: UIViewController, VNDocumentCameraViewControllerDelegate, 
               image: UIImage(systemName: "trash"),
                 attributes: .destructive) { [self] _ in
                 self.presets.remove(at: indexPath.row)
+                UserDefaults.standard.set(presets, forKey: "presets")
                 self.presetCellsView.reloadData()
                 if selectedPresets.contains(preset) {
                     removeSelectedPreset(indexPath: indexPath, tableView)

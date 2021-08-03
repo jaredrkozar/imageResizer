@@ -6,8 +6,9 @@
 //
 
 import UIKit
+import MobileCoreServices
 
-class resizedImagesController: UICollectionViewController, UIAdaptivePresentationControllerDelegate {
+class resizedImagesController: UICollectionViewController, UIAdaptivePresentationControllerDelegate, UICollectionViewDragDelegate {
 
     var imageDetails = [Images]()
     var cellImage: UIImage!
@@ -26,6 +27,9 @@ class resizedImagesController: UICollectionViewController, UIAdaptivePresentatio
         navigationItem.leftBarButtonItem = UIBarButtonItem(image: image, style: .done, target: self, action: #selector(shareButtonTapped))
         
         checkImages()
+        collectionView.dragDelegate = self
+
+        collectionView.dragInteractionEnabled = true
         
         //reloads the collection view when its being presented, allows multiple selction, and sets the presentation controller delegate to this class.
         collectionView.reloadData()
@@ -33,6 +37,18 @@ class resizedImagesController: UICollectionViewController, UIAdaptivePresentatio
         self.navigationController?.presentationController?.delegate = self
     }
     
+    func collectionView(_ collectionView: UICollectionView, itemsForBeginning session: UIDragSession, at indexPath: IndexPath) -> [UIDragItem] {
+        let provider = NSItemProvider(object: imageDetails[indexPath.row].image)
+        let dragItem = UIDragItem(itemProvider: provider)
+        return [dragItem]
+                                      
+    }
+       
+    func collectionView(_ collectionView: UICollectionView, itemsForAddingTo session: UIDragSession, at indexPath: IndexPath, point: CGPoint) -> [UIDragItem] {
+        let provider = NSItemProvider(object: imageDetails[indexPath.row].image)
+        let dragItem = UIDragItem(itemProvider: provider)
+        return [dragItem]
+    }
     func presentationControllerWillDismiss(_ presentationController: UIPresentationController) {
         //sends a notification to the emptyImagesArray in the main ViewController class to remove all items in the imageDetails array (in case the user adds/removes currently selected presets)
         
