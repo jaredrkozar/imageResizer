@@ -52,7 +52,7 @@ class resizedImagesController: UICollectionViewController, UIAdaptivePresentatio
 
         cell.dimensions.text = image.dimensions
 
-        cell.imageView.image = image.image
+        cell.imageView.image = image.image.resizeImageWithAspectRatio(dimension: "150 x 150")
 
         return cell
     }

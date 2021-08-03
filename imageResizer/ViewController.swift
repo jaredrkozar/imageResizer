@@ -271,9 +271,8 @@ class ViewController: UIViewController, VNDocumentCameraViewControllerDelegate, 
                     if let data = try? Data(contentsOf: url!) {
                         if let image = UIImage(data: data) {
                             DispatchQueue.main.async {
-                                self?.sourcesArray.append(image)
-                                
-                                self!.imageView.image = self!.sourcesArray[0]
+                                self!.imageView.image = image.resizeImageWithAspectRatio(dimension: "773.5 x 284")
+                                NotificationCenter.default.post(name: Notification.Name( "isImageSelected"), object: nil)
                                 
                             }
                         }
@@ -300,13 +299,13 @@ class ViewController: UIViewController, VNDocumentCameraViewControllerDelegate, 
         do {
             let imageData = try Data(contentsOf: myURL)
             let image = UIImage(data: imageData)!
-            sourcesArray.append(image)
+            imageView.image = image.resizeImageWithAspectRatio(dimension: "773.5 x 284")
+            NotificationCenter.default.post(name: Notification.Name( "isImageSelected"), object: nil)
         } catch {
             print("There was an error loading the image: \(error). Please try again.")
         }
         
         myURL.startAccessingSecurityScopedResource()
-        imageView.image = sourcesArray[0]
         
     }
     
@@ -318,9 +317,9 @@ class ViewController: UIViewController, VNDocumentCameraViewControllerDelegate, 
                 return
             }
 
-            sourcesArray.append(image)
             dismiss(animated: true, completion: nil)
-        imageView.image = sourcesArray[0]
+        imageView.image = image.resizeImageWithAspectRatio(dimension: "773.5 x 284")
+            NotificationCenter.default.post(name: Notification.Name( "isImageSelected"), object: nil)
     }
 
     func documentCameraViewController(_ controller: VNDocumentCameraViewController, didFailWithError error: Error) {
@@ -347,12 +346,13 @@ class ViewController: UIViewController, VNDocumentCameraViewControllerDelegate, 
         for pageNumber in 0..<scan.pageCount {
             let image = scan.imageOfPage(at: pageNumber)
             
-            sourcesArray.append(image)
+            sourcesArray.append(image).resizeImageWithAspectRatio(dimension: "773.5 x 284")
         }
         
         controller.dismiss(animated: true)
         print("Finished scanning document \(kCGPDFContextTitle)")
-        imageView.image = sourcesArray[0]
+        imageView.image = sourcesArray[0].resizeImageWithAspectRatio(dimension: "773.5 x 284")
+        NotificationCenter.default.post(name: Notification.Name( "isImageSelected"), object: nil)
     }
     
     @IBAction func resizeButtonTapped(_ sender: Any) {
@@ -394,7 +394,7 @@ class ViewController: UIViewController, VNDocumentCameraViewControllerDelegate, 
             itemProvider.loadObject(ofClass: UIImage.self) { [weak self] image, error in
                 DispatchQueue.main.async {
                     guard let self = self, let image = image as? UIImage, self.imageView.image == previousImage else { return }
-                    self.imageView.image = image
+                    self.imageView.image = image.resizeImageWithAspectRatio(dimension: "773.5 x 284")
                     NotificationCenter.default.post(name: Notification.Name( "isImageSelected"), object: nil)
                 }
             }
@@ -421,29 +421,13 @@ class ViewController: UIViewController, VNDocumentCameraViewControllerDelegate, 
         //gets the current dimension and splits it up into 2 parts, heightNum and widthNum, and gets the image that was selected. The image is then duplicated with the specified widthNum and heightNum, and set to newImage, where the newImage and the dimension are appended to the Images array.
         
         for dimension in selectedPresets {
-            let HeightWidthArr = dimension.components(separatedBy: " x ")
-            
-            let heightnum = Double(HeightWidthArr[0])! / 2
-            let widthnum = Double(HeightWidthArr[1])! / 2
-            
-            if let image = self.imageView.image {
-                UIGraphicsBeginImageContextWithOptions(CGSize(width: widthnum, height: heightnum), false, 0.0)
-                image.draw(in: CGRect(x: 0, y: 0, width: widthnum, height: heightnum))
-                self.newImage = UIGraphicsGetImageFromCurrentImageContext()!
-                UIGraphicsEndImageContext()
-                let cell = Images(dimensions: dimension, image: self.newImage)
-                self.imageDetails.append(cell)
-            }
-            
+            let newImage = (imageView.image?.resizeImageWithoutAspectRatio(dimension: dimension))!
+            let cell = Images(dimensions: dimension, image: newImage)
+            self.imageDetails.append(cell)
         }
         
         //brings up the resizedImagesController() modal popover
-        let storyboard : UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
-        let vc : resizedImagesController = storyboard.instantiateViewController(withIdentifier: "Detail") as! resizedImagesController
-        vc.imageDetails = self.imageDetails
-        let navigationController = UINavigationController(rootViewController: vc)
-        
-        self.present(navigationController, animated: true, completion: nil)
+        resizedImagesStoryboard()
     
     }
     
@@ -451,36 +435,13 @@ class ViewController: UIViewController, VNDocumentCameraViewControllerDelegate, 
         //gets the current dimension and splits it up into 2 parts, heightNum and widthNum, and gets the image that was selected. The aspect ratio is found by dividing the width the user entered by the image's width (same thing for the height). The new size of the image is found by comparing the two ratios; if the widthRatio is greater than the heightRatio, it gets the images width and multiplies it by the heightRatio, and gets the images height, and multiplies that by the heightRatio. (Vice versa if the heightRatio is greater than the widthRatio).
         
         for dimension in selectedPresets {
-            let HeightWidthArr = dimension.components(separatedBy: " x ")
-            
-            let heightnum = Double(HeightWidthArr[0])!
-            let widthnum = Double(HeightWidthArr[1])!
-            let widthRatio  = widthnum  / Double(imageView.image!.size.width)
-            let heightRatio = heightnum / Double(imageView.image!.size.height)
-
-            
-            var newSize: CGSize
-            if(widthRatio > heightRatio) {
-                newSize = CGSize(width: Double(self.imageView.image!.size.width) * heightRatio, height: Double(Int(self.imageView.image!.size.height)) * heightRatio)
-            } else {
-                newSize = CGSize(width: Double(self.imageView.image!.size.width) * widthRatio, height: Double(self.imageView.image!.size.height) * widthRatio)
-            }
-            
-            //creates a new image based off of the dimensions found above
-            UIGraphicsBeginImageContextWithOptions(newSize, false, 1.0)
-            self.imageView.image!.draw(in: CGRect(origin: .zero, size: newSize))
-            let newImage = UIGraphicsGetImageFromCurrentImageContext()!
-            UIGraphicsEndImageContext()
+            let newImage = (imageView.image?.resizeImageWithAspectRatio(dimension: dimension))!
             let cell = Images(dimensions: dimension, image: newImage)
             self.imageDetails.append(cell)
         }
         
         //brings up the resizedImagesController() modal popover
-        let storyboard : UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
-        let vc : resizedImagesController = storyboard.instantiateViewController(withIdentifier: "Detail") as! resizedImagesController
-        vc.imageDetails = self.imageDetails
-        let navigationController = UINavigationController(rootViewController: vc)
-        self.present(navigationController, animated: true, completion: nil)
+        resizedImagesStoryboard()
     }
     
     //Context Menu code
@@ -555,9 +516,20 @@ class ViewController: UIViewController, VNDocumentCameraViewControllerDelegate, 
     
     func removeSelectedPreset(indexPath: IndexPath, _ tableView: UITableView) {
         //removes currently selected row from the selectedPresets array
-        print(selectedPresets)
-        let selectedpresettoRemove = selectedPresets[indexPath.row]
-        let selectedPreset = selectedPresets.firstIndex(of: selectedpresettoRemove)!
-        selectedPresets.remove(at: selectedPreset)
+        if selectedPresets.count > 1 {
+            let selectedpresettoRemove = selectedPresets[indexPath.row]
+            let selectedPreset = selectedPresets.firstIndex(of: selectedpresettoRemove)!
+            selectedPresets.remove(at: selectedPreset)
+        } else {
+            return
+        }
+    }
+    
+    func resizedImagesStoryboard() {
+        let storyboard : UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
+        let vc : resizedImagesController = storyboard.instantiateViewController(withIdentifier: "Detail") as! resizedImagesController
+        vc.imageDetails = self.imageDetails
+        let navigationController = UINavigationController(rootViewController: vc)
+        self.present(navigationController, animated: true, completion: nil)
     }
 }
