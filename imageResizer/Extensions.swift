@@ -9,6 +9,18 @@ import UIKit
 
 public var isEditingDimension: Bool = false
 
+let vc = ViewController()
+
+public var imageDetails: [Images] {
+    //saves the color, for use throughout the app
+    get{
+        return vc.imageArray
+    }
+    set{
+        vc.imageArray = newValue
+    }
+}
+
 extension UIImage {
     
     func resizeImageWithoutAspectRatio(dimension: String) -> UIImage {

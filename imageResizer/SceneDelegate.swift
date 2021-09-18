@@ -33,7 +33,17 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
         #endif
         
-        guard let _ = (scene as? UIWindowScene) else { return }
+        if let windowScene = scene as? UIWindowScene {
+            let window = UIWindow(windowScene: windowScene)
+    
+            let mobileHome = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "MainView")
+            
+            window.rootViewController = mobileHome
+            
+            self.window = window
+            window.makeKeyAndVisible()
+        }
+        
     }
 
     func sceneDidDisconnect(_ scene: UIScene) {

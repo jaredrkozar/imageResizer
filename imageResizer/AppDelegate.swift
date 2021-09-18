@@ -29,13 +29,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(_ application: UIApplication, configurationForConnecting connectingSceneSession: UISceneSession, options: UIScene.ConnectionOptions) -> UISceneConfiguration {
         // Called when a new scene session is being created.
         // Use this method to select a configuration to create the new scene with.
-        
+
         if options.userActivities.first?.activityType == "resizeImages" {
             let config = UISceneConfiguration(name: "Default Configuration", sessionRole: connectingSceneSession.role)
-            config.delegateClass = resizedImagesController.self
+            config.delegateClass = resizedImageSceneDelegate.self
             return config
         } else {
-            return UISceneConfiguration(name: "Default Configuration", sessionRole: connectingSceneSession.role)
+            let config = UISceneConfiguration(name: "Default Configuration", sessionRole: connectingSceneSession.role)
+            config.delegateClass = SceneDelegate.self
+            return config
         }
     }
 

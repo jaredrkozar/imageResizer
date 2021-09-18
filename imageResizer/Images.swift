@@ -7,7 +7,7 @@
 
 import UIKit
 
-class Images: NSObject {
+public class Images: NSObject {
     //sets up the collection view cells array
     
     var dimensions: String = ""

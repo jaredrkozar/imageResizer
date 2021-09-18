@@ -27,11 +27,10 @@ class StandardButton: UIButton {
 class ViewController: UIViewController, VNDocumentCameraViewControllerDelegate, UIImagePickerControllerDelegate, PHPickerViewControllerDelegate & UINavigationControllerDelegate, UIDocumentPickerDelegate, UITableViewDataSource, UITableViewDelegate, UIAdaptivePresentationControllerDelegate, UIDropInteractionDelegate {
     
     var sourcesArray = [UIImage]()
-    var imageDetails = [Images]()
     var presets = UserDefaults.standard.stringArray(forKey: "presets") ?? [String]()
     var selectedPresets = [String]()
     var newImage = UIImage()
-    var imageArray = [UIImage]()
+    var imageArray = [Images]()
     var dimensionArray = [String]()
     
     @IBOutlet var noPresetsLabel: UILabel!
@@ -480,9 +479,10 @@ class ViewController: UIViewController, VNDocumentCameraViewControllerDelegate, 
         for dimension in selectedPresets {
             let newImage = (imageView.image?.resizeImageWithoutAspectRatio(dimension: dimension))!
             let cell = Images(dimensions: dimension, image: newImage)
-            self.imageDetails.append(cell)
+            imageDetails.append(cell)
         }
         
+        print(imageDetails.count)
         //brings up the resizedImagesController() modal popover
         resizedImagesStoryboard()
     
@@ -494,9 +494,9 @@ class ViewController: UIViewController, VNDocumentCameraViewControllerDelegate, 
         for dimension in selectedPresets {
             let newImage = (imageView.image?.resizeImageWithAspectRatio(dimension: dimension))!
             let cell = Images(dimensions: dimension, image: newImage)
-            self.imageDetails.append(cell)
+            imageDetails.append(cell)
         }
-        
+        print(imageDetails.count)
         //brings up the resizedImagesController() modal popover
         resizedImagesStoryboard()
     }
@@ -553,20 +553,10 @@ class ViewController: UIViewController, VNDocumentCameraViewControllerDelegate, 
     }
     
     func resizedImagesStoryboard() {
-        #if targetEnvironment(macCatalyst)
-            let activity = NSUserActivity(activityType: "resizeImages")
-            UIApplication.shared.requestSceneSessionActivation(nil, userActivity: activity, options: nil) { (error) in
-                print(error)
-            }
-        #else
-        
-            let storyboard : UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
-            let vc : resizedImagesController = storyboard.instantiateViewController(withIdentifier: "Detail") as! resizedImagesController
-            vc.imageDetails = self.imageDetails
-            let navigationController = UINavigationController(rootViewController: vc)
-            self.present(navigationController, animated: true, completion: nil)
-        
-        #endif
+        let activity = NSUserActivity(activityType: "resizeImages")
+        UIApplication.shared.requestSceneSessionActivation(nil, userActivity: activity, options: nil) { (error) in
+            print(error)
+        }
     }
     
     

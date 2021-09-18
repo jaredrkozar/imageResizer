@@ -14,7 +14,7 @@
         <!--View Controller-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <viewController storyboardIdentifier="ViewController" id="BYZ-38-t0r" customClass="ViewController" customModule="imageResizer" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="BYZ-38-t0r" customClass="ViewController" customModule="imageResizer" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
                         <rect key="frame" x="0.0" y="0.0" width="768" height="1024"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -228,7 +228,7 @@
         <!--Navigation Controller-->
         <scene sceneID="J05-0q-RbD">
             <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="9fO-JW-53i" sceneMemberID="viewController">
+                <navigationController storyboardIdentifier="MainView" automaticallyAdjustsScrollViewInsets="NO" id="9fO-JW-53i" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="5Tu-41-ILy">
                         <rect key="frame" x="0.0" y="20" width="768" height="50"/>
@@ -330,7 +330,7 @@
         <!--Resized Image-->
         <scene sceneID="tL7-xT-HxX">
             <objects>
-                <collectionViewController storyboardIdentifier="Detail" title="Resized Image" id="ThJ-0r-BAj" customClass="resizedImagesController" customModule="imageResizer" customModuleProvider="target" sceneMemberID="viewController">
+                <collectionViewController title="Resized Image" id="ThJ-0r-BAj" customClass="resizedImagesController" customModule="imageResizer" customModuleProvider="target" sceneMemberID="viewController">
                     <collectionView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" id="j7H-2t-yYC">
                         <rect key="frame" x="0.0" y="0.0" width="768" height="1024"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -373,8 +373,27 @@
                             <outlet property="delegate" destination="ThJ-0r-BAj" id="iOM-sn-RaH"/>
                         </connections>
                     </collectionView>
+                    <navigationItem key="navigationItem" id="RXA-Kg-LXb"/>
                 </collectionViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="QwY-Ch-6cE" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2442.96875" y="843.75"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="gun-Zm-zwJ">
+            <objects>
+                <navigationController storyboardIdentifier="Detail" automaticallyAdjustsScrollViewInsets="NO" id="3zB-gR-PjK" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="sLP-5u-wbl">
+                        <rect key="frame" x="0.0" y="20" width="768" height="50"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="ThJ-0r-BAj" kind="relationship" relationship="rootViewController" id="JQW-Q1-sC1"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="OtO-ZF-Yfi" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1677.34375" y="843.75"/>
         </scene>

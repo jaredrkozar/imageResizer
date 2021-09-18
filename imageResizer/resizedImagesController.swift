@@ -10,7 +10,6 @@ import MobileCoreServices
 
 class resizedImagesController: UICollectionViewController, UIAdaptivePresentationControllerDelegate, UICollectionViewDragDelegate {
 
-    var imageDetails = [Images]()
     var cellImage: UIImage!
     var dimension: String = ""
     var selectedImages = [UIImage]()
@@ -20,7 +19,6 @@ class resizedImagesController: UICollectionViewController, UIAdaptivePresentatio
         
         //sets up the UIBarButton items and since no images are currently selected, the left bar button items (the share button) is set to false (this is done in the checkImages() function)
         title = "Resized Images"
-        
         navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Done", style: .done, target: self, action: #selector(doneButtonTapped))
         
         let image = UIImage(systemName: "square.and.arrow.up")
@@ -56,6 +54,7 @@ class resizedImagesController: UICollectionViewController, UIAdaptivePresentatio
         NotificationCenter.default.post(name: Notification.Name( "emptyImagesArray"), object: nil)
         dismiss(animated: true, completion: nil)
     }
+    
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return imageDetails.count
     }
