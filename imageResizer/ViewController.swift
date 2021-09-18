@@ -553,12 +553,22 @@ class ViewController: UIViewController, VNDocumentCameraViewControllerDelegate, 
     }
     
     func resizedImagesStoryboard() {
-        let storyboard : UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
-        let vc : resizedImagesController = storyboard.instantiateViewController(withIdentifier: "Detail") as! resizedImagesController
-        vc.imageDetails = self.imageDetails
-        let navigationController = UINavigationController(rootViewController: vc)
-        self.present(navigationController, animated: true, completion: nil)
+        #if targetEnvironment(macCatalyst)
+            let activity = NSUserActivity(activityType: "resizeImages")
+            UIApplication.shared.requestSceneSessionActivation(nil, userActivity: activity, options: nil) { (error) in
+                print(error)
+            }
+        #else
+        
+            let storyboard : UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
+            let vc : resizedImagesController = storyboard.instantiateViewController(withIdentifier: "Detail") as! resizedImagesController
+            vc.imageDetails = self.imageDetails
+            let navigationController = UINavigationController(rootViewController: vc)
+            self.present(navigationController, animated: true, completion: nil)
+        
+        #endif
     }
+    
     
     override func viewWillAppear(_ animated: Bool) {
         #if targetEnvironment(macCatalyst)
