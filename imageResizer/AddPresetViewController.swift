@@ -17,15 +17,26 @@ class AddPresetViewController: UIViewController {
     @IBOutlet var savePresetButton: StandardButton!
     
     let nc = NotificationCenter.default
-
+    var height: String = ""
+    var width: String = ""
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        //disables the save preset button
-        self.savePresetButton.isEnabled = false
-        savePresetButton.alpha = 0.5;
-        
-        title = "Add Preset"
+        if isEditingDimension == false {
+            //disables the save preset button
+            self.savePresetButton.isEnabled = false
+            savePresetButton.alpha = 0.5;
+            
+            title = "Add Preset"
+        } else {
+            self.savePresetButton.isEnabled = true
+            savePresetButton.alpha = 1.0;
+            widthField.text = width
+            heightField.text = height
+            
+            title = "Edit Preset"
+        }
     }
     
     @IBAction func checkText(_ sender: Any) {

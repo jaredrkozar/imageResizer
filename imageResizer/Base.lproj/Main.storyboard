@@ -1,13 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="19115.3" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="9fO-JW-53i" initialMenu="829-VQ-39P">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="19150" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="9fO-JW-53i">
     <device id="ipad9_7" orientation="portrait" layout="fullscreen" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19107.5"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19134"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
-        <capability name="UIMenu" message="Requires Xcode 11 or later." minToolsVersion="11.0" requiredIntegratedClassName="UICommandDiff"/>
         <capability name="collection view cell content view" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -53,7 +52,7 @@
                                     <constraint firstAttribute="width" secondItem="yCX-Xf-KGV" secondAttribute="height" multiplier="7:6" id="pRj-QL-nWT"/>
                                 </constraints>
                                 <label key="tableFooterView" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" adjustsFontForContentSizeCategory="YES" id="P6a-Ml-K0n">
-                                    <rect key="frame" x="0.0" y="136.5" width="392" height="128"/>
+                                    <rect key="frame" x="0.0" y="130.5" width="392" height="128"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                     <fontDescription key="fontDescription" style="UICTFontTextStyleTitle2"/>
                                     <color key="textColor" name="gray"/>
@@ -61,7 +60,7 @@
                                 </label>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="presetCell" textLabel="2pf-dP-CwV" rowHeight="63" style="IBUITableViewCellStyleDefault" id="fPb-fJ-3rB">
-                                        <rect key="frame" x="16" y="55.5" width="360" height="63"/>
+                                        <rect key="frame" x="16" y="49.5" width="360" height="63"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="fPb-fJ-3rB" id="XkW-sD-aHR">
                                             <rect key="frame" x="0.0" y="0.0" width="360" height="63"/>
@@ -327,45 +326,6 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="pvK-bT-2N4" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="799.21875" y="843.75"/>
-        </scene>
-        <!--Main Menu-->
-        <scene sceneID="BR0-49-Hqs">
-            <objects>
-                <menu isSystemItem="YES" title="Main Menu" identifier="com.apple.menu.root" id="829-VQ-39P" sceneMemberID="viewController">
-                    <children>
-                        <menu isSystemItem="YES" title="File" identifier="com.apple.menu.file" id="2if-nK-ipn">
-                            <children>
-                                <menu isSystemItem="YES" title="New Scene" identifier="com.apple.menu.new-scene" id="HcR-Gi-Xs3">
-                                    <menuOptions key="menuOptions" displayInline="YES"/>
-                                    <systemMenuChildDeletions>
-                                        <itemDeletion anchorAction="requestNewScene:"/>
-                                    </systemMenuChildDeletions>
-                                </menu>
-                                <command title="Import Photo" input="i" anchor="com.apple.menu.new-scene" id="HoD-qy-7sE">
-                                    <keyModifierFlags key="modifierFlags" command="YES"/>
-                                    <connections>
-                                        <action selector="importButtonTapped:" destination="kox-cN-g3D" id="e71-Tm-Nfw"/>
-                                    </connections>
-                                </command>
-                                <command title="Add Preset" input="p" anchor="com.apple.menu.new-scene" id="0z5-re-LOx">
-                                    <keyModifierFlags key="modifierFlags" command="YES"/>
-                                    <connections>
-                                        <action selector="addPresetButton:" destination="kox-cN-g3D" id="TAQ-XP-TGA"/>
-                                    </connections>
-                                </command>
-                            </children>
-                            <systemMenuChildDeletions>
-                                <menuDeletion anchor="com.apple.menu.open-recent"/>
-                            </systemMenuChildDeletions>
-                        </menu>
-                    </children>
-                    <systemMenuChildDeletions>
-                        <menuDeletion anchor="com.apple.menu.format"/>
-                    </systemMenuChildDeletions>
-                </menu>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="kox-cN-g3D" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="830" y="-507"/>
         </scene>
         <!--Resized Image-->
         <scene sceneID="tL7-xT-HxX">

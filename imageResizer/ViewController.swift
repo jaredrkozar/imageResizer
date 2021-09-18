@@ -81,9 +81,7 @@ class ViewController: UIViewController, VNDocumentCameraViewControllerDelegate, 
         NotificationCenter.default.addObserver(self, selector: #selector(isImageSelected(_:)), name: NSNotification.Name( "isImageSelected"), object: nil)
         
         NotificationCenter.default.addObserver(self, selector: #selector(addtoTable(_:)), name: NSNotification.Name( "addWidthHeighttoTable"), object: nil)
-        
-        NotificationCenter.default.addObserver(self, selector: #selector(editedPreset(_:)), name: NSNotification.Name( "editedPreset"), object: nil)
-        
+
         NotificationCenter.default.addObserver(self, selector: #selector(emptyImagesArray(_:)), name: NSNotification.Name( "emptyImagesArray"), object: nil)
         
         setUpImageViewDrop()
@@ -126,13 +124,25 @@ class ViewController: UIViewController, VNDocumentCameraViewControllerDelegate, 
     
     @objc func addtoTable(_ notification: Notification) {
         //adds the dimension the user entednin the AddPresetViewController class to the table view.
-        let dimension = UserDefaults.standard.string(forKey: "dimension")
-        presets.append(dimension!)
-        let indexPath = IndexPath(row: (self.presets.count - 1), section: 0)
-        presetCellsView.insertRows(at: [indexPath], with: .automatic)
-        noPresets()
-        UserDefaults.standard.set(presets, forKey: "presets")
         
+        let dimension = UserDefaults.standard.string(forKey: "dimension")
+        
+        if isEditingDimension == true {
+            
+            let row = UserDefaults.standard.integer(forKey: "row")
+            if(selectedPresets.contains(presets[row])) {
+                selectedPresets[row] = dimension!
+                presets[row] = dimension!
+            } else {
+                presets[row] = dimension!
+            }
+            
+        } else {
+            presets.append(dimension!)
+            
+            UserDefaults.standard.set(presets, forKey: "presets")
+        }
+        self.presetCellsView.reloadData()
     }
     
     func noPresets() {
@@ -402,10 +412,23 @@ class ViewController: UIViewController, VNDocumentCameraViewControllerDelegate, 
     
     @IBAction func addPresetButton(_ sender: Any) {
         //if the user taps the Add Preset button, a popover pops up allowing the user to enter a preset
-        
+        isEditingDimension = false
+        showPopup()
+    }
+    
+    func showPopup() {
         let vc : AddPresetViewController = storyboard!.instantiateViewController(withIdentifier: "addPreset") as! AddPresetViewController
         let navigationController = UINavigationController(rootViewController: vc)
             
+        if isEditingDimension == true {
+            let HeightWidthArr = presets[UserDefaults.standard.integer(forKey: "row")]
+                .components(separatedBy: " x ")
+            let height = Double(HeightWidthArr[0])!
+            let width = Double(HeightWidthArr[1])!
+            vc.height = String(Int(height))
+            vc.width = String(Int(width))
+        }
+        
         navigationController.modalPresentationStyle = UIModalPresentationStyle.popover
         navigationController.preferredContentSize = CGSize(width: 400, height: 200)
            
@@ -490,25 +513,8 @@ class ViewController: UIViewController, VNDocumentCameraViewControllerDelegate, 
               title: "Edit", image: UIImage(systemName: "pencil")) { [self] _ in
                 //gets the current dimension and splits it up into 2 parts, and saves them so they can be shown in the text fields in editPresetViewController. The editPresetViewController is then shown via a popover
                 
-                let HeightWidthArr = preset.components(separatedBy: " x ")
-                let height = Double(HeightWidthArr[0])!
-                let width = Double(HeightWidthArr[1])!
-                
-                let vc : EditPresetViewController = storyboard!.instantiateViewController(withIdentifier: "editPreset") as! EditPresetViewController
-                let navigationController = UINavigationController(rootViewController: vc)
-                    
-                navigationController.modalPresentationStyle = UIModalPresentationStyle.popover
-                navigationController.preferredContentSize = CGSize(width: 400, height: 200)
-                vc.height = String(Int(height))
-                vc.width = String(Int(width))
-                   
-                self.present(navigationController, animated: true, completion: nil)
-                       
-                let popoverPresentationController = vc.popoverPresentationController
-                
-                popoverPresentationController?.sourceView = self.presetCellsView
-
-                popoverPresentationController?.sourceRect = CGRect(x: 0, y: 0, width: 0, height: 0)
+                  isEditingDimension = true
+                  showPopup()
                 
             }
             
@@ -528,20 +534,6 @@ class ViewController: UIViewController, VNDocumentCameraViewControllerDelegate, 
             }
             return UIMenu(title: "", children: [editAction, deleteAction])
         }
-    }
-    
-    @objc func editedPreset(_ tableView: UITableView) {
-        //gets the current row from contextMenuConfigurationForRowAt and the new dimensions from EditPresetViewController. If the row is currently selected, delete it from the selectedPreseta and presets arrays, and if it isn't currently selected, just delete it from the presets array.
-        
-        let row = UserDefaults.standard.integer(forKey: "row")
-        let editedDimensions = UserDefaults.standard.string(forKey: "editedDimension")
-        if(selectedPresets.contains(presets[row])) {
-            selectedPresets[row] = editedDimensions!
-            presets[row] = editedDimensions!
-        } else {
-            presets[row] = editedDimensions!
-        }
-        self.presetCellsView.reloadData()
     }
     
     @objc func emptyImagesArray(_ notification: Notification) {

@@ -7,6 +7,8 @@
 
 import UIKit
 
+public var isEditingDimension: Bool = false
+
 extension UIImage {
     
     func resizeImageWithoutAspectRatio(dimension: String) -> UIImage {

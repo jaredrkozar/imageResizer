@@ -24,12 +24,7 @@ class EditPresetViewController: UIViewController {
         super.viewDidLoad()
         //disables the save preset button, and gets the width and height, and fills those values in in their respective text fields
 
-        self.savePresetButton.isEnabled = false
-        savePresetButton.alpha = 0.5;
-        editedWidthField.text = width
-        editedHeightField.text = height
-        
-        title = "Edit Preset"
+       
         
     }
     
