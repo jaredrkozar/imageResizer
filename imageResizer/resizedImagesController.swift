@@ -24,7 +24,6 @@ class resizedImagesController: UICollectionViewController, UIAdaptivePresentatio
         let image = UIImage(systemName: "square.and.arrow.up")
         navigationItem.leftBarButtonItem = UIBarButtonItem(image: image, style: .done, target: self, action: #selector(shareButtonTapped))
         
-        checkImages()
         collectionView.dragDelegate = self
 
         collectionView.dragInteractionEnabled = true
@@ -33,6 +32,13 @@ class resizedImagesController: UICollectionViewController, UIAdaptivePresentatio
         collectionView.reloadData()
         collectionView.allowsMultipleSelection = true
         self.navigationController?.presentationController?.delegate = self
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        #if targetEnvironment(macCatalyst)
+        navigationController?.setNavigationBarHidden(true, animated: animated)
+        #endif
+        
     }
     
     func collectionView(_ collectionView: UICollectionView, itemsForBeginning session: UIDragSession, at indexPath: IndexPath) -> [UIDragItem] {
@@ -79,7 +85,7 @@ class resizedImagesController: UICollectionViewController, UIAdaptivePresentatio
         let imagetoAdd = imageDetails[indexPath.item]
         selectedImages.append(imagetoAdd.image)
         checkImages()
-        
+        print(selectedImages.count)
         if let cell = collectionView.cellForItem(at: indexPath) {
             //what a cell looks like when the user selects it
             cell.layer.borderWidth = 3.0

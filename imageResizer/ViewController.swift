@@ -478,11 +478,10 @@ class ViewController: UIViewController, VNDocumentCameraViewControllerDelegate, 
         
         for dimension in selectedPresets {
             let newImage = (imageView.image?.resizeImageWithoutAspectRatio(dimension: dimension))!
-            let cell = Images(dimensions: dimension, image: newImage)
-            imageDetails.append(cell)
+            let resizedImage = Images(dimensions: dimension, image: newImage)
+            imageDetails.append(resizedImage)
         }
         
-        print(imageDetails.count)
         //brings up the resizedImagesController() modal popover
         resizedImagesStoryboard()
     
@@ -493,10 +492,10 @@ class ViewController: UIViewController, VNDocumentCameraViewControllerDelegate, 
         
         for dimension in selectedPresets {
             let newImage = (imageView.image?.resizeImageWithAspectRatio(dimension: dimension))!
-            let cell = Images(dimensions: dimension, image: newImage)
-            imageDetails.append(cell)
+            let resizedImage = Images(dimensions: dimension, image: newImage)
+            imageDetails.append(resizedImage)
         }
-        print(imageDetails.count)
+        
         //brings up the resizedImagesController() modal popover
         resizedImagesStoryboard()
     }
@@ -553,10 +552,22 @@ class ViewController: UIViewController, VNDocumentCameraViewControllerDelegate, 
     }
     
     func resizedImagesStoryboard() {
-        let activity = NSUserActivity(activityType: "resizeImages")
-        UIApplication.shared.requestSceneSessionActivation(nil, userActivity: activity, options: nil) { (error) in
-            print(error)
-        }
+        #if targetEnvironment(macCatalyst)
+
+            let activity = NSUserActivity(activityType: "resizeImages")
+            UIApplication.shared.requestSceneSessionActivation(nil, userActivity: activity, options: nil) { (error) in
+                print(error)
+            }
+        
+        #else
+            
+            let storyboard : UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
+            let vc : resizedImagesController = storyboard.instantiateViewController(withIdentifier: "Detail") as! resizedImagesController
+            vc.imageDetails = self.imageDetails
+            let navigationController = UINavigationController(rootViewController: vc)
+            self.present(navigationController, animated: true, completion: nil)
+
+        #endif
     }
     
     
