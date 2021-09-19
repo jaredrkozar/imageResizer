@@ -17,12 +17,28 @@ class AddPresetViewController: UIViewController {
     @IBOutlet var savePresetButton: StandardButton!
     
     let nc = NotificationCenter.default
-    var height: String = ""
-    var width: String = ""
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        print(dimensionwidth)
+        print(dimensionheight)
+        print("EEEE")
+        switch UIDevice.current.userInterfaceIdiom {
+        case .pad:
+                
+            savePresetButton.isHidden = false
+            
+        case .mac:
+                
+            savePresetButton.isHidden = true
+    
+
+            default:
+                break
+        }
+        
+       
         if isEditingDimension == false {
             //disables the save preset button
             self.savePresetButton.isEnabled = false
@@ -32,8 +48,8 @@ class AddPresetViewController: UIViewController {
         } else {
             self.savePresetButton.isEnabled = true
             savePresetButton.alpha = 1.0;
-            widthField.text = width
-            heightField.text = height
+            widthField.text = dimensionwidth
+            heightField.text = dimensionheight
             
             title = "Edit Preset"
         }

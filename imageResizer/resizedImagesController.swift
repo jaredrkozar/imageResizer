@@ -8,7 +8,7 @@
 import UIKit
 import MobileCoreServices
 
-class resizedImagesController: UICollectionViewController, UIAdaptivePresentationControllerDelegate, UICollectionViewDragDelegate {
+class resizedImagesController: UICollectionViewController, UICollectionViewDragDelegate {
 
     var cellImage: UIImage!
     var dimension: String = ""
@@ -31,7 +31,6 @@ class resizedImagesController: UICollectionViewController, UIAdaptivePresentatio
         //reloads the collection view when its being presented, allows multiple selction, and sets the presentation controller delegate to this class.
         collectionView.reloadData()
         collectionView.allowsMultipleSelection = true
-        self.navigationController?.presentationController?.delegate = self
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -120,7 +119,7 @@ class resizedImagesController: UICollectionViewController, UIAdaptivePresentatio
       }
     
     @objc func doneButtonTapped(_ sender: UIBarButtonItem) {
-        NotificationCenter.default.post(name: Notification.Name( "emptyImagesArray"), object: nil)
+        imageDetails.removeAll()
         dismiss(animated: true, completion: nil)
     }
     

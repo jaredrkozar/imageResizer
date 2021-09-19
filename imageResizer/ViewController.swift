@@ -81,8 +81,6 @@ class ViewController: UIViewController, VNDocumentCameraViewControllerDelegate, 
         
         NotificationCenter.default.addObserver(self, selector: #selector(addtoTable(_:)), name: NSNotification.Name( "addWidthHeighttoTable"), object: nil)
 
-        NotificationCenter.default.addObserver(self, selector: #selector(emptyImagesArray(_:)), name: NSNotification.Name( "emptyImagesArray"), object: nil)
-        
         setUpImageViewDrop()
     }
     
@@ -412,31 +410,46 @@ class ViewController: UIViewController, VNDocumentCameraViewControllerDelegate, 
     @IBAction func addPresetButton(_ sender: Any) {
         //if the user taps the Add Preset button, a popover pops up allowing the user to enter a preset
         isEditingDimension = false
+        
         showPopup()
     }
     
     func showPopup() {
-        let vc : AddPresetViewController = storyboard!.instantiateViewController(withIdentifier: "addPreset") as! AddPresetViewController
-        let navigationController = UINavigationController(rootViewController: vc)
-            
+        
         if isEditingDimension == true {
             let HeightWidthArr = presets[UserDefaults.standard.integer(forKey: "row")]
                 .components(separatedBy: " x ")
-            let height = Double(HeightWidthArr[0])!
-            let width = Double(HeightWidthArr[1])!
-            vc.height = String(Int(height))
-            vc.width = String(Int(width))
+            var heightNum = Double(HeightWidthArr[0])!
+            let widthNum = Double(HeightWidthArr[1])!
+            dimensionheight = String(Int(heightNum))
+            dimensionwidth = String(Int(widthNum))
         }
         
-        navigationController.modalPresentationStyle = UIModalPresentationStyle.popover
-        navigationController.preferredContentSize = CGSize(width: 400, height: 200)
-           
-        self.present(navigationController, animated: true, completion: nil)
-        
-        let popoverPresentationController = vc.popoverPresentationController
-       popoverPresentationController?.sourceView = addPresetButton
-       popoverPresentationController?.permittedArrowDirections = UIPopoverArrowDirection.up
-       popoverPresentationController?.sourceRect = CGRect(x: 30, y: 20, width: 0, height: 5)
+        switch UIDevice.current.userInterfaceIdiom {
+        case .phone, .phone:
+            let vc : AddPresetViewController = storyboard!.instantiateViewController(withIdentifier: "addPreset") as! AddPresetViewController
+            let navigationController = UINavigationController(rootViewController: vc)
+            
+            navigationController.modalPresentationStyle = UIModalPresentationStyle.popover
+            navigationController.preferredContentSize = CGSize(width: 400, height: 200)
+               
+            self.present(navigationController, animated: true, completion: nil)
+            
+            let popoverPresentationController = vc.popoverPresentationController
+           popoverPresentationController?.sourceView = addPresetButton
+           popoverPresentationController?.permittedArrowDirections = UIPopoverArrowDirection.up
+            
+        case .mac:
+                
+            let activity = NSUserActivity(activityType: "addPreset")
+            UIApplication.shared.requestSceneSessionActivation(nil, userActivity: activity, options: nil) { (error) in
+                print(error)
+            }
+
+            default:
+                break
+        }
+
     }
     
     //Image Picker
@@ -535,11 +548,6 @@ class ViewController: UIViewController, VNDocumentCameraViewControllerDelegate, 
         }
     }
     
-    @objc func emptyImagesArray(_ notification: Notification) {
-        //remove all images from the imageDetails array
-        imageDetails.removeAll()
-    }
-    
     func removeSelectedPreset(indexPath: IndexPath, _ tableView: UITableView) {
         //removes currently selected row from the selectedPresets array
         if selectedPresets.count > 1 {
@@ -566,7 +574,6 @@ class ViewController: UIViewController, VNDocumentCameraViewControllerDelegate, 
 
         #endif
     }
-    
     
     override func viewWillAppear(_ animated: Bool) {
         #if targetEnvironment(macCatalyst)

@@ -11,6 +11,9 @@ public var isEditingDimension: Bool = false
 
 let vc = ViewController()
 
+public var dimensionwidth: String = ""
+public var dimensionheight: String = ""
+
 public var imageDetails: [Images] {
     //saves the color, for use throughout the app
     get{

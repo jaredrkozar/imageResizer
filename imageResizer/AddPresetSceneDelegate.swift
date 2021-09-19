@@ -1,13 +1,13 @@
 //
-//  resizedImageSceneDelegate.swift
-//  resizedImageSceneDelegate
+//  AddPresetSceneDelegate.swift
+//  AddPresetSceneDelegate
 //
-//  Created by Jared Kozar on 9/18/21.
+//  Created by Jared Kozar on 9/19/21.
 //
 
 import UIKit
 
-class resizedImageSceneDelegate: UIResponder, UIWindowSceneDelegate {
+class AddPresetSceneDelegate: UIResponder, UIWindowSceneDelegate {
      
 #if targetEnvironment(macCatalyst)
 var toolbarDelegate: NSToolbarDelegate?
@@ -21,7 +21,7 @@ var toolbarDelegate: NSToolbarDelegate?
         guard let windowScene = (scene as? UIWindowScene) else { return }
         
         #if targetEnvironment(macCatalyst)
-        toolbarDelegate = resizedImagesToolbarDelegate()
+        toolbarDelegate = addPresetToolbarDelegate()
         let toolbar = NSToolbar(identifier: "main")
         toolbar.delegate = toolbarDelegate
         toolbar.displayMode = .iconOnly
@@ -29,8 +29,12 @@ var toolbarDelegate: NSToolbarDelegate?
         toolbar.autosavesConfiguration = true
         toolbar.showsBaselineSeparator = false
 
-        windowScene.title = "Resized Images"
-
+        if isEditingDimension == true {
+            windowScene.title = "Edit Preset"
+        } else {
+            windowScene.title = "Add Preset"
+        }
+        
         if let titlebar = windowScene.titlebar {
             titlebar.toolbar = toolbar
             titlebar.toolbarStyle = .unified
@@ -41,8 +45,12 @@ var toolbarDelegate: NSToolbarDelegate?
         
         if let windowScene = scene as? UIWindowScene {
             let window = UIWindow(windowScene: windowScene)
-            let detailView = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "Detail")
-            window.rootViewController = detailView
+            let addPreset = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "addPreset")
+    
+            window.rootViewController = addPreset
+            
+            windowScene.sizeRestrictions?.maximumSize = CGSize(width: 275, height: 190)
+            
             self.window = window
             window.makeKeyAndVisible()
         }
@@ -53,16 +61,16 @@ var toolbarDelegate: NSToolbarDelegate?
 
 #if targetEnvironment(macCatalyst)
 extension NSToolbarItem.Identifier {
-    static let shareImages = NSToolbarItem.Identifier("com.jkozar.imageResizer.shareImages")
+    static let savePreset = NSToolbarItem.Identifier("com.jkozar.imageResizer.savePreset")
 }
 
-class resizedImagesToolbarDelegate: NSObject {
+class addPresetToolbarDelegate: NSObject {
 }
 
-extension resizedImagesToolbarDelegate: NSToolbarDelegate {
+extension addPresetToolbarDelegate: NSToolbarDelegate {
     func toolbarDefaultItemIdentifiers(_ toolbar: NSToolbar) -> [NSToolbarItem.Identifier] {
         let identifiers: [NSToolbarItemGroup.Identifier] = [
-            .shareImages
+            .savePreset
         ]
         return identifiers
     }
@@ -79,10 +87,10 @@ extension resizedImagesToolbarDelegate: NSToolbarDelegate {
         item.isBordered = true
         item.target = nil
         switch itemIdentifier {
-            case .shareImages:
-                item.image = UIImage(systemName: "square.and.arrow.up")
-                item.label = "Share Images"
-            item.action = #selector(resizedImagesController.shareButtonTapped(_:))
+            case .savePreset:
+                item.image = UIImage(systemName: "checkmark.circle")
+                item.label = "Save Preset"
+            item.action = #selector(AddPresetViewController.savePresetButtonTapped(_:))
                 toolbarItem = item
             default:
                 toolbarItem = nil
@@ -95,4 +103,5 @@ extension resizedImagesToolbarDelegate: NSToolbarDelegate {
 }
 
 #endif
+
 

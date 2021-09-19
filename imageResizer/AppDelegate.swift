@@ -10,14 +10,6 @@ import CoreData
 
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
-
-    override func buildMenu(with builder: UIMenuBuilder) {
-        super.buildMenu(with: builder)
-        
-        builder.remove(menu: .services)
-        builder.remove(menu: .format)
-        builder.remove(menu: .toolbar)
-    }
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
@@ -34,6 +26,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             let config = UISceneConfiguration(name: "Default Configuration", sessionRole: connectingSceneSession.role)
             config.delegateClass = resizedImageSceneDelegate.self
             return config
+        } else if options.userActivities.first?.activityType == "addPreset" {
+            let config = UISceneConfiguration(name: "Default Configuration", sessionRole: connectingSceneSession.role)
+            config.delegateClass = AddPresetSceneDelegate.self
+            return config
+                
         } else {
             let config = UISceneConfiguration(name: "Default Configuration", sessionRole: connectingSceneSession.role)
             config.delegateClass = SceneDelegate.self
