@@ -561,11 +561,8 @@ class ViewController: UIViewController, VNDocumentCameraViewControllerDelegate, 
         
         #else
             
-            let storyboard : UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
-            let vc : resizedImagesController = storyboard.instantiateViewController(withIdentifier: "Detail") as! resizedImagesController
-            vc.imageDetails = self.imageDetails
-            let navigationController = UINavigationController(rootViewController: vc)
-            self.present(navigationController, animated: true, completion: nil)
+            let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "Detail")
+            self.present(vc, animated: true, completion: nil)
 
         #endif
     }

@@ -36,9 +36,9 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         if let windowScene = scene as? UIWindowScene {
             let window = UIWindow(windowScene: windowScene)
     
-            let mobileHome = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "MainView")
+            let mainView = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "MainView")
             
-            window.rootViewController = mobileHome
+            window.rootViewController = mainView
             
             self.window = window
             window.makeKeyAndVisible()

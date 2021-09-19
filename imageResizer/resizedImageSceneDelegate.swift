@@ -41,8 +41,8 @@ var toolbarDelegate: NSToolbarDelegate?
         
         if let windowScene = scene as? UIWindowScene {
             let window = UIWindow(windowScene: windowScene)
-            let presetView = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "Detail")
-            window.rootViewController = presetView
+            let detailView = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "Detail")
+            window.rootViewController = detailView
             self.window = window
             window.makeKeyAndVisible()
         }
