@@ -243,90 +243,6 @@
             </objects>
             <point key="canvasLocation" x="19.921875" y="75.78125"/>
         </scene>
-        <!--Edit Preset View Controller-->
-        <scene sceneID="1WH-7M-IXq">
-            <objects>
-                <viewController storyboardIdentifier="editPreset" id="g4C-SS-IwC" customClass="EditPresetViewController" customModule="imageResizer" customModuleProvider="target" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="EK0-yr-bkR">
-                        <rect key="frame" x="0.0" y="0.0" width="768" height="1024"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Height" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="BK8-Ah-KFg">
-                                <rect key="frame" x="245" y="49" width="97" height="34"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="97" id="vh3-az-KIW"/>
-                                </constraints>
-                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits"/>
-                                <connections>
-                                    <action selector="checkText:" destination="g4C-SS-IwC" eventType="editingChanged" id="hb8-g8-w04"/>
-                                </connections>
-                            </textField>
-                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Width" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="ZmL-VA-FKI">
-                                <rect key="frame" x="249" y="111" width="93" height="34"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="93" id="3Md-a2-BgQ"/>
-                                </constraints>
-                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits"/>
-                                <connections>
-                                    <action selector="checkText:" destination="g4C-SS-IwC" eventType="editingChanged" id="60v-VS-1JA"/>
-                                </connections>
-                            </textField>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Height" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="iW2-M2-bUa">
-                                <rect key="frame" x="45" y="26" width="160" height="41"/>
-                                <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
-                                <nil key="textColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="oVw-n7-XfC" customClass="StandardButton" customModule="imageResizer" customModuleProvider="target">
-                                <rect key="frame" x="45" y="171" width="297" height="36"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="297" id="8XJ-3u-YCP"/>
-                                </constraints>
-                                <fontDescription key="fontDescription" type="system" weight="medium" pointSize="20"/>
-                                <state key="normal" title="Save Preset">
-                                    <color key="titleColor" name="AccentColor"/>
-                                </state>
-                                <connections>
-                                    <action selector="saveEditPresetButtonTapped:" destination="g4C-SS-IwC" eventType="touchUpInside" id="UUN-a2-zPj"/>
-                                </connections>
-                            </button>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Width" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tAx-sd-Wb0">
-                                <rect key="frame" x="45" y="88" width="160" height="41"/>
-                                <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
-                                <nil key="textColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                        </subviews>
-                        <viewLayoutGuide key="safeArea" id="m5o-uA-7zf"/>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                        <constraints>
-                            <constraint firstItem="ZmL-VA-FKI" firstAttribute="centerY" secondItem="tAx-sd-Wb0" secondAttribute="centerY" id="3HF-aK-TW3"/>
-                            <constraint firstItem="ZmL-VA-FKI" firstAttribute="top" secondItem="m5o-uA-7zf" secondAttribute="top" constant="91" id="8U6-6E-Ldr"/>
-                            <constraint firstItem="tAx-sd-Wb0" firstAttribute="leading" secondItem="m5o-uA-7zf" secondAttribute="leading" constant="45" id="9Mi-Gt-Oe0"/>
-                            <constraint firstItem="iW2-M2-bUa" firstAttribute="top" secondItem="m5o-uA-7zf" secondAttribute="top" constant="26" id="A8K-Lh-USO"/>
-                            <constraint firstItem="oVw-n7-XfC" firstAttribute="leading" secondItem="m5o-uA-7zf" secondAttribute="leading" constant="45" id="Pmn-Ta-Org"/>
-                            <constraint firstItem="BK8-Ah-KFg" firstAttribute="centerY" secondItem="iW2-M2-bUa" secondAttribute="centerY" id="Q4C-x9-Zl0"/>
-                            <constraint firstItem="oVw-n7-XfC" firstAttribute="top" secondItem="m5o-uA-7zf" secondAttribute="top" constant="151" id="Qi5-UQ-xiB"/>
-                            <constraint firstItem="tAx-sd-Wb0" firstAttribute="top" secondItem="m5o-uA-7zf" secondAttribute="top" constant="88" id="dTM-PR-65z"/>
-                            <constraint firstItem="ZmL-VA-FKI" firstAttribute="leading" secondItem="m5o-uA-7zf" secondAttribute="leading" constant="249" id="k6d-ib-hhI"/>
-                            <constraint firstItem="iW2-M2-bUa" firstAttribute="leading" secondItem="m5o-uA-7zf" secondAttribute="leading" constant="45" id="pbu-nn-YaK"/>
-                            <constraint firstItem="BK8-Ah-KFg" firstAttribute="leading" secondItem="m5o-uA-7zf" secondAttribute="leading" constant="245" id="uDl-eQ-2IY"/>
-                            <constraint firstItem="BK8-Ah-KFg" firstAttribute="top" secondItem="m5o-uA-7zf" secondAttribute="top" constant="29" id="uUo-rJ-BgN"/>
-                        </constraints>
-                    </view>
-                    <navigationItem key="navigationItem" id="Vqf-fZ-jXo"/>
-                    <connections>
-                        <outlet property="editedHeightField" destination="BK8-Ah-KFg" id="9qy-4t-RES"/>
-                        <outlet property="editedWidthField" destination="ZmL-VA-FKI" id="sSG-mx-i4w"/>
-                        <outlet property="savePresetButton" destination="oVw-n7-XfC" id="qjk-L4-L3z"/>
-                    </connections>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="pvK-bT-2N4" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="799.21875" y="843.75"/>
-        </scene>
         <!--Resized Image-->
         <scene sceneID="tL7-xT-HxX">
             <objects>
@@ -377,7 +293,7 @@
                 </collectionViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="QwY-Ch-6cE" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3208.59375" y="843.75"/>
+            <point key="canvasLocation" x="3246" y="139"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="4MW-sV-QTg">
@@ -396,7 +312,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="fzQ-JQ-py1" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2442.96875" y="843.75"/>
+            <point key="canvasLocation" x="2480" y="139"/>
         </scene>
     </scenes>
     <resources>
