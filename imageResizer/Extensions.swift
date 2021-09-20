@@ -13,6 +13,7 @@ let vc = ViewController()
 
 public var dimensionwidth: String = ""
 public var dimensionheight: String = ""
+public var selectedSource: String = ""
 
 public var imageDetails: [Images] {
     //saves the color, for use throughout the app

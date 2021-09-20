@@ -29,7 +29,6 @@ class ViewController: UIViewController, VNDocumentCameraViewControllerDelegate, 
     var sourcesArray = [UIImage]()
     var presets = UserDefaults.standard.stringArray(forKey: "presets") ?? [String]()
     var selectedPresets = [String]()
-    var newImage = UIImage()
     var imageArray = [Images]()
     var dimensionArray = [String]()
     
@@ -80,6 +79,8 @@ class ViewController: UIViewController, VNDocumentCameraViewControllerDelegate, 
         NotificationCenter.default.addObserver(self, selector: #selector(isImageSelected(_:)), name: NSNotification.Name( "isImageSelected"), object: nil)
         
         NotificationCenter.default.addObserver(self, selector: #selector(addtoTable(_:)), name: NSNotification.Name( "addWidthHeighttoTable"), object: nil)
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(sourceSelected(_:)), name: NSNotification.Name( "sourceSelected"), object: nil)
 
         setUpImageViewDrop()
     }
@@ -194,38 +195,45 @@ class ViewController: UIViewController, VNDocumentCameraViewControllerDelegate, 
     //Button code
     
     @objc func addImage() -> UIBarButtonItem {
-        var sources: [UIAction] {
-            return [
-                UIAction(title: "Scan Document", image: UIImage(systemName: "doc.text.viewfinder"), handler: { (_) in
-                self.presentDocumentScanner()
-                }),
-                
-                UIAction(title: "Camera", image: UIImage(systemName: "camera"), handler: { (_) in
-                self.presentCamera()
-                }),
-                
-                UIAction(title: "Photo Library", image: UIImage(systemName: "photo"), handler: { (_) in
-                self.presentPhotoPicker()
-                }),
-                
-                UIAction(title: "Files", image: UIImage(systemName: "folder"), handler: { (_) in
-                self.presentFilesPicker()
-                }),
-                
-                UIAction(title: "URL", image: UIImage(systemName: "link"), handler: { (_) in
-                self.presentURLPicker()
-                }),
-            ]
+        var listofsources = [UIAction]()
+        
+        for sort in Sources.allCases {
+           
+            listofsources.append( UIAction(title: "\(sort.title)", image: sort.icon, identifier: nil, attributes: []) { _ in
+               
+                selectedSource = sort.title
+                NotificationCenter.default.post(name: Notification.Name( "sourceSelected"), object: nil)
+           })
         }
         
         var sourcesMenu: UIMenu {
-            return UIMenu(title: "Import image from...", image: nil, identifier: nil, options: [], children: sources)
+            return UIMenu(title: "Import image from...", image: nil, identifier: nil, options: [], children: listofsources)
         }
         
         let addImageButton = UIBarButtonItem(title: nil, image: UIImage(systemName: "plus"), primaryAction: nil, menu: sourcesMenu)
         
         return addImageButton
     }
+    
+    @objc func sourceSelected(_ notification: Notification) {
+        
+        switch selectedSource {
+            case "Scan Document":
+                self.presentDocumentScanner()
+            case "Camera":
+                self.presentPhotoPicker()
+            case "Photo Library":
+                self.presentPhotoPicker()
+            case "Files":
+                self.presentFilesPicker()
+            case "URL":
+                self.presentURLPicker()
+            default:
+                print("Enjoy your day!")
+        }
+    }
+    
+    
     
     @objc func presentDocumentScanner() {
         self.sourcesArray.removeAll()
