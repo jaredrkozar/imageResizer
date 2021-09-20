@@ -9,9 +9,7 @@ import UIKit
 import MobileCoreServices
 
 class resizedImagesController: UICollectionViewController, UICollectionViewDragDelegate {
-
-    var cellImage: UIImage!
-    var dimension: String = ""
+    
     var selectedImages = [UIImage]()
     
     override func viewDidLoad() {
@@ -130,11 +128,5 @@ class resizedImagesController: UICollectionViewController, UICollectionViewDragD
         } else {
             navigationItem.leftBarButtonItem?.isEnabled = true
         }
-    }
-    
-    func presentationControllerDidDismiss(_ presentationController:
-                                            UIPresentationController) {
-        //removes all images when the presentation controller is swiped down
-        imageDetails.removeAll()
     }
 }

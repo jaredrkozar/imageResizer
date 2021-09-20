@@ -10,7 +10,6 @@
 		7F4F8548266C8F4A00D2CB2A /* resizedImagesController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F4F8547266C8F4A00D2CB2A /* resizedImagesController.swift */; };
 		7F4F854A266C90F800D2CB2A /* ImageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F4F8549266C90F800D2CB2A /* ImageCell.swift */; };
 		7F4F854C266C962300D2CB2A /* Images.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F4F854B266C962300D2CB2A /* Images.swift */; };
-		7F83278926BA08590068DBC9 /* ToolbarDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F83278826BA08590068DBC9 /* ToolbarDelegate.swift */; };
 		7F89443E26F674B0000AF308 /* resizedImageSceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F89443D26F674B0000AF308 /* resizedImageSceneDelegate.swift */; };
 		7F89444326F6F9FA000AF308 /* MenuBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F89444226F6F9FA000AF308 /* MenuBar.swift */; };
 		7F89444626F7BA4D000AF308 /* AddPresetSceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F89444526F7BA4D000AF308 /* AddPresetSceneDelegate.swift */; };
@@ -29,7 +28,6 @@
 		7F4F8547266C8F4A00D2CB2A /* resizedImagesController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = resizedImagesController.swift; sourceTree = "<group>"; };
 		7F4F8549266C90F800D2CB2A /* ImageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageCell.swift; sourceTree = "<group>"; };
 		7F4F854B266C962300D2CB2A /* Images.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Images.swift; sourceTree = "<group>"; };
-		7F83278826BA08590068DBC9 /* ToolbarDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToolbarDelegate.swift; sourceTree = "<group>"; };
 		7F89443D26F674B0000AF308 /* resizedImageSceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = resizedImageSceneDelegate.swift; sourceTree = "<group>"; };
 		7F89444226F6F9FA000AF308 /* MenuBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuBar.swift; sourceTree = "<group>"; };
 		7F89444526F7BA4D000AF308 /* AddPresetSceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddPresetSceneDelegate.swift; sourceTree = "<group>"; };
@@ -84,7 +82,6 @@
 				7F89444526F7BA4D000AF308 /* AddPresetSceneDelegate.swift */,
 				7F89444226F6F9FA000AF308 /* MenuBar.swift */,
 				7FEF76C2265F0F9D007E6043 /* ViewController.swift */,
-				7F83278826BA08590068DBC9 /* ToolbarDelegate.swift */,
 				7FD9361626B8B5BA009123ED /* Extensions.swift */,
 				7FEF76C4265F0F9D007E6043 /* Main.storyboard */,
 				7F4F8547266C8F4A00D2CB2A /* resizedImagesController.swift */,
@@ -170,7 +167,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				7F89443E26F674B0000AF308 /* resizedImageSceneDelegate.swift in Sources */,
-				7F83278926BA08590068DBC9 /* ToolbarDelegate.swift in Sources */,
 				7F89444326F6F9FA000AF308 /* MenuBar.swift in Sources */,
 				7F4F8548266C8F4A00D2CB2A /* resizedImagesController.swift in Sources */,
 				7FEF76C9265F0F9D007E6043 /* imageResizer.xcdatamodeld in Sources */,

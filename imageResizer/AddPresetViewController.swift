@@ -26,16 +26,11 @@ class AddPresetViewController: UIViewController {
         print("EEEE")
         switch UIDevice.current.userInterfaceIdiom {
         case .pad:
-                
             savePresetButton.isHidden = false
-            
         case .mac:
-                
             savePresetButton.isHidden = true
-    
-
-            default:
-                break
+        default:
+            break
         }
         
        
@@ -69,7 +64,7 @@ class AddPresetViewController: UIViewController {
     
     @IBAction func savePresetButtonTapped(_ sender: StandardButton) {
         //gets the text in the height and width field's UITextField, and  concatenate them together to get the dimension. This dimension is saved, where it's added to the table
-        
+
         let width = widthField.text
         let height = heightField.text
         
