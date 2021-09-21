@@ -16,7 +16,7 @@ extension AppDelegate {
         
         // Adds import commands and keyboard shorcuts to the file menu
         builder.insertChild(addPresets(), atStartOfMenu: .file)
-      builder.insertChild(importMenu(), atEndOfMenu: .file)
+      builder.insertChild(importMenu(), atStartOfMenu: .file)
       
     }
         
@@ -45,13 +45,13 @@ extension AppDelegate {
                          modifierFlags: .command,
                          propertyList: nil)
         
-        let openMenu =
+        let importMenu =
             UIMenu(title: "",
                    image: nil,
-                   identifier: UIMenu.Identifier("com.example.apple-samplecode.menus.openMenu"),
+                   identifier: UIMenu.Identifier("com.jkozar.imageResizer.importMenu"),
                    options: .displayInline,
                    children: [cameracommand, photosCommand, urlCommand])
-        return openMenu
+        return importMenu
     }
     
     func addPresets() -> UIMenu {
@@ -61,17 +61,17 @@ extension AppDelegate {
                          image: nil,
                          action: #selector(ViewController.addPresetButton(_:)),
                          input: "P",
-                         modifierFlags: [.command],
+                         modifierFlags: [.command, .shift],
                          propertyList: nil)
         addPreset.discoverabilityTitle = "Add New Preset"
         
-        let openMenu =
+        let newPreset =
             UIMenu(title: "",
                    image: nil,
-                   identifier: UIMenu.Identifier("com.example.apple-samplecode.menus.openMenu"),
+                   identifier: UIMenu.Identifier("com.jkozar.imageResizer.newPreset"),
                    options: .displayInline,
                    children: [addPreset])
-        return openMenu
+        return newPreset
         
     }
 }

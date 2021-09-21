@@ -233,8 +233,6 @@ class ViewController: UIViewController, VNDocumentCameraViewControllerDelegate, 
         }
     }
     
-    
-    
     @objc func presentDocumentScanner() {
         self.sourcesArray.removeAll()
 
