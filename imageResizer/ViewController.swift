@@ -6,11 +6,6 @@
 //
 
 import UIKit
-import VisionKit
-import Vision
-import PhotosUI
-import MobileCoreServices
-import UniformTypeIdentifiers
 
 class StandardButton: UIButton {
     override func draw(_ rect: CGRect) {
@@ -24,9 +19,8 @@ class StandardButton: UIButton {
     }
 }
 
-class ViewController: UIViewController, VNDocumentCameraViewControllerDelegate, UIImagePickerControllerDelegate, PHPickerViewControllerDelegate & UINavigationControllerDelegate, UIDocumentPickerDelegate, UITableViewDataSource, UITableViewDelegate, UIAdaptivePresentationControllerDelegate, UIDropInteractionDelegate {
+class ViewController: UIViewController & UINavigationControllerDelegate, UITableViewDataSource, UITableViewDelegate, UIDropInteractionDelegate {
     
-    var sourcesArray = [UIImage]()
     var presets = UserDefaults.standard.stringArray(forKey: "presets") ?? [String]()
     var selectedPresets = [String]()
     var imageArray = [Images]()
@@ -221,7 +215,7 @@ class ViewController: UIViewController, VNDocumentCameraViewControllerDelegate, 
             case "Scan Document":
                 self.presentDocumentScanner()
             case "Camera":
-                self.presentPhotoPicker()
+                self.presentCamera()
             case "Photo Library":
                 self.presentPhotoPicker()
             case "Files":
@@ -231,24 +225,6 @@ class ViewController: UIViewController, VNDocumentCameraViewControllerDelegate, 
             default:
                 print("Enjoy your day!")
         }
-    }
-    
-    @objc func presentDocumentScanner() {
-        self.sourcesArray.removeAll()
-
-        let vc = VNDocumentCameraViewController()
-        vc.delegate = self
-        self.present(vc, animated: true)
-    }
-    
-    @objc func presentCamera() {
-        self.sourcesArray.removeAll()
-
-        let vc = UIImagePickerController()
-        vc.sourceType = .camera
-        vc.allowsEditing = true
-        vc.delegate = self
-        self.present(vc, animated: true)
     }
     
     func tableView(_ tableView: UITableView, performDropWith coordinator: UITableViewDropCoordinator) {
@@ -280,126 +256,6 @@ class ViewController: UIViewController, VNDocumentCameraViewControllerDelegate, 
 
           }
       }
-    }
-                                 
-    @objc func presentPhotoPicker() {
-        self.sourcesArray.removeAll()
-        var configuration = PHPickerConfiguration()
-        configuration.filter = .images
-        let picker = PHPickerViewController(configuration: configuration)
-        picker.delegate = self
-        self.present(picker, animated: true)
-    }
-    
-    @objc func presentFilesPicker() {
-        self.sourcesArray.removeAll()
-        let documentpicker = UIDocumentPickerViewController(forOpeningContentTypes: [UTType.image])
-        documentpicker.delegate = self
-            self.present(documentpicker, animated: true, completion: nil)
-    }
-    
-    @objc func presentURLPicker() {
-        self.sourcesArray.removeAll()
-        
-        let enterURL = UIAlertController(title: "Enter URL", message: "Enter the direct URL of the image you want to get the text from.", preferredStyle: .alert)
-    
-        enterURL.addTextField()
-        
-        enterURL.addAction(UIAlertAction(title: "Cancel", style: .cancel))
-            
-        enterURL.addAction(UIAlertAction(title: "OK", style: .default) { [weak self, weak enterURL] _ in
-
-            let textField = enterURL?.textFields![0]
-                    
-            let url = URL(string: (textField?.text)!)
-
-            if UIApplication.shared.canOpenURL(url! as URL) == true {
-                DispatchQueue.global().async { [weak self] in
-                    if let data = try? Data(contentsOf: url!) {
-                        if let image = UIImage(data: data) {
-                            DispatchQueue.main.async {
-                                self!.imageView.image = image.resizeImageWithAspectRatio(dimension: "773.5 x 284")
-                                NotificationCenter.default.post(name: Notification.Name( "isImageSelected"), object: nil)
-                                
-                            }
-                        }
-                    }
-                }
-            } else {
-                let invalidURL = UIAlertController(title: "Invalid URL", message: "The direct image URL you entered is invalid. Please enter another URL.", preferredStyle: .alert)
-                
-                invalidURL.addAction(UIAlertAction(title: "Cancel", style: .cancel))
-                
-                self!.present(invalidURL, animated: true)
-            }
-        })
-        present(enterURL, animated: true)
-    }
-    
-    public func documentPicker(_ controller: UIDocumentPickerViewController, didPickDocumentsAt urls: [URL]) {
-        
-        guard let myURL = urls.first else {
-            return
-        }
-        
-        myURL.startAccessingSecurityScopedResource()
-        do {
-            let imageData = try Data(contentsOf: myURL)
-            let image = UIImage(data: imageData)!
-            imageView.image = image.resizeImageWithAspectRatio(dimension: "773.5 x 284")
-            NotificationCenter.default.post(name: Notification.Name( "isImageSelected"), object: nil)
-        } catch {
-            print("There was an error loading the image: \(error). Please try again.")
-        }
-        
-        myURL.startAccessingSecurityScopedResource()
-        
-    }
-    
-    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
-            picker.dismiss(animated: true)
-
-            guard let image = info[.editedImage] as? UIImage else {
-                print("No image was found at this location. Please try again.")
-                return
-            }
-
-            dismiss(animated: true, completion: nil)
-        imageView.image = image.resizeImageWithAspectRatio(dimension: "773.5 x 284")
-            NotificationCenter.default.post(name: Notification.Name( "isImageSelected"), object: nil)
-    }
-
-    func documentCameraViewController(_ controller: VNDocumentCameraViewController, didFailWithError error: Error) {
-        let errorAlert = UIAlertController(title: "Failed to scan document", message: "The document couldn't be scanned right now. Please try again.", preferredStyle: .alert)
-        
-        errorAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
-        
-        present(errorAlert, animated: true)
-        
-        controller.dismiss(animated: true)
-    }
-    
-    func documentPickerWasCancelled(_ controller: UIDocumentPickerViewController) {
-        dismiss(animated: true, completion: nil)
-    }
-    
-    func documentCameraViewControllerDidCancel(_ controller: VNDocumentCameraViewController) {
-        dismiss(animated: true, completion: nil)
-    }
-    
-    func documentCameraViewController(_ controller:            VNDocumentCameraViewController, didFinishWith scan: VNDocumentCameraScan) {
-        // Process the scanned pages
-        
-        for pageNumber in 0..<scan.pageCount {
-            let image = scan.imageOfPage(at: pageNumber)
-            
-            sourcesArray.append(image)
-        }
-        
-        controller.dismiss(animated: true)
-        print("Finished scanning document \(kCGPDFContextTitle)")
-        imageView.image = sourcesArray[0].resizeImageWithAspectRatio(dimension: "773.5 x 284")
-        NotificationCenter.default.post(name: Notification.Name( "isImageSelected"), object: nil)
     }
     
     @IBAction func resizeButtonTapped(_ sender: Any) {
@@ -456,25 +312,6 @@ class ViewController: UIViewController, VNDocumentCameraViewControllerDelegate, 
                 break
         }
 
-    }
-    
-    //Image Picker
-    
-    func picker(_ picker: PHPickerViewController, didFinishPicking results: [PHPickerResult]) {
-        //set the photo symbol to previousImage and set the image the user selected to imageView.image, which displays it in the image view on the left side of the screen
-        
-        if let itemProvider = results.first?.itemProvider, itemProvider.canLoadObject(ofClass: UIImage.self) {
-            
-            let previousImage = imageView.image
-            itemProvider.loadObject(ofClass: UIImage.self) { [weak self] image, error in
-                DispatchQueue.main.async {
-                    guard let self = self, let image = image as? UIImage, self.imageView.image == previousImage else { return }
-                    self.imageView.image = image.resizeImageWithAspectRatio(dimension: "773.5 x 284")
-                    NotificationCenter.default.post(name: Notification.Name( "isImageSelected"), object: nil)
-                }
-            }
-        }
-        picker.dismiss(animated: true, completion: nil)
     }
     
     //Image Selection
