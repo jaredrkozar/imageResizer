@@ -31,11 +31,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             config.delegateClass = AddPresetSceneDelegate.self
             return config
                 
-        } else {
-            let config = UISceneConfiguration(name: "Default Configuration", sessionRole: connectingSceneSession.role)
-            config.delegateClass = SceneDelegate.self
-            return config
         }
+        
+        return UISceneConfiguration(name: "Default Configuration", sessionRole: connectingSceneSession.role)
+        
     }
 
     func application(_ application: UIApplication, didDiscardSceneSessions sceneSessions: Set<UISceneSession>) {
