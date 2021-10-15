@@ -12,10 +12,8 @@ class resizedImageSceneDelegate: UIResponder, UIWindowSceneDelegate {
 #if targetEnvironment(macCatalyst)
 var toolbarDelegate: NSToolbarDelegate?
 #endif
-
-    
     var window: UIWindow?
-    
+
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
         
         guard let windowScene = (scene as? UIWindowScene) else { return }
@@ -91,7 +89,6 @@ extension resizedImagesToolbarDelegate: NSToolbarDelegate {
         item.autovalidates = true
         return toolbarItem
     }
-    
 }
 
 #endif

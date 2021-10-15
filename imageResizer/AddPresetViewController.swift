@@ -21,9 +21,6 @@ class AddPresetViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        print(dimensionwidth)
-        print(dimensionheight)
-        print("EEEE")
         switch UIDevice.current.userInterfaceIdiom {
         case .pad:
             savePresetButton.isHidden = false

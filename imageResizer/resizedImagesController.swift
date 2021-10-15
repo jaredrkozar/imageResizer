@@ -6,7 +6,6 @@
 //
 
 import UIKit
-import MobileCoreServices
 
 class resizedImagesController: UICollectionViewController, UICollectionViewDragDelegate {
     
@@ -14,7 +13,7 @@ class resizedImagesController: UICollectionViewController, UICollectionViewDragD
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+     
         //sets up the UIBarButton items and since no images are currently selected, the left bar button items (the share button) is set to false (this is done in the checkImages() function)
         title = "Resized Images"
         navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Done", style: .done, target: self, action: #selector(doneButtonTapped))
