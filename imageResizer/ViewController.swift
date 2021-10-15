@@ -289,7 +289,7 @@ class ViewController: UIViewController & UINavigationControllerDelegate, UITable
         }
         
         switch UIDevice.current.userInterfaceIdiom {
-        case .phone, .phone:
+        case .pad:
             let vc : AddPresetViewController = storyboard!.instantiateViewController(withIdentifier: "addPreset") as! AddPresetViewController
             let navigationController = UINavigationController(rootViewController: vc)
             
@@ -415,7 +415,6 @@ class ViewController: UIViewController & UINavigationControllerDelegate, UITable
             
             let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "Detail")
             self.present(vc, animated: true, completion: nil)
-
         #endif
     }
     
@@ -423,6 +422,5 @@ class ViewController: UIViewController & UINavigationControllerDelegate, UITable
         #if targetEnvironment(macCatalyst)
         navigationController?.setNavigationBarHidden(true, animated: animated)
         #endif
-        
     }
 }

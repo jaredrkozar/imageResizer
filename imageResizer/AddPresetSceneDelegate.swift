@@ -54,7 +54,6 @@ var toolbarDelegate: NSToolbarDelegate?
             self.window = window
             window.makeKeyAndVisible()
         }
-       
     }
 }
 

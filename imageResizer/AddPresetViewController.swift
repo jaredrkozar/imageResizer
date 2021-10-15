@@ -64,7 +64,7 @@ class AddPresetViewController: UIViewController {
     
     @IBAction func savePresetButtonTapped(_ sender: StandardButton) {
         //gets the text in the height and width field's UITextField, and  concatenate them together to get the dimension. This dimension is saved, where it's added to the table
-
+        
         let width = widthField.text
         let height = heightField.text
         
@@ -72,6 +72,20 @@ class AddPresetViewController: UIViewController {
         UserDefaults.standard.set(dimension, forKey: "dimension")
         
         NotificationCenter.default.post(name: Notification.Name( "addWidthHeighttoTable"), object: nil)
+        
+        switch UIDevice.current.userInterfaceIdiom {
+        case .mac:
+            
+            if let session = self.view.window?.windowScene?.session {
+              let options = UIWindowSceneDestructionRequestOptions()
+              options.windowDismissalAnimation = .commit
+              UIApplication.shared.requestSceneSessionDestruction(session, options: options, errorHandler: nil)
+            }
+
+            default:
+                break
+        }
+        
         dismiss(animated: true, completion: nil)
         
     }

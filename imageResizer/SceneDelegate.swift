@@ -110,7 +110,6 @@ extension MainToolbarDelegate: NSToolbarDelegate {
         item.autovalidates = true
         return toolbarItem
     }
-    
 }
 
 #endif
