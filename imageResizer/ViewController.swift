@@ -131,16 +131,17 @@ class ViewController: UIViewController & UINavigationControllerDelegate, UITable
             
         } else {
             presets.append(dimension!)
-            
             UserDefaults.standard.set(presets, forKey: "presets")
         }
+        noPresetsLabel.isHidden = true
         self.presetCellsView.reloadData()
     }
     
     func noPresets() {
         //checks of there are any presets in the table view; if there no presets, display a message telling the user to add a preset, and if there are presets, don;t display the message
-        
+
         if presets.count == 0 {
+            noPresetsLabel.isHidden = false
             noPresetsLabel.text = "No presets available. Add a preset using the 'Add Preset' button above and you'll see them here."
             resizeImageButton.isEnabled = false;
             resizeImageButton.alpha = 0.5;
@@ -384,7 +385,7 @@ class ViewController: UIViewController & UINavigationControllerDelegate, UITable
                 if selectedPresets.contains(preset) {
                     removeSelectedPreset(indexPath: indexPath, tableView)
                 }
-                self.noPresets()
+                noPresets()
                 
             }
             return UIMenu(title: "", children: [editAction, deleteAction])
