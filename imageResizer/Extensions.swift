@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import Foundation
 
 public var isEditingDimension: Bool = false
 
@@ -46,6 +47,7 @@ extension UIImage {
         
         let heightnum = Double(HeightWidthArr[0])!
         let widthnum = Double(HeightWidthArr[1])!
+
         let widthRatio  = widthnum  / Double(self.size.width)
         let heightRatio = heightnum / Double(self.size.height)
 
@@ -56,6 +58,7 @@ extension UIImage {
         } else {
             newSize = CGSize(width: Double(self.size.width) * widthRatio, height: Double(self.size.height) * widthRatio)
         }
+        CGSize(width: Double(self.size.width) * heightRatio, height: Double(Int(self.size.height)) * heightRatio)
         
         //creates a new image based off of the dimensions found above
         UIGraphicsBeginImageContextWithOptions(newSize, false, 1.0)

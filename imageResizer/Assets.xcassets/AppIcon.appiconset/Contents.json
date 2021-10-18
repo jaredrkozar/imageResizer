@@ -1,169 +1,169 @@
 {
   "images" : [
     {
-      "filename" : "Image 6-27-21 at 1.53 PM (2)-1.jpg",
+      "filename" : "AppIcon20x20@2x.png",
       "idiom" : "iphone",
       "scale" : "2x",
       "size" : "20x20"
     },
     {
-      "filename" : "Image 6-27-21 at 1.57 PM (9).jpg",
+      "filename" : "AppIcon20x20@3x.png",
       "idiom" : "iphone",
       "scale" : "3x",
       "size" : "20x20"
     },
     {
-      "filename" : "Image 6-27-21 at 1.57 PM (4)-1.jpg",
+      "filename" : "AppIcon29x29@2x.png",
       "idiom" : "iphone",
       "scale" : "2x",
       "size" : "29x29"
     },
     {
-      "filename" : "Image 6-27-21 at 2.02 PM (1).jpg",
+      "filename" : "AppIcon29x29@3x.png",
       "idiom" : "iphone",
       "scale" : "3x",
       "size" : "29x29"
     },
     {
-      "filename" : "Image 6-27-21 at 1.53 PM-2.jpg",
+      "filename" : "AppIcon40x40@2x.png",
       "idiom" : "iphone",
       "scale" : "2x",
       "size" : "40x40"
     },
     {
-      "filename" : "Image 6-27-21 at 1.57 PM (5)-2.jpg",
+      "filename" : "AppIcon60x60@2x-1.png",
       "idiom" : "iphone",
       "scale" : "3x",
       "size" : "40x40"
     },
     {
-      "filename" : "Image 6-27-21 at 1.57 PM (5)-1.jpg",
+      "filename" : "AppIcon60x60@2x.png",
       "idiom" : "iphone",
       "scale" : "2x",
       "size" : "60x60"
     },
     {
-      "filename" : "Image 6-27-21 at 1.57 PM (8).jpg",
+      "filename" : "AppIcon60x60@3x.png",
       "idiom" : "iphone",
       "scale" : "3x",
       "size" : "60x60"
     },
     {
-      "filename" : "Image 6-27-21 at 1.53 PM (1)-1.jpg",
+      "filename" : "AppIcon20x20.png",
       "idiom" : "ipad",
       "scale" : "1x",
       "size" : "20x20"
     },
     {
-      "filename" : "Image 6-27-21 at 1.53 PM (2)-3.jpg",
+      "filename" : "AppIcon20x20@2x-1.png",
       "idiom" : "ipad",
       "scale" : "2x",
       "size" : "20x20"
     },
     {
-      "filename" : "Image 6-27-21 at 2.02 PM.jpg",
+      "filename" : "AppIcon29x29.png",
       "idiom" : "ipad",
       "scale" : "1x",
       "size" : "29x29"
     },
     {
-      "filename" : "Image 6-27-21 at 1.57 PM (4).jpg",
+      "filename" : "AppIcon29x29@3x-1.png",
       "idiom" : "ipad",
       "scale" : "2x",
       "size" : "29x29"
     },
     {
-      "filename" : "Image 6-27-21 at 1.53 PM (2)-2.jpg",
+      "filename" : "AppIcon20x20@2x-2.png",
       "idiom" : "ipad",
       "scale" : "1x",
       "size" : "40x40"
     },
     {
-      "filename" : "Image 6-27-21 at 1.53 PM-1.jpg",
+      "filename" : "AppIcon40x40@2x-1.png",
       "idiom" : "ipad",
       "scale" : "2x",
       "size" : "40x40"
     },
     {
-      "filename" : "Image 6-27-21 at 1.50 PM (2).jpg",
+      "filename" : "AppIcon76x76.png",
       "idiom" : "ipad",
       "scale" : "1x",
       "size" : "76x76"
     },
     {
-      "filename" : "Image 6-27-21 at 2.03 PM.jpg",
+      "filename" : "AppIcon76x76@2x.png",
       "idiom" : "ipad",
       "scale" : "2x",
       "size" : "76x76"
     },
     {
-      "filename" : "Image 6-27-21 at 1.50 PM.jpg",
+      "filename" : "AppIcon83.5x83.5@2x.png",
       "idiom" : "ipad",
       "scale" : "2x",
       "size" : "83.5x83.5"
     },
     {
-      "filename" : "1024-1024-appicon .png",
+      "filename" : "imageResizer.png",
       "idiom" : "ios-marketing",
       "scale" : "1x",
       "size" : "1024x1024"
     },
     {
-      "filename" : "Image 6-27-21 at 11.53 PM (2).jpg",
+      "filename" : "AppIcon16x16.png",
       "idiom" : "mac",
       "scale" : "1x",
       "size" : "16x16"
     },
     {
-      "filename" : "Image 6-27-21 at 11.53 PM.jpg",
+      "filename" : "AppIcon16x16@2x.png",
       "idiom" : "mac",
       "scale" : "2x",
       "size" : "16x16"
     },
     {
-      "filename" : "Image 6-27-21 at 11.53 PM-1.jpg",
+      "filename" : "AppIcon32x32.png",
       "idiom" : "mac",
       "scale" : "1x",
       "size" : "32x32"
     },
     {
-      "filename" : "Image 6-27-21 at 11.53 PM (5).jpg",
+      "filename" : "AppIcon32x32@2x.png",
       "idiom" : "mac",
       "scale" : "2x",
       "size" : "32x32"
     },
     {
-      "filename" : "Image 6-27-21 at 11.53 PM (1).jpg",
+      "filename" : "AppIcon128x128.png",
       "idiom" : "mac",
       "scale" : "1x",
       "size" : "128x128"
     },
     {
-      "filename" : "Image 6-27-21 at 11.53 PM (3).jpg",
+      "filename" : "AppIcon128x128@2x.png",
       "idiom" : "mac",
       "scale" : "2x",
       "size" : "128x128"
     },
     {
-      "filename" : "Image 6-27-21 at 11.53 PM (3)-1.jpg",
+      "filename" : "AppIcon256x256.png",
       "idiom" : "mac",
       "scale" : "1x",
       "size" : "256x256"
     },
     {
-      "filename" : "Image 6-27-21 at 11.53 PM (4).jpg",
+      "filename" : "AppIcon256x256@2x.png",
       "idiom" : "mac",
       "scale" : "2x",
       "size" : "256x256"
     },
     {
-      "filename" : "Image 6-27-21 at 11.53 PM (4)-1.jpg",
+      "filename" : "AppIcon512x512.png",
       "idiom" : "mac",
       "scale" : "1x",
       "size" : "512x512"
     },
     {
-      "filename" : "1024-1024-appicon  2.png",
+      "filename" : "imageResizer (Mac).png",
       "idiom" : "mac",
       "scale" : "2x",
       "size" : "512x512"
