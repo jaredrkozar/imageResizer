@@ -80,6 +80,44 @@
 			path = Sources;
 			sourceTree = "<group>";
 		};
+		7F8BBDEC276D5FC3005B07C1 /* Mac */ = {
+			isa = PBXGroup;
+			children = (
+				7F8BBDED276D5FCD005B07C1 /* Scana Delegates */,
+				7F89444226F6F9FA000AF308 /* MenuBar.swift */,
+			);
+			path = Mac;
+			sourceTree = "<group>";
+		};
+		7F8BBDED276D5FCD005B07C1 /* Scana Delegates */ = {
+			isa = PBXGroup;
+			children = (
+				7FEF76C0265F0F9D007E6043 /* SceneDelegate.swift */,
+				7F89444526F7BA4D000AF308 /* AddPresetSceneDelegate.swift */,
+				7F89443D26F674B0000AF308 /* resizedImageSceneDelegate.swift */,
+			);
+			path = "Scana Delegates";
+			sourceTree = "<group>";
+		};
+		7F8BBDEE276D5FF8005B07C1 /* View Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				7FEF76C2265F0F9D007E6043 /* ViewController.swift */,
+				7F4F8547266C8F4A00D2CB2A /* resizedImagesController.swift */,
+				7F95C9F12666BC7400A8F7D8 /* AddPresetViewController.swift */,
+			);
+			path = "View Controllers";
+			sourceTree = "<group>";
+		};
+		7F8BBDEF276D6017005B07C1 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				7F4F8549266C90F800D2CB2A /* ImageCell.swift */,
+				7F4F854B266C962300D2CB2A /* Images.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
 		7FEF76B2265F0F9D007E6043 = {
 			isa = PBXGroup;
 			children = (
@@ -101,19 +139,13 @@
 			children = (
 				7FEF76D82661A7B2007E6043 /* imageResizer.entitlements */,
 				7FEF76BE265F0F9D007E6043 /* AppDelegate.swift */,
-				7FEF76C0265F0F9D007E6043 /* SceneDelegate.swift */,
-				7F89443D26F674B0000AF308 /* resizedImageSceneDelegate.swift */,
-				7F89444926F91173000AF308 /* Sources.swift */,
-				7F89444526F7BA4D000AF308 /* AddPresetSceneDelegate.swift */,
-				7F89444226F6F9FA000AF308 /* MenuBar.swift */,
-				7FEF76C2265F0F9D007E6043 /* ViewController.swift */,
-				7F89447426FAB747000AF308 /* Sources */,
 				7FD9361626B8B5BA009123ED /* Extensions.swift */,
 				7FEF76C4265F0F9D007E6043 /* Main.storyboard */,
-				7F4F8547266C8F4A00D2CB2A /* resizedImagesController.swift */,
-				7F4F8549266C90F800D2CB2A /* ImageCell.swift */,
-				7F4F854B266C962300D2CB2A /* Images.swift */,
-				7F95C9F12666BC7400A8F7D8 /* AddPresetViewController.swift */,
+				7F89444926F91173000AF308 /* Sources.swift */,
+				7F8BBDEC276D5FC3005B07C1 /* Mac */,
+				7F89447426FAB747000AF308 /* Sources */,
+				7F8BBDEF276D6017005B07C1 /* Models */,
+				7F8BBDEE276D5FF8005B07C1 /* View Controllers */,
 				7FEF76CA265F0F9E007E6043 /* Assets.xcassets */,
 				7FEF76CC265F0F9E007E6043 /* LaunchScreen.storyboard */,
 				7FEF76CF265F0F9E007E6043 /* Info.plist */,
