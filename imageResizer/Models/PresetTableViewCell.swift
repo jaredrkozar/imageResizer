@@ -22,7 +22,7 @@ class PresetTableViewCell: UITableViewCell {
 
         // Configure the view for the selected state
         
-        self.accessoryType = selected ? .checkmark : .none
+        self.accessoryType = isSelected ? .checkmark : .none
     }
     
 }

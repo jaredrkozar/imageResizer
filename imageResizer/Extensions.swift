@@ -69,3 +69,20 @@ extension UIImage {
     }
 }
 
+extension Array where Element == Preset {
+    func save() {
+        if let savedData = try? NSKeyedArchiver.archivedData(withRootObject: self, requiringSecureCoding: false) {
+            let defaults = UserDefaults.standard
+            defaults.set(savedData, forKey: "presets")
+        }
+    }
+    
+    mutating func load() -> [Preset] {
+        if let savedPresets = UserDefaults.standard.object(forKey: "presets") as? Data {
+            if let decodedPresets = try? NSKeyedUnarchiver.unarchiveTopLevelObjectWithData(savedPresets) as? [Preset] {
+                self = decodedPresets
+            }
+        }
+        return self
+    }
+}

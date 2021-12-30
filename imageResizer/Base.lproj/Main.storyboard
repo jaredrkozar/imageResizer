@@ -246,7 +246,7 @@
         <!--Resized Image-->
         <scene sceneID="tL7-xT-HxX">
             <objects>
-                <collectionViewController storyboardIdentifier="dddddd" title="Resized Image" id="ThJ-0r-BAj" customClass="resizedImagesController" customModule="imageResizer" customModuleProvider="target" sceneMemberID="viewController">
+                <collectionViewController title="Resized Image" id="ThJ-0r-BAj" customClass="resizedImagesController" customModule="imageResizer" customModuleProvider="target" sceneMemberID="viewController">
                     <collectionView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" id="j7H-2t-yYC">
                         <rect key="frame" x="0.0" y="0.0" width="768" height="1024"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -298,7 +298,7 @@
         <!--Navigation Controller-->
         <scene sceneID="4MW-sV-QTg">
             <objects>
-                <navigationController storyboardIdentifier="Detail" automaticallyAdjustsScrollViewInsets="NO" id="oJW-3d-Fxh" sceneMemberID="viewController">
+                <navigationController storyboardIdentifier="ResizedImages" automaticallyAdjustsScrollViewInsets="NO" id="oJW-3d-Fxh" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationItem key="navigationItem" id="Jwn-t4-nIF"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="5yR-1W-GKi">

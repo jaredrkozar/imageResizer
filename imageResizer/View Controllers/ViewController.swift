@@ -19,10 +19,11 @@ class StandardButton: UIButton {
     }
 }
 
-class ViewController: UIViewController & UINavigationControllerDelegate, UITableViewDataSource, UITableViewDelegate, UIDropInteractionDelegate {
+class ViewController: UIViewController & UINavigationControllerDelegate, UITableViewDelegate, UIDropInteractionDelegate {
     
-    var presets = UserDefaults.standard.stringArray(forKey: "presets") ?? [String]()
+    var presets = [Preset]()
     var imageArray = [Images]()
+    var dataSource = TableViewDataSource()
     
     @IBOutlet var noPresetsLabel: UILabel!
     @IBOutlet var imageView: UIImageView!
@@ -55,8 +56,9 @@ class ViewController: UIViewController & UINavigationControllerDelegate, UITable
         
         //sets the table view's delegate and data source methods
         presetCellsView.delegate = self
-        presetCellsView.dataSource = self
-        
+        presetCellsView.dataSource = dataSource
+        dataSource.tablePresets = presets.load()
+
         let addImageButton = addImage()
         
         navigationItem.rightBarButtonItems = [addImageButton]
@@ -115,16 +117,16 @@ class ViewController: UIViewController & UINavigationControllerDelegate, UITable
         let dimension = UserDefaults.standard.string(forKey: "dimension")
         
         if isEditingDimension == true {
-            
-            let row = UserDefaults.standard.integer(forKey: "row")
-            presets[row] = dimension!
+            self.dataSource.tablePresets[UserDefaults.standard.integer(forKey: "row")].title = dimension!
             
         } else {
-            presets.append(dimension!)
-            UserDefaults.standard.set(presets, forKey: "presets")
+            let preset = Preset(title: dimension!, isSelected: false)
+            self.dataSource.tablePresets.append(preset)
         }
+        
+        presets.save()
         noPresetsLabel.isHidden = true
-        self.presetCellsView.reloadData()
+        presetCellsView.reloadData()
     }
     
     func noPresets() {
@@ -140,39 +142,22 @@ class ViewController: UIViewController & UINavigationControllerDelegate, UITable
         }
     }
     
-    func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-        return 1
-    }
-    
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return presets.count
-    }
-    
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let presetCell = tableView.dequeueReusableCell(withIdentifier: "PresetTableViewCell", for: indexPath) as? PresetTableViewCell else {
-              fatalError("Unable to dequeue the preset cell.")
-          }
-        
-        presetCell.dimension.text = presets[indexPath.row]
-        return presetCell
-    }
-    
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         //when the user selects a row, give that row a checkmark accessory,append it to the selectedPresets array, and send a notification to the isImageSelected class, which checks if theres an image
-        presetCellsView.cellForRow(at: indexPath as IndexPath)?.isSelected = true
+        self.dataSource.tablePresets[indexPath.row].isSelected = true
     
         NotificationCenter.default.post(name: Notification.Name( "isImageSelected"), object: nil)
     }
     
     func tableView(_ tableView: UITableView, didDeselectRowAt indexPath: IndexPath) {
         //remove the cell from the selectedPresets array and its accessory.
-        presetCellsView.cellForRow(at: indexPath as IndexPath)?.isSelected = false
+        self.dataSource.tablePresets[indexPath.row].isSelected = false
         
         NotificationCenter.default.post(name: Notification.Name( "isImageSelected"), object: nil)
 
     }
     
-    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+    func tableView(_ presetCellsView: UITableView, titleForHeaderInSection section: Int) -> String? {
         return "Presets"
     }
     
@@ -214,7 +199,7 @@ class ViewController: UIViewController & UINavigationControllerDelegate, UITable
             case "URL":
                 self.presentURLPicker()
             default:
-                print("Enjoy your day!")
+                print("Encountered an error while selecting a source")
         }
     }
     
@@ -254,10 +239,10 @@ class ViewController: UIViewController & UINavigationControllerDelegate, UITable
         
         
         if aspectRatioLocked.isOn {
-            resizeImageWithAspectRatio(selectedImages: ["100 x 200"]
+            resizeImageWithAspectRatio(selectedImages: self.dataSource.tablePresets.filter { return $0.isSelected }.map({$0.title})
              )
         } else {
-            resizeImage(selectedImages: ["100 x 200"])
+            resizeImage(selectedImages: self.dataSource.tablePresets.filter { return $0.isSelected }.map({$0.title}))
         }
         
     }
@@ -272,9 +257,9 @@ class ViewController: UIViewController & UINavigationControllerDelegate, UITable
     func showPopup() {
         
         if isEditingDimension == true {
-            let HeightWidthArr = presets[UserDefaults.standard.integer(forKey: "row")]
+            let HeightWidthArr = self.dataSource.tablePresets[UserDefaults.standard.integer(forKey: "row")].title
                 .components(separatedBy: " x ")
-            var heightNum = Double(HeightWidthArr[0])!
+            let heightNum = Double(HeightWidthArr[0])!
             let widthNum = Double(HeightWidthArr[1])!
             dimensionheight = String(Int(heightNum))
             dimensionwidth = String(Int(widthNum))
@@ -310,6 +295,7 @@ class ViewController: UIViewController & UINavigationControllerDelegate, UITable
     //Image Selection
     @objc func isImageSelected(_ notification: Notification) {
         //if the user selects an image and a preset, the Resize Image button is enabled, otherwise it's disabled
+        let selectedPresets = self.dataSource.tablePresets.filter { return $0.isSelected }
         
         if imageView.image != UIImage(systemName: "photo") && selectedPresets.count >= 1 {
             resizeImageButton.isEnabled = true;
@@ -352,7 +338,7 @@ class ViewController: UIViewController & UINavigationControllerDelegate, UITable
     //Context Menu code
     
     func tableView(_ tableView: UITableView, contextMenuConfigurationForRowAt indexPath: IndexPath, point: CGPoint) -> UIContextMenuConfiguration? {
-        let preset = presets[indexPath.row]
+       
         //saves the row the user bought the context menu appear on in row
         
         UserDefaults.standard.set(indexPath.row, forKey: "row")
@@ -392,7 +378,7 @@ class ViewController: UIViewController & UINavigationControllerDelegate, UITable
         
         #else
             
-            let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "Detail")
+            let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "ResizedImages")
             self.present(vc, animated: true, completion: nil)
         #endif
     }
