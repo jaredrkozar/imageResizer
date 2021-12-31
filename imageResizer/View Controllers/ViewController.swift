@@ -19,9 +19,8 @@ class StandardButton: UIButton {
     }
 }
 
-class ViewController: UIViewController & UINavigationControllerDelegate, UITableViewDelegate, UIDropInteractionDelegate {
+class ViewController: UIViewController & UINavigationControllerDelegate, UITableViewDelegate, UIDropInteractionDelegate, NSFetchedResultsControllerDelegate {
     
-    var presets = [Preset]()
     var imageArray = [Images]()
     var dataSource = TableViewDataSource()
     
@@ -39,6 +38,8 @@ class ViewController: UIViewController & UINavigationControllerDelegate, UITable
         super.viewDidLoad()
         // Do any additional setup after loading the view.
     
+        fetchPresets()
+        print(presets.count)
         title = "Image Resizer"
         noPresets()
         
@@ -57,8 +58,8 @@ class ViewController: UIViewController & UINavigationControllerDelegate, UITable
         //sets the table view's delegate and data source methods
         presetCellsView.delegate = self
         presetCellsView.dataSource = dataSource
-        dataSource.tablePresets = presets.load()
-
+        dataSource.tablePresets = presets
+     
         let addImageButton = addImage()
         
         navigationItem.rightBarButtonItems = [addImageButton]
@@ -117,15 +118,23 @@ class ViewController: UIViewController & UINavigationControllerDelegate, UITable
         let dimension = UserDefaults.standard.string(forKey: "dimension")
         
         if isEditingDimension == true {
-            self.dataSource.tablePresets[UserDefaults.standard.integer(forKey: "row")].title = dimension!
+            let editedDimension = self.dataSource.tablePresets[UserDefaults.standard.integer(forKey: "row")]
+            
+            editedDimension.dimension = dimension
+            
+            savePreset(dimension: editedDimension.dimension!, uuid: editedDimension.id!)
             
         } else {
-            let preset = Preset(title: dimension!, isSelected: false)
-            self.dataSource.tablePresets.append(preset)
+            let newPreset = Preset(context: context)
+            newPreset.dimension = dimension
+            newPreset.isSelected = false
+            newPreset.id = UUID().uuidString
+            
+            savePreset(dimension: newPreset.dimension!, uuid: newPreset.id!)
+            
+            self.dataSource.tablePresets.append(newPreset)
         }
-        
-        presets.save()
-        noPresetsLabel.isHidden = true
+       
         presetCellsView.reloadData()
     }
     
@@ -239,10 +248,10 @@ class ViewController: UIViewController & UINavigationControllerDelegate, UITable
         
         
         if aspectRatioLocked.isOn {
-            resizeImageWithAspectRatio(selectedImages: self.dataSource.tablePresets.filter { return $0.isSelected }.map({$0.title})
+            resizeImageWithAspectRatio(selectedImages: self.dataSource.tablePresets.filter { return $0.isSelected }.map({$0.dimension!})
              )
         } else {
-            resizeImage(selectedImages: self.dataSource.tablePresets.filter { return $0.isSelected }.map({$0.title}))
+            resizeImage(selectedImages: self.dataSource.tablePresets.filter { return $0.isSelected }.map({$0.dimension!}))
         }
         
     }
@@ -257,8 +266,7 @@ class ViewController: UIViewController & UINavigationControllerDelegate, UITable
     func showPopup() {
         
         if isEditingDimension == true {
-            let HeightWidthArr = self.dataSource.tablePresets[UserDefaults.standard.integer(forKey: "row")].title
-                .components(separatedBy: " x ")
+            let HeightWidthArr = self.dataSource.tablePresets[UserDefaults.standard.integer(forKey: "row")].dimension!.components(separatedBy: " x ")
             let heightNum = Double(HeightWidthArr[0])!
             let widthNum = Double(HeightWidthArr[1])!
             dimensionheight = String(Int(heightNum))
@@ -357,8 +365,11 @@ class ViewController: UIViewController & UINavigationControllerDelegate, UITable
               title: "Delete",
               image: UIImage(systemName: "trash"),
                 attributes: .destructive) { [self] _ in
-                self.presets.remove(at: indexPath.row)
-
+                    
+                deletePreset(preset: dataSource.tablePresets[indexPath.row])
+                
+                self.dataSource.tablePresets.remove(at: indexPath.row)
+        
                 self.presetCellsView.reloadData()
  
                 noPresets()

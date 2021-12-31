@@ -25,7 +25,7 @@ class TableViewDataSource: NSObject, UITableViewDataSource {
           }
         
         let preset = tablePresets[indexPath.row]
-        presetCell.dimension.text = preset.title
+        presetCell.dimension.text = preset.dimension
         presetCell.layoutIfNeeded()
         return presetCell
     }

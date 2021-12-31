@@ -7,8 +7,9 @@
 
 import UIKit
 import Foundation
+var isEditingDimension: Bool = false
 
-public var isEditingDimension: Bool = false
+var presets = [Preset]()
 
 let vc = ViewController()
 
@@ -71,6 +72,7 @@ extension UIImage {
 
 extension Array where Element == Preset {
     func save() {
+        print(self.count)
         if let savedData = try? NSKeyedArchiver.archivedData(withRootObject: self, requiringSecureCoding: false) {
             let defaults = UserDefaults.standard
             defaults.set(savedData, forKey: "presets")
