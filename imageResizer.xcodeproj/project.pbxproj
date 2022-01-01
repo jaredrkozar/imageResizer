@@ -135,11 +135,20 @@
 			path = Models;
 			sourceTree = "<group>";
 		};
+		7FCBD1A02780DEB700E02CCF /* Core Data */ = {
+			isa = PBXGroup;
+			children = (
+				7F835944277ED410007428A8 /* ImageResizerDataModel.xcdatamodeld */,
+				7FCBD19C2780DD6C00E02CCF /* Preset+CoreDataClass.swift */,
+				7FCBD19D2780DD6C00E02CCF /* Preset+CoreDataProperties.swift */,
+				7F835942277ECCFC007428A8 /* CoreData.swift */,
+			);
+			path = "Core Data";
+			sourceTree = "<group>";
+		};
 		7FEF76B2265F0F9D007E6043 = {
 			isa = PBXGroup;
 			children = (
-				7FCBD19C2780DD6C00E02CCF /* Preset+CoreDataClass.swift */,
-				7FCBD19D2780DD6C00E02CCF /* Preset+CoreDataProperties.swift */,
 				7FEF76BD265F0F9D007E6043 /* imageResizer */,
 				7FEF76BC265F0F9D007E6043 /* Products */,
 			);
@@ -156,13 +165,12 @@
 		7FEF76BD265F0F9D007E6043 /* imageResizer */ = {
 			isa = PBXGroup;
 			children = (
-				7F835944277ED410007428A8 /* ImageResizerDataModel.xcdatamodeld */,
-				7F835942277ECCFC007428A8 /* CoreData.swift */,
 				7FEF76D82661A7B2007E6043 /* imageResizer.entitlements */,
 				7FEF76BE265F0F9D007E6043 /* AppDelegate.swift */,
 				7FD9361626B8B5BA009123ED /* Extensions.swift */,
 				7FEF76C4265F0F9D007E6043 /* Main.storyboard */,
 				7F89444926F91173000AF308 /* Sources.swift */,
+				7FCBD1A02780DEB700E02CCF /* Core Data */,
 				7F8BBDEC276D5FC3005B07C1 /* Mac */,
 				7F89447426FAB747000AF308 /* Sources */,
 				7F8BBDEF276D6017005B07C1 /* Models */,
@@ -485,8 +493,7 @@
 				7F835945277ED410007428A8 /* ImageResizerDataModel.xcdatamodel */,
 			);
 			currentVersion = 7F835945277ED410007428A8 /* ImageResizerDataModel.xcdatamodel */;
-			name = ImageResizerDataModel.xcdatamodeld;
-			path = ../ImageResizerDataModel.xcdatamodeld;
+			path = ImageResizerDataModel.xcdatamodeld;
 			sourceTree = "<group>";
 			versionGroupType = wrapper.xcdatamodel;
 		};
