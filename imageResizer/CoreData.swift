@@ -16,12 +16,12 @@ func savePreset(dimension: String, uuid: String) {
     let newPreset = Preset(context: context)
     newPreset.dimension = dimension
     newPreset.isSelected = false
-    newPreset.id = uuid
+    newPreset.presetID = uuid
     
     do {
         try context.save()
     } catch {
-        print("An error occured while saving the preset.")
+        print("An error occured while saving the preset. \(error)")
     }
 }
 

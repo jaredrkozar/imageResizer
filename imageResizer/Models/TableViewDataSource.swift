@@ -19,6 +19,10 @@ class TableViewDataSource: NSObject, UITableViewDataSource {
         return tablePresets.count
     }
     
+    func tableView(_ presetCellsView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        return "Presets"
+    }
+    
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let presetCell = tableView.dequeueReusableCell(withIdentifier: "PresetTableViewCell", for: indexPath) as? PresetTableViewCell else {
               fatalError("Unable to dequeue the preset cell.")

@@ -2,7 +2,7 @@
 //  Preset+CoreDataProperties.swift
 //  imageResizer
 //
-//  Created by JaredKozar on 12/31/21.
+//  Created by JaredKozar on 1/1/22.
 //
 //
 
@@ -17,8 +17,8 @@ extension Preset {
     }
 
     @NSManaged public var dimension: String?
+    @NSManaged public var presetID: String?
     @NSManaged public var isSelected: Bool
-    @NSManaged public var id: String?
 
 }
 

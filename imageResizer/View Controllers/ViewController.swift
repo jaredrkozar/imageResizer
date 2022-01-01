@@ -19,7 +19,7 @@ class StandardButton: UIButton {
     }
 }
 
-class ViewController: UIViewController & UINavigationControllerDelegate, UITableViewDelegate, UIDropInteractionDelegate, NSFetchedResultsControllerDelegate {
+class ViewController: UIViewController & UINavigationControllerDelegate, UITableViewDelegate, UIDropInteractionDelegate {
     
     var imageArray = [Images]()
     var dataSource = TableViewDataSource()
@@ -122,17 +122,19 @@ class ViewController: UIViewController & UINavigationControllerDelegate, UITable
             
             editedDimension.dimension = dimension
             
-            savePreset(dimension: editedDimension.dimension!, uuid: editedDimension.id!)
-            
         } else {
+            let uuid = UUID().uuidString
             let newPreset = Preset(context: context)
             newPreset.dimension = dimension
             newPreset.isSelected = false
-            newPreset.id = UUID().uuidString
-            
-            savePreset(dimension: newPreset.dimension!, uuid: newPreset.id!)
+            newPreset.presetID = uuid
+            print(newPreset.presetID)
+            savePreset(dimension: dimension!, uuid: uuid)
             
             self.dataSource.tablePresets.append(newPreset)
+            
+            print(dataSource.tablePresets.count)
+            
         }
        
         presetCellsView.reloadData()
@@ -165,11 +167,6 @@ class ViewController: UIViewController & UINavigationControllerDelegate, UITable
         NotificationCenter.default.post(name: Notification.Name( "isImageSelected"), object: nil)
 
     }
-    
-    func tableView(_ presetCellsView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        return "Presets"
-    }
-    
     
     //Button code
     
