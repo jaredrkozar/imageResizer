@@ -24,13 +24,11 @@ class TableViewDataSource: NSObject, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let presetCell = tableView.dequeueReusableCell(withIdentifier: "PresetTableViewCell", for: indexPath) as? PresetTableViewCell else {
-              fatalError("Unable to dequeue the preset cell.")
-          }
+        let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
         
         let preset = tablePresets[indexPath.row]
-        presetCell.dimension.text = preset.dimension
-        presetCell.layoutIfNeeded()
-        return presetCell
+        cell.textLabel!.text = preset.dimension
+        cell.layoutIfNeeded()
+        return cell
     }
 }

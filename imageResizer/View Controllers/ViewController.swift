@@ -7,30 +7,69 @@
 
 import UIKit
 
-class StandardButton: UIButton {
-    override func draw(_ rect: CGRect) {
-        #if !targetEnvironment(macCatalyst)
-            self.layer.masksToBounds = true
-            self.layer.cornerCurve = .continuous
-            self.layer.cornerRadius = 5.0
-            self.layer.backgroundColor = UIColor(named: "AccentColor")?.cgColor
-            self.setTitleColor(.white, for: .normal)
-        #endif
-    }
-}
-
 class ViewController: UIViewController & UINavigationControllerDelegate, UITableViewDelegate, UIDropInteractionDelegate {
     
     var imageArray = [Images]()
     var dataSource = TableViewDataSource()
     
-    @IBOutlet var noPresetsLabel: UILabel!
-    @IBOutlet var imageView: UIImageView!
-    @IBOutlet var resizeImageButton: StandardButton!
-    @IBOutlet var importButton: UIBarButtonItem!
-    @IBOutlet var aspectRatioLocked: UISwitch!
-    @IBOutlet var presetCellsView: UITableView!
-    @IBOutlet var addPresetButton: UIButton!
+    var imageView: UIImageView = {
+       let image = UIImageView()
+        image.translatesAutoresizingMaskIntoConstraints = false
+        image.image = UIImage(systemName: "photo")
+        image.tintColor = .systemBlue
+        image.contentMode = .scaleAspectFit
+        return image
+    }()
+    
+    lazy var noPresetsLabel: UILabel = {
+        let label = UILabel()
+        label.numberOfLines = 0
+        label.textAlignment = .center
+        label.font = UIFont.systemFont(ofSize: 20, weight: .medium)
+        label.textColor = .label
+        label.text = "Yoou don't have any presets currently added. Add a preset by tapping the button above."
+        label.translatesAutoresizingMaskIntoConstraints = false
+
+        return label
+    }()
+    
+    lazy var resizeImageButton: StandardButton = {
+        var resizeButton = StandardButton()
+        resizeButton.target(forAction: #selector(resizeButtonTapped), withSender: self)
+        resizeButton.setTitle("Resize Image", for: .normal)
+        resizeButton.translatesAutoresizingMaskIntoConstraints = false
+        
+        if imageView.image == nil {
+            resizeButton.isEnabled = false
+        }
+        
+        return resizeButton
+    }()
+    
+    lazy var presetsTableView: UITableView = {
+        let tableView = UITableView()
+        tableView.allowsMultipleSelection = true
+        tableView.rowHeight = 63
+        tableView.translatesAutoresizingMaskIntoConstraints = false
+        tableView.backgroundColor = .systemBackground
+    
+        //sets the table view's delegate and data source methods
+        tableView.delegate = self
+        tableView.dataSource = dataSource
+        return tableView
+    }()
+    
+    lazy var addPresetButton: StandardButton = {
+        let addPresetbutton = StandardButton()
+        addPresetbutton.tintColor = .systemBlue
+        addPresetbutton.setTitle("Add Preset", for: .normal)
+        addPresetbutton.addTarget(self, action: #selector(addPresetButtonTapped), for: .touchUpInside)
+        addPresetbutton.translatesAutoresizingMaskIntoConstraints = false
+        return addPresetbutton
+    }()
+    
+    
+    lazy var aspectRatioLocked = UISwitch()
     
     let nc = NotificationCenter.default
     
@@ -39,36 +78,49 @@ class ViewController: UIViewController & UINavigationControllerDelegate, UITable
         // Do any additional setup after loading the view.
     
         fetchPresets()
-        print(presets.count)
+        view.backgroundColor = .systemBackground
         title = "Image Resizer"
-        noPresets()
         
-        //disables the "Resize Image" button once the app starts
-        resizeImageButton.isEnabled = false;
-        resizeImageButton.alpha = 0.5
         notifications()
+        presetsTableView.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
+        view.addSubview(imageView)
+        view.addSubview(presetsTableView)
+        view.addSubview(resizeImageButton)
+        view.addSubview(addPresetButton)
+        view.addSubview(noPresetsLabel)
         
-        let nib = UINib(nibName: "PresetTableViewCell", bundle: nil)
-        presetCellsView.register(nib, forCellReuseIdentifier: "PresetTableViewCell")
+        NSLayoutConstraint.activate([
+            imageView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 30),
+            imageView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: -30),
+            imageView.heightAnchor.constraint(equalToConstant: 540),
+            imageView.widthAnchor.constraint(equalToConstant: 540),
+            
+            addPresetButton.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -30),
+            addPresetButton.heightAnchor.constraint(equalToConstant: 30),
+            addPresetButton.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 20),
+            
+            presetsTableView.trailingAnchor.constraint(equalTo: addPresetButton.trailingAnchor, constant: 0),
+            presetsTableView.topAnchor.constraint(equalTo: addPresetButton.bottomAnchor, constant: 5),
+            presetsTableView.leadingAnchor.constraint(equalTo: imageView.trailingAnchor, constant: 20),
+            presetsTableView.bottomAnchor.constraint(equalTo: resizeImageButton.topAnchor, constant: -15),
+            
+            resizeImageButton.trailingAnchor.constraint(equalTo: addPresetButton.trailingAnchor, constant: 0),
+            resizeImageButton.leadingAnchor.constraint(equalTo: imageView.trailingAnchor, constant: 15),
+            resizeImageButton.heightAnchor.constraint(equalToConstant: 40),
+            resizeImageButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -30),
+            
+            noPresetsLabel.centerYAnchor.constraint(equalTo: presetsTableView.centerYAnchor, constant: 0),
+            noPresetsLabel.centerXAnchor.constraint(equalTo: presetsTableView.centerXAnchor, constant: 0),
+            noPresetsLabel.widthAnchor.constraint(equalTo: presetsTableView.widthAnchor, multiplier: 0.70),
+            noPresetsLabel.heightAnchor.constraint(equalTo: presetsTableView.heightAnchor, multiplier: 0.30),
+        ])
         
-        //enables the user to select multiple dimensions in the table view
-        self.presetCellsView.allowsMultipleSelection = true
-        self.presetCellsView.rowHeight = 63
-        
-        //sets the table view's delegate and data source methods
-        presetCellsView.delegate = self
-        presetCellsView.dataSource = dataSource
-        dataSource.tablePresets = presets
-     
-        let addImageButton = addImage()
-        
-        navigationItem.rightBarButtonItems = [addImageButton]
+        navigationItem.rightBarButtonItem =  UIBarButtonItem(title: nil, image: UIImage(systemName: "plus"), primaryAction: nil, menu: addImage())
     }
-
+    
     func notifications() {
         
        //sends out notifications to other classes in this view controller
-        NotificationCenter.default.addObserver(self, selector: #selector(isImageSelected(_:)), name: NSNotification.Name( "isImageSelected"), object: nil)
         
         NotificationCenter.default.addObserver(self, selector: #selector(addtoTable(_:)), name: NSNotification.Name( "addWidthHeighttoTable"), object: nil)
         
@@ -116,7 +168,7 @@ class ViewController: UIViewController & UINavigationControllerDelegate, UITable
         //adds the dimension the user entednin the AddPresetViewController class to the table view.
         
         let dimension = UserDefaults.standard.string(forKey: "dimension")
-        
+        print(dimension)
         if isEditingDimension == true {
             let editedDimension = self.dataSource.tablePresets[UserDefaults.standard.integer(forKey: "row")]
             
@@ -128,7 +180,6 @@ class ViewController: UIViewController & UINavigationControllerDelegate, UITable
             newPreset.dimension = dimension
             newPreset.isSelected = false
             newPreset.presetID = uuid
-            print(newPreset.presetID)
             savePreset(dimension: dimension!, uuid: uuid)
             
             self.dataSource.tablePresets.append(newPreset)
@@ -137,20 +188,7 @@ class ViewController: UIViewController & UINavigationControllerDelegate, UITable
             
         }
        
-        presetCellsView.reloadData()
-    }
-    
-    func noPresets() {
-        //checks of there are any presets in the table view; if there no presets, display a message telling the user to add a preset, and if there are presets, don;t display the message
-
-        if presets.count == 0 {
-            noPresetsLabel.isHidden = false
-            noPresetsLabel.text = "No presets available. Add a preset using the 'Add Preset' button above and you'll see them here."
-            resizeImageButton.isEnabled = false;
-            resizeImageButton.alpha = 0.5;
-        } else {
-            noPresetsLabel.text = ""
-        }
+        presetsTableView.reloadData()
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
@@ -170,7 +208,7 @@ class ViewController: UIViewController & UINavigationControllerDelegate, UITable
     
     //Button code
     
-    @objc func addImage() -> UIBarButtonItem {
+    @objc func addImage() -> UIMenu {
         var listofsources = [UIAction]()
         
         for sort in Sources.allCases {
@@ -182,13 +220,7 @@ class ViewController: UIViewController & UINavigationControllerDelegate, UITable
            })
         }
         
-        var sourcesMenu: UIMenu {
-            return UIMenu(title: "Import image from...", image: nil, identifier: nil, options: [], children: listofsources)
-        }
-        
-        let addImageButton = UIBarButtonItem(title: nil, image: UIImage(systemName: "plus"), primaryAction: nil, menu: sourcesMenu)
-        
-        return addImageButton
+        return UIMenu(title: "Import image from...", image: nil, identifier: nil, options: [], children: listofsources)
     }
     
     @objc func sourceSelected(_ notification: Notification) {
@@ -240,7 +272,7 @@ class ViewController: UIViewController & UINavigationControllerDelegate, UITable
       }
     }
     
-    @IBAction func resizeButtonTapped(_ sender: Any) {
+    @objc func resizeButtonTapped(_ sender: UIButton) {
     //if the user turned the aspect ratio locked switch on, the resizeImageWithAspectRatio() function runs, and if the switch is off, then run the resizeImage() function, which doesn't keep the aspect ratio the same
         
         
@@ -253,7 +285,7 @@ class ViewController: UIViewController & UINavigationControllerDelegate, UITable
         
     }
     
-    @IBAction func addPresetButton(_ sender: Any) {
+    @objc func addPresetButtonTapped(_ sender: UIButton) {
         //if the user taps the Add Preset button, a popover pops up allowing the user to enter a preset
         isEditingDimension = false
         
@@ -272,7 +304,7 @@ class ViewController: UIViewController & UINavigationControllerDelegate, UITable
         
         switch UIDevice.current.userInterfaceIdiom {
         case .pad:
-            let vc : AddPresetViewController = storyboard!.instantiateViewController(withIdentifier: "addPreset") as! AddPresetViewController
+            let vc = AddPresetViewController()
             let navigationController = UINavigationController(rootViewController: vc)
             
             navigationController.modalPresentationStyle = UIModalPresentationStyle.popover
@@ -295,20 +327,6 @@ class ViewController: UIViewController & UINavigationControllerDelegate, UITable
                 break
         }
 
-    }
-    
-    //Image Selection
-    @objc func isImageSelected(_ notification: Notification) {
-        //if the user selects an image and a preset, the Resize Image button is enabled, otherwise it's disabled
-        let selectedPresets = self.dataSource.tablePresets.filter { return $0.isSelected }
-        
-        if imageView.image != UIImage(systemName: "photo") && selectedPresets.count >= 1 {
-            resizeImageButton.isEnabled = true;
-            resizeImageButton.alpha = 1.0;
-        } else {
-            resizeImageButton.isEnabled = false;
-            resizeImageButton.alpha = 0.5;
-        }
     }
     
     //Image Resizing Code
@@ -367,9 +385,7 @@ class ViewController: UIViewController & UINavigationControllerDelegate, UITable
                 
                 self.dataSource.tablePresets.remove(at: indexPath.row)
         
-                self.presetCellsView.reloadData()
- 
-                noPresets()
+                presetsTableView.reloadData()
                 
             }
             return UIMenu(title: "", children: [editAction, deleteAction])
@@ -395,5 +411,26 @@ class ViewController: UIViewController & UINavigationControllerDelegate, UITable
         #if targetEnvironment(macCatalyst)
         navigationController?.setNavigationBarHidden(true, animated: animated)
         #endif
+    }
+    
+    func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+        return 1
+    }
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return presets.count
+    }
+    
+    func tableView(_ presetCellsView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        return "Presets"
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
+        
+        let preset = tablePresets[indexPath.row]
+        cell.textLabel!.text = preset.dimension
+        cell.layoutIfNeeded()
+        return cell
     }
 }

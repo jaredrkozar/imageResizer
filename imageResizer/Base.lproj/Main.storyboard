@@ -1,230 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="19529" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="9fO-JW-53i">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="21223" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="9fO-JW-53i">
     <device id="ipad9_7" orientation="portrait" layout="fullscreen" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19519"/>
-        <capability name="Named colors" minToolsVersion="9.0"/>
-        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21204"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="collection view cell content view" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--View Controller-->
-        <scene sceneID="tne-QT-ifu">
-            <objects>
-                <viewController id="BYZ-38-t0r" customClass="ViewController" customModule="imageResizer" customModuleProvider="target" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
-                        <rect key="frame" x="0.0" y="0.0" width="768" height="1024"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="photo" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="Iue-9H-XWq">
-                                <rect key="frame" x="50" y="160" width="284" height="773.5"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="540" id="MEq-RV-0tf"/>
-                                    <constraint firstAttribute="height" constant="540" id="e1D-Ng-byN"/>
-                                </constraints>
-                            </imageView>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" reversesTitleShadowWhenHighlighted="YES" lineBreakMode="middleTruncation" pointerInteraction="YES" translatesAutoresizingMaskIntoConstraints="NO" id="k6o-pn-FLc" customClass="StandardButton" customModule="imageResizer" customModuleProvider="target">
-                                <rect key="frame" x="369" y="874" width="365" height="44"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" secondItem="k6o-pn-FLc" secondAttribute="height" multiplier="365:44" id="QMJ-hT-g6q"/>
-                                    <constraint firstAttribute="width" constant="365" id="hbS-dq-zHR"/>
-                                </constraints>
-                                <fontDescription key="fontDescription" type="system" weight="medium" pointSize="20"/>
-                                <state key="normal" title="Resize Image">
-                                    <color key="titleColor" name="AccentColor"/>
-                                </state>
-                                <connections>
-                                    <action selector="resizeButtonTapped:" destination="BYZ-38-t0r" eventType="touchUpInside" id="GDk-RU-xiJ"/>
-                                </connections>
-                            </button>
-                            <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="1bQ-gc-he3">
-                                <rect key="frame" x="685" y="789" width="51" height="31"/>
-                            </switch>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="insetGrouped" allowsMultipleSelection="YES" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="18" sectionFooterHeight="18" translatesAutoresizingMaskIntoConstraints="NO" id="yCX-Xf-KGV">
-                                <rect key="frame" x="342" y="147" width="392" height="336"/>
-                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="392" id="TEQ-Lf-OEh"/>
-                                    <constraint firstAttribute="height" constant="336" id="WFH-ll-oAt"/>
-                                    <constraint firstAttribute="width" secondItem="yCX-Xf-KGV" secondAttribute="height" multiplier="7:6" id="pRj-QL-nWT"/>
-                                </constraints>
-                                <label key="tableFooterView" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" adjustsFontForContentSizeCategory="YES" id="P6a-Ml-K0n">
-                                    <rect key="frame" x="0.0" y="130.5" width="392" height="128"/>
-                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                    <fontDescription key="fontDescription" style="UICTFontTextStyleTitle2"/>
-                                    <color key="textColor" name="gray"/>
-                                    <nil key="highlightedColor"/>
-                                </label>
-                                <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="PresetTableViewCell" textLabel="2pf-dP-CwV" rowHeight="63" style="IBUITableViewCellStyleDefault" id="fPb-fJ-3rB" customClass="PresetTableViewCell" customModule="imageResizer" customModuleProvider="target">
-                                        <rect key="frame" x="16" y="49.5" width="360" height="63"/>
-                                        <autoresizingMask key="autoresizingMask"/>
-                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="fPb-fJ-3rB" id="XkW-sD-aHR">
-                                            <rect key="frame" x="0.0" y="0.0" width="360" height="63"/>
-                                            <autoresizingMask key="autoresizingMask"/>
-                                            <subviews>
-                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" id="2pf-dP-CwV">
-                                                    <rect key="frame" x="16" y="0.0" width="328" height="63"/>
-                                                    <autoresizingMask key="autoresizingMask"/>
-                                                    <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
-                                                    <nil key="textColor"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
-                                            </subviews>
-                                        </tableViewCellContentView>
-                                    </tableViewCell>
-                                </prototypes>
-                            </tableView>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="DPn-Xj-Lhc">
-                                <rect key="frame" x="645" y="122" width="89" height="34"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" secondItem="DPn-Xj-Lhc" secondAttribute="height" multiplier="89:34" id="OhS-qT-zGq"/>
-                                </constraints>
-                                <fontDescription key="fontDescription" type="system" pointSize="18"/>
-                                <state key="normal" title="Add Preset"/>
-                                <connections>
-                                    <action selector="addPresetButton:" destination="BYZ-38-t0r" eventType="touchUpInside" id="sYT-i6-NoT"/>
-                                </connections>
-                            </button>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Aspect Ratio Locked" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="FvR-Ou-073">
-                                <rect key="frame" x="369" y="789" width="297" height="31"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="297" id="I5r-ec-h3q"/>
-                                </constraints>
-                                <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
-                                <nil key="textColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                        </subviews>
-                        <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                        <constraints>
-                            <constraint firstItem="Iue-9H-XWq" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="50" id="185-Ox-ApE"/>
-                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="DPn-Xj-Lhc" secondAttribute="trailing" constant="34" id="1z0-xU-XVm"/>
-                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="FvR-Ou-073" secondAttribute="bottom" constant="204" id="ASw-r5-4oy"/>
-                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="k6o-pn-FLc" secondAttribute="bottom" constant="106" id="BWF-7I-wLa"/>
-                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="k6o-pn-FLc" secondAttribute="trailing" constant="34" id="CIf-9Z-Aax"/>
-                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="FvR-Ou-073" secondAttribute="trailing" constant="102" id="DnB-Mf-7tP"/>
-                            <constraint firstItem="DPn-Xj-Lhc" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="52" id="F6b-gY-DU1"/>
-                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="1bQ-gc-he3" secondAttribute="trailing" constant="34" id="Iio-PZ-JP6"/>
-                            <constraint firstItem="yCX-Xf-KGV" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="77" id="JfB-Ib-Z1x"/>
-                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="Iue-9H-XWq" secondAttribute="trailing" constant="434" id="OJp-2c-aRp"/>
-                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="1bQ-gc-he3" secondAttribute="bottom" constant="204" id="Xng-a2-Ih8"/>
-                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="Iue-9H-XWq" secondAttribute="bottom" constant="89" id="ZMh-rd-PLC"/>
-                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="yCX-Xf-KGV" secondAttribute="trailing" constant="34" id="cPX-7s-Pbb"/>
-                            <constraint firstItem="Iue-9H-XWq" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="89" id="h6P-17-ma1"/>
-                        </constraints>
-                    </view>
-                    <navigationItem key="navigationItem" id="sXk-se-eJo">
-                        <barButtonItem key="rightBarButtonItem" title="Import Photo" id="cGJ-0b-qEU">
-                            <connections>
-                                <action selector="importButtonTapped:" destination="BYZ-38-t0r" id="x87-SP-ztV"/>
-                            </connections>
-                        </barButtonItem>
-                    </navigationItem>
-                    <connections>
-                        <outlet property="addPresetButton" destination="DPn-Xj-Lhc" id="oEm-IG-nJf"/>
-                        <outlet property="aspectRatioLocked" destination="1bQ-gc-he3" id="CIE-dj-x8n"/>
-                        <outlet property="imageView" destination="Iue-9H-XWq" id="H0l-OM-qmi"/>
-                        <outlet property="importButton" destination="cGJ-0b-qEU" id="rwA-rp-fzK"/>
-                        <outlet property="noPresetsLabel" destination="P6a-Ml-K0n" id="2FX-7P-1PC"/>
-                        <outlet property="presetCellsView" destination="yCX-Xf-KGV" id="TZS-gs-hqo"/>
-                        <outlet property="resizeImageButton" destination="k6o-pn-FLc" id="QEd-zW-RuA"/>
-                    </connections>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="743.75" y="75.5859375"/>
-        </scene>
-        <!--Add Preset-->
-        <scene sceneID="M4L-a8-s3f">
-            <objects>
-                <viewController storyboardIdentifier="addPreset" title="Add Preset" id="Gmj-tL-yLc" customClass="AddPresetViewController" customModule="imageResizer" customModuleProvider="target" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="HhB-FA-FrD">
-                        <rect key="frame" x="0.0" y="0.0" width="768" height="1024"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Height" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="C6k-vO-BBn">
-                                <rect key="frame" x="45" y="26" width="160" height="41"/>
-                                <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
-                                <nil key="textColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Width" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="UKV-vX-GYa">
-                                <rect key="frame" x="45" y="88" width="160" height="41"/>
-                                <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
-                                <nil key="textColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Height" textAlignment="natural" adjustsFontForContentSizeCategory="YES" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="RsX-Nw-zeZ">
-                                <rect key="frame" x="245" y="49" width="97" height="34"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="97" id="ajZ-KI-Acc"/>
-                                </constraints>
-                                <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
-                                <textInputTraits key="textInputTraits" keyboardType="numberPad"/>
-                                <connections>
-                                    <action selector="checkText:" destination="Gmj-tL-yLc" eventType="editingChanged" id="IeW-C7-Nca"/>
-                                </connections>
-                            </textField>
-                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Width" textAlignment="natural" adjustsFontForContentSizeCategory="YES" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="gvV-5y-t6I">
-                                <rect key="frame" x="249" y="111" width="93" height="34"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="93" id="C4U-tq-drt"/>
-                                </constraints>
-                                <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
-                                <textInputTraits key="textInputTraits" keyboardType="numberPad"/>
-                                <connections>
-                                    <action selector="checkText:" destination="Gmj-tL-yLc" eventType="editingChanged" id="NbZ-qn-9X1"/>
-                                </connections>
-                            </textField>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" reversesTitleShadowWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Hau-lL-smB" customClass="StandardButton" customModule="imageResizer" customModuleProvider="target">
-                                <rect key="frame" x="45" y="171" width="297" height="36"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="297" id="3gN-0x-rRt"/>
-                                </constraints>
-                                <fontDescription key="fontDescription" type="system" weight="medium" pointSize="20"/>
-                                <state key="normal" title="Save Preset">
-                                    <color key="titleColor" name="AccentColor"/>
-                                </state>
-                                <connections>
-                                    <action selector="savePresetButtonTapped:" destination="Gmj-tL-yLc" eventType="touchUpInside" id="yHR-5R-UU8"/>
-                                </connections>
-                            </button>
-                        </subviews>
-                        <viewLayoutGuide key="safeArea" id="KjK-ac-Kt8"/>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                        <constraints>
-                            <constraint firstItem="RsX-Nw-zeZ" firstAttribute="leading" secondItem="C6k-vO-BBn" secondAttribute="trailing" constant="40" id="AW7-BN-dvs"/>
-                            <constraint firstItem="RsX-Nw-zeZ" firstAttribute="centerY" secondItem="C6k-vO-BBn" secondAttribute="centerY" id="Fjv-eM-bf7"/>
-                            <constraint firstItem="RsX-Nw-zeZ" firstAttribute="leading" secondItem="KjK-ac-Kt8" secondAttribute="leading" constant="245" id="VmE-im-n8y"/>
-                            <constraint firstItem="RsX-Nw-zeZ" firstAttribute="top" secondItem="KjK-ac-Kt8" secondAttribute="top" constant="29" id="WPt-z6-Q1g"/>
-                            <constraint firstItem="gvV-5y-t6I" firstAttribute="centerY" secondItem="UKV-vX-GYa" secondAttribute="centerY" id="WvP-ys-jrP"/>
-                            <constraint firstItem="Hau-lL-smB" firstAttribute="top" secondItem="KjK-ac-Kt8" secondAttribute="top" constant="151" id="XAd-Dv-IWR"/>
-                            <constraint firstItem="UKV-vX-GYa" firstAttribute="leading" secondItem="KjK-ac-Kt8" secondAttribute="leading" constant="45" id="gUa-ml-VHc"/>
-                            <constraint firstItem="C6k-vO-BBn" firstAttribute="top" secondItem="KjK-ac-Kt8" secondAttribute="top" constant="26" id="hdm-oe-Ngp"/>
-                            <constraint firstItem="C6k-vO-BBn" firstAttribute="leading" secondItem="KjK-ac-Kt8" secondAttribute="leading" constant="45" id="kfb-mC-p4e"/>
-                            <constraint firstItem="UKV-vX-GYa" firstAttribute="top" secondItem="KjK-ac-Kt8" secondAttribute="top" constant="88" id="lXR-cu-p9z"/>
-                            <constraint firstItem="gvV-5y-t6I" firstAttribute="leading" secondItem="KjK-ac-Kt8" secondAttribute="leading" constant="249" id="sND-Sb-FYI"/>
-                            <constraint firstItem="Hau-lL-smB" firstAttribute="leading" secondItem="KjK-ac-Kt8" secondAttribute="leading" constant="45" id="ypq-Wf-w8j"/>
-                            <constraint firstItem="gvV-5y-t6I" firstAttribute="top" secondItem="KjK-ac-Kt8" secondAttribute="top" constant="91" id="z3R-qj-tjj"/>
-                        </constraints>
-                    </view>
-                    <navigationItem key="navigationItem" id="dAW-oi-szf"/>
-                    <value key="contentSizeForViewInPopover" type="size" width="400" height="275"/>
-                    <connections>
-                        <outlet property="heightField" destination="RsX-Nw-zeZ" id="0mt-fl-02b"/>
-                        <outlet property="savePresetButton" destination="Hau-lL-smB" id="mRJ-M4-fGg"/>
-                        <outlet property="widthField" destination="gvV-5y-t6I" id="pcR-xf-Rm8"/>
-                    </connections>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="Wr4-YF-Akr" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="1640" y="76"/>
-        </scene>
         <!--Navigation Controller-->
         <scene sceneID="J05-0q-RbD">
             <objects>
@@ -235,9 +19,6 @@
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <nil name="viewControllers"/>
-                    <connections>
-                        <segue destination="BYZ-38-t0r" kind="relationship" relationship="rootViewController" id="mdC-1P-bwl"/>
-                    </connections>
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="mTv-Bp-R0V" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
@@ -316,13 +97,6 @@
         </scene>
     </scenes>
     <resources>
-        <image name="photo" catalog="system" width="128" height="93"/>
-        <namedColor name="AccentColor">
-            <color red="0.0" green="0.4779999852180481" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-        </namedColor>
-        <namedColor name="gray">
-            <color red="0.55500000715255737" green="0.55500000715255737" blue="0.55500000715255737" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
-        </namedColor>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>

@@ -7,12 +7,12 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0243442B28C8F9A00063680D /* CustomButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0243442A28C8F9A00063680D /* CustomButton.swift */; };
 		7F4F8548266C8F4A00D2CB2A /* resizedImagesController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F4F8547266C8F4A00D2CB2A /* resizedImagesController.swift */; };
 		7F4F854A266C90F800D2CB2A /* ImageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F4F8549266C90F800D2CB2A /* ImageCell.swift */; };
 		7F4F854C266C962300D2CB2A /* Images.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F4F854B266C962300D2CB2A /* Images.swift */; };
 		7F83592F277D8223007428A8 /* PresetTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F83592D277D8223007428A8 /* PresetTableViewCell.swift */; };
 		7F835930277D8223007428A8 /* PresetTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7F83592E277D8223007428A8 /* PresetTableViewCell.xib */; };
-		7F835938277D95C9007428A8 /* TableViewDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F835937277D95C9007428A8 /* TableViewDataSource.swift */; };
 		7F835943277ECCFC007428A8 /* CoreData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F835942277ECCFC007428A8 /* CoreData.swift */; };
 		7F835946277ED410007428A8 /* ImageResizerDataModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 7F835944277ED410007428A8 /* ImageResizerDataModel.xcdatamodeld */; };
 		7F89443E26F674B0000AF308 /* resizedImageSceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F89443D26F674B0000AF308 /* resizedImageSceneDelegate.swift */; };
@@ -38,12 +38,12 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		0243442A28C8F9A00063680D /* CustomButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomButton.swift; sourceTree = "<group>"; };
 		7F4F8547266C8F4A00D2CB2A /* resizedImagesController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = resizedImagesController.swift; sourceTree = "<group>"; };
 		7F4F8549266C90F800D2CB2A /* ImageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageCell.swift; sourceTree = "<group>"; };
 		7F4F854B266C962300D2CB2A /* Images.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Images.swift; sourceTree = "<group>"; };
 		7F83592D277D8223007428A8 /* PresetTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PresetTableViewCell.swift; sourceTree = "<group>"; };
 		7F83592E277D8223007428A8 /* PresetTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PresetTableViewCell.xib; sourceTree = "<group>"; };
-		7F835937277D95C9007428A8 /* TableViewDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableViewDataSource.swift; sourceTree = "<group>"; };
 		7F835942277ECCFC007428A8 /* CoreData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreData.swift; sourceTree = "<group>"; };
 		7F835945277ED410007428A8 /* ImageResizerDataModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = ImageResizerDataModel.xcdatamodel; sourceTree = "<group>"; };
 		7F89443D26F674B0000AF308 /* resizedImageSceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = resizedImageSceneDelegate.swift; sourceTree = "<group>"; };
@@ -127,10 +127,10 @@
 			isa = PBXGroup;
 			children = (
 				7F83592D277D8223007428A8 /* PresetTableViewCell.swift */,
-				7F835937277D95C9007428A8 /* TableViewDataSource.swift */,
 				7F83592E277D8223007428A8 /* PresetTableViewCell.xib */,
 				7F4F8549266C90F800D2CB2A /* ImageCell.swift */,
 				7F4F854B266C962300D2CB2A /* Images.swift */,
+				0243442A28C8F9A00063680D /* CustomButton.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -256,8 +256,8 @@
 			files = (
 				7F89443E26F674B0000AF308 /* resizedImageSceneDelegate.swift in Sources */,
 				7FCBD19E2780DD6C00E02CCF /* Preset+CoreDataClass.swift in Sources */,
-				7F835938277D95C9007428A8 /* TableViewDataSource.swift in Sources */,
 				7F89444326F6F9FA000AF308 /* MenuBar.swift in Sources */,
+				0243442B28C8F9A00063680D /* CustomButton.swift in Sources */,
 				7F835943277ECCFC007428A8 /* CoreData.swift in Sources */,
 				7F4F8548266C8F4A00D2CB2A /* resizedImagesController.swift in Sources */,
 				7F89447126FAB62B000AF308 /* CameraViewController.swift in Sources */,

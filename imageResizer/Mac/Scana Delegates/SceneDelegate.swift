@@ -43,10 +43,8 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         
         if let windowScene = scene as? UIWindowScene {
             let window = UIWindow(windowScene: windowScene)
-    
-            let mainView = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "MainView")
-            
-            window.rootViewController = mainView
+            let navController = UINavigationController(rootViewController: ViewController())
+            window.rootViewController = navController
             
             self.window = window
             window.makeKeyAndVisible()

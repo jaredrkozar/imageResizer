@@ -10,11 +10,68 @@ import UIKit
 
 class AddPresetViewController: UIViewController {
 
-    @IBOutlet var heightField: UITextField!
+    lazy var heightField: UITextField = {
+        let textfield = UITextField()
+        textfield.translatesAutoresizingMaskIntoConstraints = false
+        textfield.layer.backgroundColor = UIColor.systemGray4.cgColor
+        textfield.layer.cornerRadius = 15.0
+        textfield.addTarget(self, action: #selector(checkText), for: .valueChanged)
+        return textfield
+    }()
+
+    var widthField: UITextField = {
+        let width = UITextField()
+        
+        width.translatesAutoresizingMaskIntoConstraints = false
+        width.layer.backgroundColor = UIColor.systemGray4.cgColor
+        width.layer.cornerRadius = 15.0
+        width.translatesAutoresizingMaskIntoConstraints = false
+        width.addTarget(self, action: #selector(checkText), for: .valueChanged)
+        return width
+    }()
     
-    @IBOutlet var widthField: UITextField!
+    lazy var widthText: UILabel = {
+        let label = UILabel()
+        label.text = "Width"
+        label.font = UIFont.systemFont(ofSize: 20.0, weight: .regular)
+        label.textColor = .label
+        label.translatesAutoresizingMaskIntoConstraints = false
+        return label
+    }()
     
-    @IBOutlet var savePresetButton: StandardButton!
+    lazy var heightText: UILabel = {
+        let label = UILabel()
+        label.text = "Height"
+        label.font = UIFont.systemFont(ofSize: 20.0, weight: .regular)
+        label.textColor = .label
+        label.translatesAutoresizingMaskIntoConstraints = false
+        return label
+    }()
+    
+    lazy var parentStackView: UIStackView = {
+        let stackView = UIStackView()
+        stackView.axis = .vertical
+        stackView.translatesAutoresizingMaskIntoConstraints = false
+        stackView.alignment = .fill
+        stackView.distribution = .fillEqually
+        return stackView
+    }()
+    
+    lazy var horizontalStackView: UIStackView = {
+        let stackView = UIStackView()
+        stackView.axis = .horizontal
+        stackView.distribution = .fill
+        stackView.distribution = .fillEqually
+        return stackView
+    }()
+    
+    
+    lazy var savePresetButton: StandardButton = {
+        let button = StandardButton()
+        button.setTitle("Save Preset", for: .normal)
+        button.target(forAction: #selector(savePresetButtonTapped), withSender: self)
+        return button
+    }()
     
     let nc = NotificationCenter.default
     
@@ -30,7 +87,8 @@ class AddPresetViewController: UIViewController {
             break
         }
         
-       
+        view.addSubview(savePresetButton)
+        
         if isEditingDimension == false {
             //disables the save preset button
             self.savePresetButton.isEnabled = false
@@ -45,11 +103,44 @@ class AddPresetViewController: UIViewController {
             
             title = "Edit Preset"
         }
+    
+        let textStackView = UIStackView(arrangedSubviews: [widthText, heightText])
+        textStackView.axis = .vertical
+        textStackView.distribution = .fill
+        textStackView.distribution = .fillEqually
+        
+        let heightStackView = UIStackView(arrangedSubviews: [widthField, heightField])
+        heightStackView.axis = .vertical
+        heightStackView.distribution = .fill
+        heightStackView.distribution = .fillEqually
+        heightStackView.spacing = 9.0
+        
+        horizontalStackView.addArrangedSubview(textStackView)
+        horizontalStackView.addArrangedSubview(heightStackView)
+        parentStackView.addArrangedSubview(horizontalStackView)
+        parentStackView.addArrangedSubview(savePresetButton)
+        
+        view.addSubview(parentStackView)
+        
+        
+        NSLayoutConstraint.activate([
+            heightField.widthAnchor.constraint(equalToConstant: 80),
+            widthField.widthAnchor.constraint(equalToConstant: 80),
+            heightField.heightAnchor.constraint(equalToConstant: 80),
+            widthField.heightAnchor.constraint(equalToConstant: 80),
+            
+            savePresetButton.heightAnchor.constraint(equalToConstant: 15),
+            
+            parentStackView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -20),
+            parentStackView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 15),
+            parentStackView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 20),
+            parentStackView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -15)
+        ])
     }
     
-    @IBAction func checkText(_ sender: Any) {
+    @objc func checkText(_ sender: Any) {
         //if the height field or width fields are empty, the save preset button is disabled, but if both fields have text, they are enabled
-        
+        print("e")
         if heightField.text!.isEmpty || widthField.text!.isEmpty {
             self.savePresetButton.isEnabled = false
             savePresetButton.alpha = 0.5;
@@ -59,17 +150,19 @@ class AddPresetViewController: UIViewController {
         }
     }
     
-    @IBAction func savePresetButtonTapped(_ sender: StandardButton) {
+    @objc func savePresetButtonTapped(_ sender: StandardButton) {
         //gets the text in the height and width field's UITextField, and  concatenate them together to get the dimension. This dimension is saved, where it's added to the table
         
         let width = widthField.text
         let height = heightField.text
-        
+        print(widthField)
+        print(heightField)
         let dimension = "\(height!) x \(width!)"
+        
         UserDefaults.standard.set(dimension, forKey: "dimension")
         
         NotificationCenter.default.post(name: Notification.Name( "addWidthHeighttoTable"), object: nil)
-        
+    
         switch UIDevice.current.userInterfaceIdiom {
         case .mac:
             

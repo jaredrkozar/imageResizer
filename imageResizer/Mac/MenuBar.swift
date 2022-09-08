@@ -59,7 +59,7 @@ extension AppDelegate {
         let addPreset =
             UIKeyCommand(title: "Add Preset",
                          image: nil,
-                         action: #selector(ViewController.addPresetButton(_:)),
+                         action: #selector(ViewController.addPresetButtonTapped(_:)),
                          input: "P",
                          modifierFlags: [.command, .shift],
                          propertyList: nil)
