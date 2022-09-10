@@ -15,7 +15,6 @@ func savePreset(dimension: String, uuid: String) {
   
     let newPreset = Preset(context: context)
     newPreset.dimension = dimension
-    newPreset.isSelected = false
     newPreset.presetID = uuid
     
     do {

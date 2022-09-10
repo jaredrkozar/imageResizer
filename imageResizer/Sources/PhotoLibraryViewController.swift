@@ -30,7 +30,7 @@ extension ViewController: PHPickerViewControllerDelegate {
             itemProvider.loadObject(ofClass: UIImage.self) { [weak self] image, error in
                 DispatchQueue.main.async {
                     guard let self = self, let image = image as? UIImage, self.imageView.image == previousImage else { return }
-                    self.imageView.image = image.resizeImageWithAspectRatio(dimension: "773.5 x 284")
+                    self.imageView.image = image
                     NotificationCenter.default.post(name: Notification.Name( "isImageSelected"), object: nil)
                 }
             }

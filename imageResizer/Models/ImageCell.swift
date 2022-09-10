@@ -12,4 +12,5 @@ class ImageCell: UICollectionViewCell {
     @IBOutlet var dimensions: UILabel!
     
     @IBOutlet var imageView: UIImageView!
+    
 }

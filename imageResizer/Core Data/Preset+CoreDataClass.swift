@@ -2,7 +2,7 @@
 //  Preset+CoreDataClass.swift
 //  imageResizer
 //
-//  Created by JaredKozar on 1/1/22.
+//  Created by Jared Kozar on 9/8/22.
 //
 //
 

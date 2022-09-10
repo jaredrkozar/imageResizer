@@ -7,66 +7,46 @@
 
 import UIKit
 import Foundation
+import AVFoundation
+
 var isEditingDimension: Bool = false
 
 var presets = [Preset]()
+var currentDevice: String?
 
 let vc = ViewController()
 
-public var dimensionwidth: String = ""
-public var dimensionheight: String = ""
 public var selectedSource: String = ""
 
-public var imageDetails: [Images] {
-    //saves the color, for use throughout the app
-    get{
-        return vc.imageArray
-    }
-    set{
-        vc.imageArray = newValue
+public var imageDetails = [UIImage]()
+
+extension String {
+    func getHeightWidth() -> (Double, Double) {
+        let HeightWidthArr = self.components(separatedBy: " x ")
+        
+        let heightnum = Double(HeightWidthArr[0])!
+        let widthnum = Double(HeightWidthArr[1])!
+        return (widthnum, heightnum)
     }
 }
 
 extension UIImage {
     
-    func resizeImageWithoutAspectRatio(dimension: String) -> UIImage {
-        let HeightWidthArr = dimension.components(separatedBy: " x ")
-        
-        let heightnum = Double(HeightWidthArr[0])! / 2
-        let widthnum = Double(HeightWidthArr[1])! / 2
-        
-        UIGraphicsBeginImageContextWithOptions(CGSize(width: widthnum, height: heightnum), false, 0.0)
-        self.draw(in: CGRect(x: 0, y: 0, width: widthnum, height: heightnum))
-        let newImage = UIGraphicsGetImageFromCurrentImageContext()!
-        UIGraphicsEndImageContext()
-        return newImage
-    }
-        
-    func resizeImageWithAspectRatio(dimension: String) -> UIImage {
-        
-        let HeightWidthArr = dimension.components(separatedBy: " x ")
-        
-        let heightnum = Double(HeightWidthArr[0])!
-        let widthnum = Double(HeightWidthArr[1])!
+    func resizeImage(dimension: String, maintainAspectRatio: Bool) -> UIImage {
 
-        let widthRatio  = widthnum  / Double(self.size.width)
-        let heightRatio = heightnum / Double(self.size.height)
-
+        var size = CGSize()
+        let splitDimension = dimension.getHeightWidth()
         
-        var newSize: CGSize
-        if(widthRatio > heightRatio) {
-            newSize = CGSize(width: Double(self.size.width) * heightRatio, height: Double(Int(self.size.height)) * heightRatio)
+        if maintainAspectRatio == true {
+            size = AVMakeRect(aspectRatio: self.size, insideRect: CGRect(origin: .zero, size: CGSize(width: splitDimension.0, height: splitDimension.1))).size
         } else {
-            newSize = CGSize(width: Double(self.size.width) * widthRatio, height: Double(self.size.height) * widthRatio)
+            size = CGSize(width: splitDimension.0, height: splitDimension.1)
         }
-        CGSize(width: Double(self.size.width) * heightRatio, height: Double(Int(self.size.height)) * heightRatio)
-        
-        //creates a new image based off of the dimensions found above
-        UIGraphicsBeginImageContextWithOptions(newSize, false, 1.0)
-        self.draw(in: CGRect(origin: .zero, size: newSize))
-        let newImage = UIGraphicsGetImageFromCurrentImageContext()!
-        UIGraphicsEndImageContext()
-        return newImage
+        print(size)
+        let renderer = UIGraphicsImageRenderer(size: size)
+        return renderer.image { (context) in
+            self.draw(in: CGRect(origin: .zero, size: size))
+        }
     }
 }
 

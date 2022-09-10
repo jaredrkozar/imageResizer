@@ -19,9 +19,10 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         // If using a storyboard, the `window` property will automatically be initialized and attached to the scene.
         // This delegate does not imply the connecting scene or session are new (see `application:configurationForConnectingSceneSession` instead).
         guard let windowScene = (scene as? UIWindowScene) else { return }
-           
-        #if targetEnvironment(macCatalyst)
 
+        
+        #if targetEnvironment(macCatalyst)
+        currentDevice = "Mac"
         toolbarDelegate = MainToolbarDelegate()
         let toolbar = NSToolbar(identifier: "main")
         toolbar.delegate = toolbarDelegate
@@ -38,7 +39,8 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
             titlebar.separatorStyle = .shadow
         }
         
-
+        #else
+            currentDevice = "iPad"
         #endif
         
         if let windowScene = scene as? UIWindowScene {
@@ -67,6 +69,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 #if targetEnvironment(macCatalyst)
 extension NSToolbarItem.Identifier {
     static let addImage = NSToolbarItem.Identifier("com.jkozar.imageResizer.addImage")
+    static let resizeImage = NSToolbarItem.Identifier("com.jkozar.imageResizer.resizeImage")
 }
 
 class MainToolbarDelegate: NSObject {
@@ -75,7 +78,8 @@ class MainToolbarDelegate: NSObject {
 extension MainToolbarDelegate: NSToolbarDelegate {
     func toolbarDefaultItemIdentifiers(_ toolbar: NSToolbar) -> [NSToolbarItem.Identifier] {
         let identifiers: [NSToolbarItemGroup.Identifier] = [
-            .addImage
+            .addImage,
+            .resizeImage,
         ]
         return identifiers
     }
@@ -99,10 +103,17 @@ extension MainToolbarDelegate: NSToolbarDelegate {
                                                                                                                                                  UICommand(title: "Photo Library", action: #selector(ViewController.presentPhotoPicker)),
                                                                                                                                                  UICommand(title: "URL", action: #selector(ViewController.presentURLPicker))
                                                                                                                                                 ])
-          item.image = UIImage(systemName: "plus")
-          return item
-            default:
-                toolbarItem = nil
+              item.image = UIImage(systemName: "plus")
+              return item
+        case .resizeImage:
+            let item = NSToolbarItem(itemIdentifier: itemIdentifier)
+            item.image = UIImage(systemName: "arrow.up.right.and.arrow.down.left.rectangle")
+            item.label = "Resize Image"
+            item.action = #selector(ViewController.resizeButtonTapped(_:))
+            item.isBordered = true
+            return item
+        default:
+            toolbarItem = nil
         }
         item.toolTip = item.label
         item.autovalidates = true

@@ -13,7 +13,7 @@ class resizedImagesController: UICollectionViewController, UICollectionViewDragD
     
     override func viewDidLoad() {
         super.viewDidLoad()
-     
+       
         //sets up the UIBarButton items and since no images are currently selected, the left bar button items (the share button) is set to false (this is done in the checkImages() function)
         title = "Resized Images"
         navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Done", style: .done, target: self, action: #selector(doneButtonTapped))
@@ -38,7 +38,7 @@ class resizedImagesController: UICollectionViewController, UICollectionViewDragD
     }
     
     func collectionView(_ collectionView: UICollectionView, itemsForBeginning session: UIDragSession, at indexPath: IndexPath) -> [UIDragItem] {
-        let provider = NSItemProvider(object: imageDetails[indexPath.row].image)
+        let provider = NSItemProvider(object: imageDetails[indexPath.row])
         let dragItem = UIDragItem(itemProvider: provider)
         return [dragItem]
                                       
@@ -68,10 +68,11 @@ class resizedImagesController: UICollectionViewController, UICollectionViewDragD
         
         let image = imageDetails[indexPath.item]
 
-        cell.dimensions.text = image.dimensions
+        cell.dimensions.text = "\(image.size.height) x \(image.size.width)"
 
-        cell.imageView.image = image.image.resizeImageWithAspectRatio(dimension: "150 x 150")
-
+        cell.imageView.contentMode = .scaleAspectFit
+        cell.imageView.image = image
+        
         return cell
     }
     
@@ -79,9 +80,8 @@ class resizedImagesController: UICollectionViewController, UICollectionViewDragD
         //ads the currently selected image to the selectedImages array, and tells the checkImages() function to enable the share button
         
         let imagetoAdd = imageDetails[indexPath.item]
-        selectedImages.append(imagetoAdd.image)
+        selectedImages.append(imageDetails[indexPath.item])
         checkImages()
-        print(selectedImages.count)
         if let cell = collectionView.cellForItem(at: indexPath) {
             //what a cell looks like when the user selects it
             cell.layer.borderWidth = 3.0
@@ -96,7 +96,7 @@ class resizedImagesController: UICollectionViewController, UICollectionViewDragD
         //removes the image from the selectedImages array, and if there are no images in the selectedImages array, tells the checkImages() function to disable the share button
         
         let imagetoRemove = imageDetails[indexPath.item]
-        let imageRemove = selectedImages.firstIndex(of: imagetoRemove.image)!
+        let imageRemove = selectedImages.firstIndex(of: imagetoRemove)!
         selectedImages.remove(at: imageRemove)
         
         checkImages()

@@ -15,7 +15,7 @@ class AddPresetViewController: UIViewController {
         textfield.translatesAutoresizingMaskIntoConstraints = false
         textfield.layer.backgroundColor = UIColor.systemGray4.cgColor
         textfield.layer.cornerRadius = 15.0
-        textfield.addTarget(self, action: #selector(checkText), for: .valueChanged)
+        textfield.addTarget(nil, action: #selector(checkText), for: .allEditingEvents)
         return textfield
     }()
 
@@ -26,7 +26,7 @@ class AddPresetViewController: UIViewController {
         width.layer.backgroundColor = UIColor.systemGray4.cgColor
         width.layer.cornerRadius = 15.0
         width.translatesAutoresizingMaskIntoConstraints = false
-        width.addTarget(self, action: #selector(checkText), for: .valueChanged)
+        width.addTarget(nil, action: #selector(checkText), for: .allEditingEvents)
         return width
     }()
     
@@ -69,9 +69,13 @@ class AddPresetViewController: UIViewController {
     lazy var savePresetButton: StandardButton = {
         let button = StandardButton()
         button.setTitle("Save Preset", for: .normal)
-        button.target(forAction: #selector(savePresetButtonTapped), withSender: self)
+        button.addTarget(self, action: #selector(savePresetButtonTapped), for: .touchUpInside)
         return button
     }()
+    
+    
+    var currentHeight: String?
+    var currentWidth: String?
     
     let nc = NotificationCenter.default
     
@@ -98,8 +102,8 @@ class AddPresetViewController: UIViewController {
         } else {
             self.savePresetButton.isEnabled = true
             savePresetButton.alpha = 1.0;
-            widthField.text = dimensionwidth
-            heightField.text = dimensionheight
+            widthField.text = currentWidth
+            heightField.text = currentHeight
             
             title = "Edit Preset"
         }
@@ -138,14 +142,14 @@ class AddPresetViewController: UIViewController {
         ])
     }
     
-    @objc func checkText(_ sender: Any) {
+    @objc func checkText(_ sender: UITextField) {
         //if the height field or width fields are empty, the save preset button is disabled, but if both fields have text, they are enabled
-        print("e")
+ 
         if heightField.text!.isEmpty || widthField.text!.isEmpty {
-            self.savePresetButton.isEnabled = false
+            savePresetButton.isEnabled = false
             savePresetButton.alpha = 0.5;
         } else {
-            self.savePresetButton.isEnabled = true
+            savePresetButton.isEnabled = true
             savePresetButton.alpha = 1.0;
         }
     }
@@ -155,10 +159,9 @@ class AddPresetViewController: UIViewController {
         
         let width = widthField.text
         let height = heightField.text
-        print(widthField)
-        print(heightField)
+    
         let dimension = "\(height!) x \(width!)"
-        
+        print(dimension)
         UserDefaults.standard.set(dimension, forKey: "dimension")
         
         NotificationCenter.default.post(name: Notification.Name( "addWidthHeighttoTable"), object: nil)

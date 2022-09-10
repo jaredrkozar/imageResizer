@@ -27,7 +27,7 @@ extension ViewController: UIImagePickerControllerDelegate {
             }
 
             dismiss(animated: true, completion: nil)
-        imageView.image = image.resizeImageWithAspectRatio(dimension: "773.5 x 284")
+        imageView.image = image
             NotificationCenter.default.post(name: Notification.Name( "isImageSelected"), object: nil)
     }
     

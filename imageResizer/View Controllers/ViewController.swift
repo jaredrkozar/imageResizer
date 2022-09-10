@@ -9,7 +9,7 @@ import UIKit
 
 class ViewController: UIViewController & UINavigationControllerDelegate, UITableViewDelegate, UIDropInteractionDelegate {
     
-    var imageArray = [Images]()
+    var imageArray = [UIImageView]()
     var dataSource = TableViewDataSource()
     
     var imageView: UIImageView = {
@@ -21,28 +21,15 @@ class ViewController: UIViewController & UINavigationControllerDelegate, UITable
         return image
     }()
     
-    lazy var noPresetsLabel: UILabel = {
-        let label = UILabel()
-        label.numberOfLines = 0
-        label.textAlignment = .center
-        label.font = UIFont.systemFont(ofSize: 20, weight: .medium)
-        label.textColor = .label
-        label.text = "Yoou don't have any presets currently added. Add a preset by tapping the button above."
-        label.translatesAutoresizingMaskIntoConstraints = false
-
-        return label
-    }()
-    
     lazy var resizeImageButton: StandardButton = {
         var resizeButton = StandardButton()
         resizeButton.target(forAction: #selector(resizeButtonTapped), withSender: self)
         resizeButton.setTitle("Resize Image", for: .normal)
         resizeButton.translatesAutoresizingMaskIntoConstraints = false
         
-        if imageView.image == nil {
-            resizeButton.isEnabled = false
+        if currentDevice == "Mac" {
+            resizeButton.isHidden = true
         }
-        
         return resizeButton
     }()
     
@@ -69,7 +56,23 @@ class ViewController: UIViewController & UINavigationControllerDelegate, UITable
     }()
     
     
-    lazy var aspectRatioLocked = UISwitch()
+    var aspectRatioLocked = UISwitch()
+    
+    var aspectRatioText: UILabel {
+        var label = UILabel()
+        label.textColor = .label
+        label.text = "Lock Aspect Ratio"
+        label.font = UIFont.systemFont(ofSize: 18, weight: .medium)
+        return label
+    }
+    
+    lazy var aspectRatiioStack: UIStackView = {
+        let stack = UIStackView(arrangedSubviews: [aspectRatioText, aspectRatioLocked])
+        stack.axis = .horizontal
+        stack.translatesAutoresizingMaskIntoConstraints = false
+        stack.distribution = .fillEqually
+        return stack
+    }()
     
     let nc = NotificationCenter.default
     
@@ -80,14 +83,14 @@ class ViewController: UIViewController & UINavigationControllerDelegate, UITable
         fetchPresets()
         view.backgroundColor = .systemBackground
         title = "Image Resizer"
-        
         notifications()
         presetsTableView.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
         view.addSubview(imageView)
         view.addSubview(presetsTableView)
-        view.addSubview(resizeImageButton)
         view.addSubview(addPresetButton)
-        view.addSubview(noPresetsLabel)
+        view.addSubview(dataSource.noPresetsLabel)
+        view.addSubview(aspectRatiioStack)
+        view.addSubview(resizeImageButton)
         
         NSLayoutConstraint.activate([
             imageView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 30),
@@ -102,17 +105,22 @@ class ViewController: UIViewController & UINavigationControllerDelegate, UITable
             presetsTableView.trailingAnchor.constraint(equalTo: addPresetButton.trailingAnchor, constant: 0),
             presetsTableView.topAnchor.constraint(equalTo: addPresetButton.bottomAnchor, constant: 5),
             presetsTableView.leadingAnchor.constraint(equalTo: imageView.trailingAnchor, constant: 20),
-            presetsTableView.bottomAnchor.constraint(equalTo: resizeImageButton.topAnchor, constant: -15),
+            presetsTableView.bottomAnchor.constraint(equalTo: UIDevice.current.name == "iPad" ? resizeImageButton.topAnchor : view.safeAreaLayoutGuide.bottomAnchor, constant: -15),
+            
+            aspectRatiioStack.trailingAnchor.constraint(equalTo: addPresetButton.trailingAnchor, constant: 0),
+            aspectRatiioStack.leadingAnchor.constraint(equalTo: imageView.trailingAnchor, constant: 15),
+            aspectRatiioStack.heightAnchor.constraint(equalToConstant: 40),
+            aspectRatiioStack.bottomAnchor.constraint(equalTo: resizeImageButton.topAnchor, constant: -15),
             
             resizeImageButton.trailingAnchor.constraint(equalTo: addPresetButton.trailingAnchor, constant: 0),
             resizeImageButton.leadingAnchor.constraint(equalTo: imageView.trailingAnchor, constant: 15),
             resizeImageButton.heightAnchor.constraint(equalToConstant: 40),
             resizeImageButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -30),
             
-            noPresetsLabel.centerYAnchor.constraint(equalTo: presetsTableView.centerYAnchor, constant: 0),
-            noPresetsLabel.centerXAnchor.constraint(equalTo: presetsTableView.centerXAnchor, constant: 0),
-            noPresetsLabel.widthAnchor.constraint(equalTo: presetsTableView.widthAnchor, multiplier: 0.70),
-            noPresetsLabel.heightAnchor.constraint(equalTo: presetsTableView.heightAnchor, multiplier: 0.30),
+            dataSource.noPresetsLabel.centerYAnchor.constraint(equalTo: presetsTableView.centerYAnchor, constant: 0),
+            dataSource.noPresetsLabel.centerXAnchor.constraint(equalTo: presetsTableView.centerXAnchor, constant: 0),
+            dataSource.noPresetsLabel.widthAnchor.constraint(equalTo: presetsTableView.widthAnchor, multiplier: 0.70),
+            dataSource.noPresetsLabel.heightAnchor.constraint(equalTo: presetsTableView.heightAnchor, multiplier: 0.30),
         ])
         
         navigationItem.rightBarButtonItem =  UIBarButtonItem(title: nil, image: UIImage(systemName: "plus"), primaryAction: nil, menu: addImage())
@@ -168,10 +176,9 @@ class ViewController: UIViewController & UINavigationControllerDelegate, UITable
         //adds the dimension the user entednin the AddPresetViewController class to the table view.
         
         let dimension = UserDefaults.standard.string(forKey: "dimension")
-        print(dimension)
         if isEditingDimension == true {
             let editedDimension = self.dataSource.tablePresets[UserDefaults.standard.integer(forKey: "row")]
-            
+  
             editedDimension.dimension = dimension
             
         } else {
@@ -183,11 +190,13 @@ class ViewController: UIViewController & UINavigationControllerDelegate, UITable
             savePreset(dimension: dimension!, uuid: uuid)
             
             self.dataSource.tablePresets.append(newPreset)
-            
-            print(dataSource.tablePresets.count)
+
             
         }
        
+        fetchPresets()
+        presetsTableView.dataSource = dataSource
+        presetsTableView.delegate = self
         presetsTableView.reloadData()
     }
     
@@ -273,16 +282,16 @@ class ViewController: UIViewController & UINavigationControllerDelegate, UITable
     }
     
     @objc func resizeButtonTapped(_ sender: UIButton) {
-    //if the user turned the aspect ratio locked switch on, the resizeImageWithAspectRatio() function runs, and if the switch is off, then run the resizeImage() function, which doesn't keep the aspect ratio the same
+        //if the user turned the aspect ratio locked switch on, the resizeImageWithAspectRatio() function runs, and if the switch is off, then run the resizeImage() function, which doesn't keep the aspect ratio the same
         
-        
-        if aspectRatioLocked.isOn {
-            resizeImageWithAspectRatio(selectedImages: self.dataSource.tablePresets.filter { return $0.isSelected }.map({$0.dimension!})
-             )
-        } else {
-            resizeImage(selectedImages: self.dataSource.tablePresets.filter { return $0.isSelected }.map({$0.dimension!}))
+        for dimension in dataSource.tablePresets.filter({ return $0.isSelected }).map({$0.dimension}) {
+            print(aspectRatioLocked.isEnabled)
+            let newImage = (imageView.image?.resizeImage(dimension: dimension!, maintainAspectRatio: aspectRatioLocked.isOn))!
+            imageDetails.append(newImage)
         }
         
+        //brings up the resizedImagesController() modal popover
+        resizedImagesStoryboard()
     }
     
     @objc func addPresetButtonTapped(_ sender: UIButton) {
@@ -293,13 +302,10 @@ class ViewController: UIViewController & UINavigationControllerDelegate, UITable
     }
     
     func showPopup() {
+        var dimension: (Double, Double)?
         
         if isEditingDimension == true {
-            let HeightWidthArr = self.dataSource.tablePresets[UserDefaults.standard.integer(forKey: "row")].dimension!.components(separatedBy: " x ")
-            let heightNum = Double(HeightWidthArr[0])!
-            let widthNum = Double(HeightWidthArr[1])!
-            dimensionheight = String(Int(heightNum))
-            dimensionwidth = String(Int(widthNum))
+            dimension = dataSource.tablePresets[UserDefaults.standard.integer(forKey: "row")].dimension?.getHeightWidth()
         }
         
         switch UIDevice.current.userInterfaceIdiom {
@@ -310,6 +316,11 @@ class ViewController: UIViewController & UINavigationControllerDelegate, UITable
             navigationController.modalPresentationStyle = UIModalPresentationStyle.popover
             navigationController.preferredContentSize = CGSize(width: 400, height: 200)
                
+            if isEditingDimension == true {
+                vc.currentWidth = "\(String(describing: dimension?.0))"
+                vc.currentHeight = "\(String(describing: dimension?.1))"
+            }
+            
             self.present(navigationController, animated: true, completion: nil)
             
             let popoverPresentationController = vc.popoverPresentationController
@@ -319,6 +330,7 @@ class ViewController: UIViewController & UINavigationControllerDelegate, UITable
         case .mac:
                 
             let activity = NSUserActivity(activityType: "addPreset")
+            
             UIApplication.shared.requestSceneSessionActivation(nil, userActivity: activity, options: nil) { (error) in
                 print(error)
             }
@@ -327,35 +339,6 @@ class ViewController: UIViewController & UINavigationControllerDelegate, UITable
                 break
         }
 
-    }
-    
-    //Image Resizing Code
-        
-    func resizeImage(selectedImages: [String]) {
-        //gets the current dimension and splits it up into 2 parts, heightNum and widthNum, and gets the image that was selected. The image is then duplicated with the specified widthNum and heightNum, and set to newImage, where the newImage and the dimension are appended to the Images array.
-        
-        for dimension in selectedImages {
-            let newImage = (imageView.image?.resizeImageWithoutAspectRatio(dimension: dimension))!
-            let resizedImage = Images(dimensions: dimension, image: newImage)
-            imageDetails.append(resizedImage)
-        }
-        
-        //brings up the resizedImagesController() modal popover
-        resizedImagesStoryboard()
-    
-    }
-    
-    func resizeImageWithAspectRatio(selectedImages: [String]) {
-        //gets the current dimension and splits it up into 2 parts, heightNum and widthNum, and gets the image that was selected. The aspect ratio is found by dividing the width the user entered by the image's width (same thing for the height). The new size of the image is found by comparing the two ratios; if the widthRatio is greater than the heightRatio, it gets the images width and multiplies it by the heightRatio, and gets the images height, and multiplies that by the heightRatio. (Vice versa if the heightRatio is greater than the widthRatio).
-        
-        for dimension in selectedImages {
-            let newImage = (imageView.image?.resizeImageWithAspectRatio(dimension: dimension))!
-            let resizedImage = Images(dimensions: dimension, image: newImage)
-            imageDetails.append(resizedImage)
-        }
-        
-        //brings up the resizedImagesController() modal popover
-        resizedImagesStoryboard()
     }
     
     //Context Menu code
@@ -402,7 +385,7 @@ class ViewController: UIViewController & UINavigationControllerDelegate, UITable
         
         #else
             
-            let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "ResizedImages")
+            let vc = resizedImagesController()
             self.present(vc, animated: true, completion: nil)
         #endif
     }
@@ -411,26 +394,5 @@ class ViewController: UIViewController & UINavigationControllerDelegate, UITable
         #if targetEnvironment(macCatalyst)
         navigationController?.setNavigationBarHidden(true, animated: animated)
         #endif
-    }
-    
-    func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-        return 1
-    }
-    
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return presets.count
-    }
-    
-    func tableView(_ presetCellsView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        return "Presets"
-    }
-    
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
-        
-        let preset = tablePresets[indexPath.row]
-        cell.textLabel!.text = preset.dimension
-        cell.layoutIfNeeded()
-        return cell
     }
 }

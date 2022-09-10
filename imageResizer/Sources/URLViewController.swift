@@ -27,7 +27,7 @@ extension ViewController {
                     if let data = try? Data(contentsOf: url!) {
                         if let image = UIImage(data: data) {
                             DispatchQueue.main.async {
-                                self!.imageView.image = image.resizeImageWithAspectRatio(dimension: "773.5 x 284")
+                                self!.imageView.image = image
                                 NotificationCenter.default.post(name: Notification.Name( "isImageSelected"), object: nil)
                                 
                             }

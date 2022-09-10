@@ -27,7 +27,7 @@ extension ViewController: UIDocumentPickerDelegate {
         do {
             let imageData = try Data(contentsOf: myURL)
             let image = UIImage(data: imageData)!
-            imageView.image = image.resizeImageWithAspectRatio(dimension: "773.5 x 284")
+            imageView.image = image
             NotificationCenter.default.post(name: Notification.Name( "isImageSelected"), object: nil)
         } catch {
             print("There was an error loading the image: \(error). Please try again.")
