@@ -12,7 +12,7 @@ class StandardButton: UIButton {
         #if !targetEnvironment(macCatalyst)
             self.layer.masksToBounds = true
             self.layer.cornerCurve = .continuous
-            self.layer.cornerRadius = 5.0
+            self.layer.cornerRadius = 7.0
         self.layer.backgroundColor = UIColor.systemBlue.cgColor
             self.setTitleColor(.white, for: .normal)
         #endif

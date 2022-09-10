@@ -20,14 +20,23 @@ class resizedImagesController: UICollectionViewController, UICollectionViewDragD
         
         let image = UIImage(systemName: "square.and.arrow.up")
         navigationItem.leftBarButtonItem = UIBarButtonItem(image: image, style: .done, target: self, action: #selector(shareButtonTapped))
+        collectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout())
         
+        collectionView.translatesAutoresizingMaskIntoConstraints = false
         collectionView.dragDelegate = self
 
         collectionView.dragInteractionEnabled = true
         
-        //reloads the collection view when its being presented, allows multiple selction, and sets the presentation controller delegate to this class.
-        collectionView.reloadData()
+        collectionView.register(ImageCell.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader , withReuseIdentifier: "image")
+        
         collectionView.allowsMultipleSelection = true
+        
+        NSLayoutConstraint.activate([
+            collectionView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 30),
+            collectionView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: -30),
+            collectionView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: 0),
+            collectionView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: 0)
+        ])
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -127,5 +136,10 @@ class resizedImagesController: UICollectionViewController, UICollectionViewDragD
         } else {
             navigationItem.leftBarButtonItem?.isEnabled = true
         }
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        selectedImages.removeAll()
+        imageDetails.removeAll()
     }
 }

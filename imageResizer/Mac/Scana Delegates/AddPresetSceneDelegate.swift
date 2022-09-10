@@ -50,7 +50,7 @@ var toolbarDelegate: NSToolbarDelegate?
             window.rootViewController = addPreset
             
             windowScene.sizeRestrictions?.minimumSize = CGSize(width: 375, height: 190)
-            
+            windowScene.sizeRestrictions?.maximumSize = CGSize(width: 375, height: 190)
             self.window = window
             window.makeKeyAndVisible()
         }

@@ -21,11 +21,11 @@ public var selectedSource: String = ""
 public var imageDetails = [UIImage]()
 
 extension String {
-    func getHeightWidth() -> (Double, Double) {
+    func getHeightWidth() -> (Int, Int) {
         let HeightWidthArr = self.components(separatedBy: " x ")
         
-        let heightnum = Double(HeightWidthArr[0])!
-        let widthnum = Double(HeightWidthArr[1])!
+        let heightnum = Int(HeightWidthArr[0])!
+        let widthnum = Int(HeightWidthArr[1])!
         return (widthnum, heightnum)
     }
 }

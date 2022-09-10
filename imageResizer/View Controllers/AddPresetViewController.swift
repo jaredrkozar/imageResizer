@@ -62,6 +62,7 @@ class AddPresetViewController: UIViewController {
         stackView.axis = .horizontal
         stackView.distribution = .fill
         stackView.distribution = .fillEqually
+        stackView.translatesAutoresizingMaskIntoConstraints = false
         return stackView
     }()
     
@@ -69,6 +70,7 @@ class AddPresetViewController: UIViewController {
     lazy var savePresetButton: StandardButton = {
         let button = StandardButton()
         button.setTitle("Save Preset", for: .normal)
+        button.translatesAutoresizingMaskIntoConstraints = false
         button.addTarget(self, action: #selector(savePresetButtonTapped), for: .touchUpInside)
         return button
     }()
@@ -108,12 +110,12 @@ class AddPresetViewController: UIViewController {
             title = "Edit Preset"
         }
     
-        let textStackView = UIStackView(arrangedSubviews: [widthText, heightText])
+        let textStackView = UIStackView(arrangedSubviews: [heightText, widthText])
         textStackView.axis = .vertical
         textStackView.distribution = .fill
         textStackView.distribution = .fillEqually
         
-        let heightStackView = UIStackView(arrangedSubviews: [widthField, heightField])
+        let heightStackView = UIStackView(arrangedSubviews: [heightField, widthField])
         heightStackView.axis = .vertical
         heightStackView.distribution = .fill
         heightStackView.distribution = .fillEqually
@@ -133,7 +135,8 @@ class AddPresetViewController: UIViewController {
             heightField.heightAnchor.constraint(equalToConstant: 80),
             widthField.heightAnchor.constraint(equalToConstant: 80),
             
-            savePresetButton.heightAnchor.constraint(equalToConstant: 15),
+            savePresetButton.topAnchor.constraint(equalTo: widthField.bottomAnchor, constant: 10),
+            savePresetButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -10),
             
             parentStackView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -20),
             parentStackView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 15),
@@ -157,11 +160,11 @@ class AddPresetViewController: UIViewController {
     @objc func savePresetButtonTapped(_ sender: StandardButton) {
         //gets the text in the height and width field's UITextField, and  concatenate them together to get the dimension. This dimension is saved, where it's added to the table
         
-        let width = widthField.text
-        let height = heightField.text
+        let width = widthField.text!
+        let height = heightField.text!
     
-        let dimension = "\(height!) x \(width!)"
-        print(dimension)
+        let dimension = "\(height) x \(width)"
+    
         UserDefaults.standard.set(dimension, forKey: "dimension")
         
         NotificationCenter.default.post(name: Notification.Name( "addWidthHeighttoTable"), object: nil)

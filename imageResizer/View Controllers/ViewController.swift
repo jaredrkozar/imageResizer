@@ -23,7 +23,7 @@ class ViewController: UIViewController & UINavigationControllerDelegate, UITable
     
     lazy var resizeImageButton: StandardButton = {
         var resizeButton = StandardButton()
-        resizeButton.target(forAction: #selector(resizeButtonTapped), withSender: self)
+        resizeButton.addTarget(self, action: #selector(resizeButtonTapped), for: .touchUpInside)
         resizeButton.setTitle("Resize Image", for: .normal)
         resizeButton.translatesAutoresizingMaskIntoConstraints = false
         
@@ -46,9 +46,9 @@ class ViewController: UIViewController & UINavigationControllerDelegate, UITable
         return tableView
     }()
     
-    lazy var addPresetButton: StandardButton = {
-        let addPresetbutton = StandardButton()
-        addPresetbutton.tintColor = .systemBlue
+    lazy var addPresetButton: UIButton = {
+        let addPresetbutton = UIButton()
+        addPresetbutton.setTitleColor(.systemBlue, for: .normal)
         addPresetbutton.setTitle("Add Preset", for: .normal)
         addPresetbutton.addTarget(self, action: #selector(addPresetButtonTapped), for: .touchUpInside)
         addPresetbutton.translatesAutoresizingMaskIntoConstraints = false
@@ -69,6 +69,7 @@ class ViewController: UIViewController & UINavigationControllerDelegate, UITable
     lazy var aspectRatiioStack: UIStackView = {
         let stack = UIStackView(arrangedSubviews: [aspectRatioText, aspectRatioLocked])
         stack.axis = .horizontal
+        stack.alignment = .center
         stack.translatesAutoresizingMaskIntoConstraints = false
         stack.distribution = .fillEqually
         return stack
@@ -285,7 +286,7 @@ class ViewController: UIViewController & UINavigationControllerDelegate, UITable
         //if the user turned the aspect ratio locked switch on, the resizeImageWithAspectRatio() function runs, and if the switch is off, then run the resizeImage() function, which doesn't keep the aspect ratio the same
         
         for dimension in dataSource.tablePresets.filter({ return $0.isSelected }).map({$0.dimension}) {
-            print(aspectRatioLocked.isEnabled)
+         
             let newImage = (imageView.image?.resizeImage(dimension: dimension!, maintainAspectRatio: aspectRatioLocked.isOn))!
             imageDetails.append(newImage)
         }
@@ -302,7 +303,7 @@ class ViewController: UIViewController & UINavigationControllerDelegate, UITable
     }
     
     func showPopup() {
-        var dimension: (Double, Double)?
+        var dimension: (Int, Int)?
         
         if isEditingDimension == true {
             dimension = dataSource.tablePresets[UserDefaults.standard.integer(forKey: "row")].dimension?.getHeightWidth()
@@ -317,8 +318,8 @@ class ViewController: UIViewController & UINavigationControllerDelegate, UITable
             navigationController.preferredContentSize = CGSize(width: 400, height: 200)
                
             if isEditingDimension == true {
-                vc.currentWidth = "\(String(describing: dimension?.0))"
-                vc.currentHeight = "\(String(describing: dimension?.1))"
+                vc.currentWidth = "\(dimension!.0)"
+                vc.currentHeight = "\(dimension!.1)"
             }
             
             self.present(navigationController, animated: true, completion: nil)
