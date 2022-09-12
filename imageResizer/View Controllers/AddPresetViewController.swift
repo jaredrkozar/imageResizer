@@ -76,7 +76,7 @@ class AddPresetViewController: UIViewController {
         return button
     }()
     
-    var index: Int?
+    var presetIndex: Int!
     
     let nc = NotificationCenter.default
     
@@ -103,7 +103,7 @@ class AddPresetViewController: UIViewController {
         } else {
             self.savePresetButton.isEnabled = true
             savePresetButton.alpha = 1.0;
-            let splitDimension = presets[index!].dimension?.getHeightWidth()
+            let splitDimension = presets[presetIndex!].dimension?.getHeightWidth()
             widthField.text = "\(splitDimension!.0)"
             heightField.text = "\(splitDimension!.1)"
             
@@ -159,13 +159,15 @@ class AddPresetViewController: UIViewController {
     
     @objc func savePresetButtonTapped(_ sender: StandardButton) {
         //gets the text in the height and width field's UITextField, and  concatenate them together to get the dimension. This dimension is saved, where it's added to the table
-        
-        let width = widthField.text!
-        let height = heightField.text!
     
-        let dimension = "\(height) x \(width)"
-     
-        updatePreset(index: index!, dimension: dimension)
+        let dimension = "\(String(describing: heightField.text!)) x \(String(describing: widthField.text!))"
+        print("index")
+        print(presetIndex)
+        if presetIndex != nil {
+            savePreset(dimension: dimension)
+        } else {
+            updatePreset(index: presetIndex!, dimension: dimension)
+        }
     
         NotificationCenter.default.post(name: Notification.Name( "addWidthHeighttoTable"), object: nil)
     

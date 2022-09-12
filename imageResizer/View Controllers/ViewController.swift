@@ -301,7 +301,7 @@ class ViewController: UIViewController & UINavigationControllerDelegate, UITable
             navigationController.preferredContentSize = CGSize(width: 400, height: 200)
 
             if isEditingDimension == true {
-                vc.index = UserDefaults.standard.integer(forKey: "row")
+                vc.presetIndex = UserDefaults.standard.integer(forKey: "row")
             }
             
             self.present(navigationController, animated: true, completion: nil)

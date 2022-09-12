@@ -26,7 +26,6 @@ public var layout: UICollectionViewFlowLayout = {
     layout.itemSize = CGSize(width: 230, height: 230)
     return layout
 }()
-
 extension String {
     func getHeightWidth() -> (Int, Int) {
         let HeightWidthArr = self.components(separatedBy: " x ")
