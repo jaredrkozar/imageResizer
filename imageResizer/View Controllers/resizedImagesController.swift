@@ -20,14 +20,14 @@ class resizedImagesController: UICollectionViewController, UICollectionViewDragD
         
         let image = UIImage(systemName: "square.and.arrow.up")
         navigationItem.leftBarButtonItem = UIBarButtonItem(image: image, style: .done, target: self, action: #selector(shareButtonTapped))
-        collectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout())
+        collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
         
         collectionView.translatesAutoresizingMaskIntoConstraints = false
         collectionView.dragDelegate = self
 
         collectionView.dragInteractionEnabled = true
         
-        collectionView.register(ImageCell.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader , withReuseIdentifier: "image")
+        collectionView.register(ImageCell.self, forCellWithReuseIdentifier: "image")
         
         collectionView.allowsMultipleSelection = true
         
@@ -77,7 +77,7 @@ class resizedImagesController: UICollectionViewController, UICollectionViewDragD
         
         let image = imageDetails[indexPath.item]
 
-        cell.dimensions.text = "\(image.size.height) x \(image.size.width)"
+        cell.dimensionText.text = "\(image.size.height) x \(image.size.width)"
 
         cell.imageView.contentMode = .scaleAspectFit
         cell.imageView.image = image
@@ -87,7 +87,6 @@ class resizedImagesController: UICollectionViewController, UICollectionViewDragD
     
     override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         //ads the currently selected image to the selectedImages array, and tells the checkImages() function to enable the share button
-        
         let imagetoAdd = imageDetails[indexPath.item]
         selectedImages.append(imageDetails[indexPath.item])
         checkImages()

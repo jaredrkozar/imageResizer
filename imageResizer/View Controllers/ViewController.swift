@@ -369,7 +369,7 @@ class ViewController: UIViewController & UINavigationControllerDelegate, UITable
         
         #else
             
-            let vc = resizedImagesController()
+            let vc = resizedImagesController(collectionViewLayout: layout)
             self.present(vc, animated: true, completion: nil)
         #endif
     }

@@ -20,6 +20,13 @@ public var selectedSource: String = ""
 
 public var imageDetails = [UIImage]()
 
+public var layout: UICollectionViewFlowLayout = {
+   let layout = UICollectionViewFlowLayout()
+    layout.estimatedItemSize = CGSize(width: 230, height: 230)
+    layout.itemSize = CGSize(width: 230, height: 230)
+    return layout
+}()
+
 extension String {
     func getHeightWidth() -> (Int, Int) {
         let HeightWidthArr = self.components(separatedBy: " x ")
@@ -42,7 +49,7 @@ extension UIImage {
         } else {
             size = CGSize(width: splitDimension.0, height: splitDimension.1)
         }
-        print(size)
+        
         let renderer = UIGraphicsImageRenderer(size: size)
         return renderer.image { (context) in
             self.draw(in: CGRect(origin: .zero, size: size))
@@ -52,7 +59,6 @@ extension UIImage {
 
 extension Array where Element == Preset {
     func save() {
-        print(self.count)
         if let savedData = try? NSKeyedArchiver.archivedData(withRootObject: self, requiringSecureCoding: false) {
             let defaults = UserDefaults.standard
             defaults.set(savedData, forKey: "presets")

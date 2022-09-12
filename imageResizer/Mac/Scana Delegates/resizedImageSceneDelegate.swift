@@ -39,7 +39,7 @@ var toolbarDelegate: NSToolbarDelegate?
         
         if let windowScene = scene as? UIWindowScene {
             let window = UIWindow(windowScene: windowScene)
-            let detailView = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "ResizedImages")
+            let detailView = resizedImagesController(collectionViewLayout: layout)
             window.rootViewController = detailView
             self.window = window
             window.makeKeyAndVisible()

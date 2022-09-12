@@ -101,8 +101,6 @@ class AddPresetViewController: UIViewController {
             
             title = "Add Preset"
         } else {
-            print(index)
-            print(presets.count)
             self.savePresetButton.isEnabled = true
             savePresetButton.alpha = 1.0;
             let splitDimension = presets[index!].dimension?.getHeightWidth()
