@@ -11,11 +11,21 @@ import CoreData
 let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
 var fetchedResultsController: NSFetchedResultsController<Preset>!
 
-func savePreset(dimension: String, uuid: String) {
+func savePreset(dimension: String) {
   
     let newPreset = Preset(context: context)
     newPreset.dimension = dimension
-    newPreset.presetID = uuid
+    newPreset.presetID = UUID().uuidString
+    
+    do {
+        try context.save()
+    } catch {
+        print("An error occured while saving the preset. \(error)")
+    }
+}
+
+func updatePreset(index: Int, dimension: String) {
+    presets[index].dimension = dimension
     
     do {
         try context.save()

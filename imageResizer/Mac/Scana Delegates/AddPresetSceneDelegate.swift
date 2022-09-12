@@ -15,7 +15,7 @@ var toolbarDelegate: NSToolbarDelegate?
 
     
     var window: UIWindow?
-    
+    var index: Int?
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
         
         guard let windowScene = (scene as? UIWindowScene) else { return }
@@ -42,11 +42,11 @@ var toolbarDelegate: NSToolbarDelegate?
         }
         #endif
         
-        
+        print(connectionOptions.userActivities.first?.userInfo?.values.first)
         if let windowScene = scene as? UIWindowScene {
             let window = UIWindow(windowScene: windowScene)
             let addPreset = AddPresetViewController()
-    
+            addPreset.index = connectionOptions.userActivities.first?.userInfo?.values.first as! Int
             window.rootViewController = addPreset
             
             windowScene.sizeRestrictions?.minimumSize = CGSize(width: 375, height: 190)

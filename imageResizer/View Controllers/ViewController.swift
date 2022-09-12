@@ -82,6 +82,7 @@ class ViewController: UIViewController & UINavigationControllerDelegate, UITable
         // Do any additional setup after loading the view.
     
         fetchPresets()
+        dataSource.tablePresets = presets
         view.backgroundColor = .systemBackground
         title = "Image Resizer"
         notifications()
@@ -106,7 +107,7 @@ class ViewController: UIViewController & UINavigationControllerDelegate, UITable
             presetsTableView.trailingAnchor.constraint(equalTo: addPresetButton.trailingAnchor, constant: 0),
             presetsTableView.topAnchor.constraint(equalTo: addPresetButton.bottomAnchor, constant: 5),
             presetsTableView.leadingAnchor.constraint(equalTo: imageView.trailingAnchor, constant: 20),
-            presetsTableView.bottomAnchor.constraint(equalTo: UIDevice.current.name == "iPad" ? resizeImageButton.topAnchor : view.safeAreaLayoutGuide.bottomAnchor, constant: -15),
+            presetsTableView.bottomAnchor.constraint(equalTo: aspectRatiioStack.topAnchor, constant: -15),
             
             aspectRatiioStack.trailingAnchor.constraint(equalTo: addPresetButton.trailingAnchor, constant: 0),
             aspectRatiioStack.leadingAnchor.constraint(equalTo: imageView.trailingAnchor, constant: 15),
@@ -175,28 +176,10 @@ class ViewController: UIViewController & UINavigationControllerDelegate, UITable
     
     @objc func addtoTable(_ notification: Notification) {
         //adds the dimension the user entednin the AddPresetViewController class to the table view.
-        
-        let dimension = UserDefaults.standard.string(forKey: "dimension")
-        if isEditingDimension == true {
-            let editedDimension = self.dataSource.tablePresets[UserDefaults.standard.integer(forKey: "row")]
-  
-            editedDimension.dimension = dimension
-            
-        } else {
-            let uuid = UUID().uuidString
-            let newPreset = Preset(context: context)
-            newPreset.dimension = dimension
-            newPreset.isSelected = false
-            newPreset.presetID = uuid
-            savePreset(dimension: dimension!, uuid: uuid)
-            
-            self.dataSource.tablePresets.append(newPreset)
 
-            
-        }
-       
         fetchPresets()
         presetsTableView.dataSource = dataSource
+        dataSource.tablePresets = presets
         presetsTableView.delegate = self
         presetsTableView.reloadData()
     }
@@ -316,10 +299,9 @@ class ViewController: UIViewController & UINavigationControllerDelegate, UITable
             
             navigationController.modalPresentationStyle = UIModalPresentationStyle.popover
             navigationController.preferredContentSize = CGSize(width: 400, height: 200)
-               
+
             if isEditingDimension == true {
-                vc.currentWidth = "\(dimension!.0)"
-                vc.currentHeight = "\(dimension!.1)"
+                vc.index = UserDefaults.standard.integer(forKey: "row")
             }
             
             self.present(navigationController, animated: true, completion: nil)
@@ -331,7 +313,8 @@ class ViewController: UIViewController & UINavigationControllerDelegate, UITable
         case .mac:
                 
             let activity = NSUserActivity(activityType: "addPreset")
-            
+            activity.userInfo = ["index": UserDefaults.standard.integer(forKey: "row")]
+
             UIApplication.shared.requestSceneSessionActivation(nil, userActivity: activity, options: nil) { (error) in
                 print(error)
             }

@@ -14,17 +14,18 @@ class AddPresetViewController: UIViewController {
         let textfield = UITextField()
         textfield.translatesAutoresizingMaskIntoConstraints = false
         textfield.layer.backgroundColor = UIColor.systemGray4.cgColor
-        textfield.layer.cornerRadius = 15.0
+        textfield.layer.cornerRadius = 9.0
         textfield.addTarget(nil, action: #selector(checkText), for: .allEditingEvents)
+        textfield.keyboardType = .numberPad
         return textfield
     }()
 
     var widthField: UITextField = {
         let width = UITextField()
-        
+        width.keyboardType = .numberPad
         width.translatesAutoresizingMaskIntoConstraints = false
         width.layer.backgroundColor = UIColor.systemGray4.cgColor
-        width.layer.cornerRadius = 15.0
+        width.layer.cornerRadius = 9.0
         width.translatesAutoresizingMaskIntoConstraints = false
         width.addTarget(nil, action: #selector(checkText), for: .allEditingEvents)
         return width
@@ -75,9 +76,7 @@ class AddPresetViewController: UIViewController {
         return button
     }()
     
-    
-    var currentHeight: String?
-    var currentWidth: String?
+    var index: Int?
     
     let nc = NotificationCenter.default
     
@@ -102,10 +101,13 @@ class AddPresetViewController: UIViewController {
             
             title = "Add Preset"
         } else {
+            print(index)
+            print(presets.count)
             self.savePresetButton.isEnabled = true
             savePresetButton.alpha = 1.0;
-            widthField.text = currentWidth
-            heightField.text = currentHeight
+            let splitDimension = presets[index!].dimension?.getHeightWidth()
+            widthField.text = "\(splitDimension!.0)"
+            heightField.text = "\(splitDimension!.1)"
             
             title = "Edit Preset"
         }
@@ -164,9 +166,9 @@ class AddPresetViewController: UIViewController {
         let height = heightField.text!
     
         let dimension = "\(height) x \(width)"
+     
+        updatePreset(index: index!, dimension: dimension)
     
-        UserDefaults.standard.set(dimension, forKey: "dimension")
-        
         NotificationCenter.default.post(name: Notification.Name( "addWidthHeighttoTable"), object: nil)
     
         switch UIDevice.current.userInterfaceIdiom {
