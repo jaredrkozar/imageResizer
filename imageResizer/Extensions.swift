@@ -9,8 +9,6 @@ import UIKit
 import Foundation
 import AVFoundation
 
-var isEditingDimension: Bool = false
-
 var presets = [Preset]()
 var currentDevice: String?
 

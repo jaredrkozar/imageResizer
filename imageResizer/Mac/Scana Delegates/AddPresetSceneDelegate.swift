@@ -28,12 +28,6 @@ var toolbarDelegate: NSToolbarDelegate?
         toolbar.allowsUserCustomization = true
         toolbar.autosavesConfiguration = true
         toolbar.showsBaselineSeparator = false
-
-        if isEditingDimension == true {
-            windowScene.title = "Edit Preset"
-        } else {
-            windowScene.title = "Add Preset"
-        }
         
         if let titlebar = windowScene.titlebar {
             titlebar.toolbar = toolbar
@@ -45,8 +39,16 @@ var toolbarDelegate: NSToolbarDelegate?
         if let windowScene = scene as? UIWindowScene {
             let window = UIWindow(windowScene: windowScene)
             let addPreset = AddPresetViewController()
-            addPreset.presetIndex = connectionOptions.userActivities.first?.userInfo?.values.first as? Int 
+            let selectedIndex = connectionOptions.userActivities.first?.userInfo?.values.first as? Int
+            
+            addPreset.presetIndex = selectedIndex
             window.rootViewController = addPreset
+            
+            if selectedIndex != nil {
+                windowScene.title = "Edit Preset"
+            } else {
+                windowScene.title = "Add Preset"
+            }
             
             windowScene.sizeRestrictions?.minimumSize = CGSize(width: 375, height: 190)
             windowScene.sizeRestrictions?.maximumSize = CGSize(width: 375, height: 190)

@@ -82,7 +82,7 @@ class AddPresetViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+ 
         switch UIDevice.current.userInterfaceIdiom {
         case .pad:
             savePresetButton.isHidden = false
@@ -94,7 +94,7 @@ class AddPresetViewController: UIViewController {
         
         view.addSubview(savePresetButton)
         
-        if isEditingDimension == false {
+        if presetIndex == nil {
             //disables the save preset button
             self.savePresetButton.isEnabled = false
             savePresetButton.alpha = 0.5;
@@ -103,11 +103,11 @@ class AddPresetViewController: UIViewController {
         } else {
             self.savePresetButton.isEnabled = true
             savePresetButton.alpha = 1.0;
-            let splitDimension = presets[presetIndex!].dimension?.getHeightWidth()
+
+            title = "Edit Preset"
+            let splitDimension = presets[presetIndex].dimension?.getHeightWidth()
             widthField.text = "\(splitDimension!.0)"
             heightField.text = "\(splitDimension!.1)"
-            
-            title = "Edit Preset"
         }
     
         let textStackView = UIStackView(arrangedSubviews: [heightText, widthText])
@@ -127,7 +127,6 @@ class AddPresetViewController: UIViewController {
         parentStackView.addArrangedSubview(savePresetButton)
         
         view.addSubview(parentStackView)
-        
         
         NSLayoutConstraint.activate([
             heightField.widthAnchor.constraint(equalToConstant: 80),
@@ -161,9 +160,8 @@ class AddPresetViewController: UIViewController {
         //gets the text in the height and width field's UITextField, and  concatenate them together to get the dimension. This dimension is saved, where it's added to the table
     
         let dimension = "\(String(describing: heightField.text!)) x \(String(describing: widthField.text!))"
-        print("index")
-        print(presetIndex)
-        if presetIndex != nil {
+
+        if presetIndex == nil {
             savePreset(dimension: dimension)
         } else {
             updatePreset(index: presetIndex!, dimension: dimension)

@@ -59,7 +59,7 @@ class ViewController: UIViewController & UINavigationControllerDelegate, UITable
     var aspectRatioLocked = UISwitch()
     
     var aspectRatioText: UILabel {
-        var label = UILabel()
+        let label = UILabel()
         label.textColor = .label
         label.text = "Lock Aspect Ratio"
         label.font = UIFont.systemFont(ofSize: 18, weight: .medium)
@@ -280,17 +280,10 @@ class ViewController: UIViewController & UINavigationControllerDelegate, UITable
     
     @objc func addPresetButtonTapped(_ sender: UIButton) {
         //if the user taps the Add Preset button, a popover pops up allowing the user to enter a preset
-        isEditingDimension = false
-        
-        showPopup()
+        showPopup(indexPath: nil)
     }
     
-    func showPopup() {
-        var dimension: (Int, Int)?
-        
-        if isEditingDimension == true {
-            dimension = dataSource.tablePresets[UserDefaults.standard.integer(forKey: "row")].dimension?.getHeightWidth()
-        }
+    func showPopup(indexPath: Int?) {
         
         switch UIDevice.current.userInterfaceIdiom {
         case .pad:
@@ -300,9 +293,7 @@ class ViewController: UIViewController & UINavigationControllerDelegate, UITable
             navigationController.modalPresentationStyle = UIModalPresentationStyle.popover
             navigationController.preferredContentSize = CGSize(width: 400, height: 200)
 
-            if isEditingDimension == true {
-                vc.presetIndex = UserDefaults.standard.integer(forKey: "row")
-            }
+            vc.presetIndex = indexPath
             
             self.present(navigationController, animated: true, completion: nil)
             
@@ -313,7 +304,7 @@ class ViewController: UIViewController & UINavigationControllerDelegate, UITable
         case .mac:
                 
             let activity = NSUserActivity(activityType: "addPreset")
-            activity.userInfo = ["index": UserDefaults.standard.integer(forKey: "row")]
+            activity.userInfo = ["presetIndex": indexPath]
 
             UIApplication.shared.requestSceneSessionActivation(nil, userActivity: activity, options: nil) { (error) in
                 print(error)
@@ -328,17 +319,15 @@ class ViewController: UIViewController & UINavigationControllerDelegate, UITable
     //Context Menu code
     
     func tableView(_ tableView: UITableView, contextMenuConfigurationForRowAt indexPath: IndexPath, point: CGPoint) -> UIContextMenuConfiguration? {
-       
+
         //saves the row the user bought the context menu appear on in row
         
-        UserDefaults.standard.set(indexPath.row, forKey: "row")
         return UIContextMenuConfiguration(identifier: nil, previewProvider: nil) { _ in
             let editAction = UIAction(
               title: "Edit", image: UIImage(systemName: "pencil")) { [self] _ in
                 //gets the current dimension and splits it up into 2 parts, and saves them so they can be shown in the text fields in editPresetViewController. The editPresetViewController is then shown via a popover
-                
-                  isEditingDimension = true
-                  showPopup()
+
+                  showPopup(indexPath: indexPath.row)
                 
             }
             
@@ -347,11 +336,9 @@ class ViewController: UIViewController & UINavigationControllerDelegate, UITable
               title: "Delete",
               image: UIImage(systemName: "trash"),
                 attributes: .destructive) { [self] _ in
-                    
                 deletePreset(preset: dataSource.tablePresets[indexPath.row])
-                
                 self.dataSource.tablePresets.remove(at: indexPath.row)
-        
+                fetchPresets()
                 presetsTableView.reloadData()
                 
             }
