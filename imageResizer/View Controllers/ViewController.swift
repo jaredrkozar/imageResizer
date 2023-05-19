@@ -71,7 +71,7 @@ class ViewController: UIViewController & UINavigationControllerDelegate, UITable
         stack.axis = .horizontal
         stack.alignment = .center
         stack.translatesAutoresizingMaskIntoConstraints = false
-        stack.distribution = .fillEqually
+        stack.distribution = .fill
         return stack
     }()
     
@@ -96,7 +96,7 @@ class ViewController: UIViewController & UINavigationControllerDelegate, UITable
         
         NSLayoutConstraint.activate([
             imageView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 30),
-            imageView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: -30),
+            imageView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 30),
             imageView.heightAnchor.constraint(equalToConstant: 540),
             imageView.widthAnchor.constraint(equalToConstant: 540),
             
@@ -291,7 +291,7 @@ class ViewController: UIViewController & UINavigationControllerDelegate, UITable
             let navigationController = UINavigationController(rootViewController: vc)
             
             navigationController.modalPresentationStyle = UIModalPresentationStyle.popover
-            navigationController.preferredContentSize = CGSize(width: 400, height: 200)
+            navigationController.preferredContentSize = CGSize(width: 400, height: 225)
 
             vc.presetIndex = indexPath
             

@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		0243442B28C8F9A00063680D /* CustomButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0243442A28C8F9A00063680D /* CustomButton.swift */; };
+		028F5EC12A1738DB009CBF44 /* CusstomTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 028F5EC02A1738DB009CBF44 /* CusstomTextField.swift */; };
 		02A9480A28CA3E0600C35D34 /* TableViewDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02A9480928CA3E0600C35D34 /* TableViewDataSource.swift */; };
 		02A9480D28CA3E4400C35D34 /* Preset+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02A9480B28CA3E4400C35D34 /* Preset+CoreDataClass.swift */; };
 		02A9480E28CA3E4400C35D34 /* Preset+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02A9480C28CA3E4400C35D34 /* Preset+CoreDataProperties.swift */; };
@@ -38,6 +39,7 @@
 
 /* Begin PBXFileReference section */
 		0243442A28C8F9A00063680D /* CustomButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomButton.swift; sourceTree = "<group>"; };
+		028F5EC02A1738DB009CBF44 /* CusstomTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CusstomTextField.swift; sourceTree = "<group>"; };
 		02A9480928CA3E0600C35D34 /* TableViewDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableViewDataSource.swift; sourceTree = "<group>"; };
 		02A9480B28CA3E4400C35D34 /* Preset+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Preset+CoreDataClass.swift"; sourceTree = "<group>"; };
 		02A9480C28CA3E4400C35D34 /* Preset+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Preset+CoreDataProperties.swift"; sourceTree = "<group>"; };
@@ -128,6 +130,7 @@
 				02A9480928CA3E0600C35D34 /* TableViewDataSource.swift */,
 				7F4F854B266C962300D2CB2A /* Images.swift */,
 				0243442A28C8F9A00063680D /* CustomButton.swift */,
+				028F5EC02A1738DB009CBF44 /* CusstomTextField.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -257,6 +260,7 @@
 				7F835943277ECCFC007428A8 /* CoreData.swift in Sources */,
 				7F4F8548266C8F4A00D2CB2A /* resizedImagesController.swift in Sources */,
 				7F89447126FAB62B000AF308 /* CameraViewController.swift in Sources */,
+				028F5EC12A1738DB009CBF44 /* CusstomTextField.swift in Sources */,
 				7F89447326FAB682000AF308 /* URLViewController.swift in Sources */,
 				7F89444A26F91173000AF308 /* Sources.swift in Sources */,
 				7FEF76C9265F0F9D007E6043 /* imageResizer.xcdatamodeld in Sources */,

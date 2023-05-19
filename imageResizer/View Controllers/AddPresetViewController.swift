@@ -10,25 +10,18 @@ import UIKit
 
 class AddPresetViewController: UIViewController {
 
-    lazy var heightField: UITextField = {
-        let textfield = UITextField()
+    lazy var heightField: CusstomTextField = {
+        let textfield = CusstomTextField(frame: .zero)
         textfield.translatesAutoresizingMaskIntoConstraints = false
-        textfield.layer.backgroundColor = UIColor.systemGray4.cgColor
-        textfield.layer.cornerRadius = 9.0
         textfield.addTarget(nil, action: #selector(checkText), for: .allEditingEvents)
-        textfield.keyboardType = .numberPad
         return textfield
     }()
 
-    var widthField: UITextField = {
-        let width = UITextField()
-        width.keyboardType = .numberPad
-        width.translatesAutoresizingMaskIntoConstraints = false
-        width.layer.backgroundColor = UIColor.systemGray4.cgColor
-        width.layer.cornerRadius = 9.0
-        width.translatesAutoresizingMaskIntoConstraints = false
-        width.addTarget(nil, action: #selector(checkText), for: .allEditingEvents)
-        return width
+    lazy var widthField: CusstomTextField = {
+        let widthField = CusstomTextField(frame: .zero)
+        widthField.translatesAutoresizingMaskIntoConstraints = false
+        widthField.addTarget(nil, action: #selector(checkText), for: .allEditingEvents)
+        return widthField
     }()
     
     lazy var widthText: UILabel = {
@@ -54,19 +47,9 @@ class AddPresetViewController: UIViewController {
         stackView.axis = .vertical
         stackView.translatesAutoresizingMaskIntoConstraints = false
         stackView.alignment = .fill
-        stackView.distribution = .fillEqually
+        stackView.distribution = .equalSpacing
         return stackView
     }()
-    
-    lazy var horizontalStackView: UIStackView = {
-        let stackView = UIStackView()
-        stackView.axis = .horizontal
-        stackView.distribution = .fill
-        stackView.distribution = .fillEqually
-        stackView.translatesAutoresizingMaskIntoConstraints = false
-        return stackView
-    }()
-    
     
     lazy var savePresetButton: StandardButton = {
         let button = StandardButton()
@@ -110,32 +93,27 @@ class AddPresetViewController: UIViewController {
             heightField.text = "\(splitDimension!.1)"
         }
     
-        let textStackView = UIStackView(arrangedSubviews: [heightText, widthText])
-        textStackView.axis = .vertical
-        textStackView.distribution = .fill
-        textStackView.distribution = .fillEqually
-        
-        let heightStackView = UIStackView(arrangedSubviews: [heightField, widthField])
-        heightStackView.axis = .vertical
+        let heightStackView = UIStackView(arrangedSubviews: [heightText, heightField])
+        heightStackView.axis = .horizontal
         heightStackView.distribution = .fill
         heightStackView.distribution = .fillEqually
-        heightStackView.spacing = 9.0
         
-        horizontalStackView.addArrangedSubview(textStackView)
-        horizontalStackView.addArrangedSubview(heightStackView)
-        parentStackView.addArrangedSubview(horizontalStackView)
+        let widthStackView = UIStackView(arrangedSubviews: [widthText, widthField])
+        widthStackView.axis = .horizontal
+        widthStackView.distribution = .fill
+        widthStackView.distribution = .fillEqually
+        
+        parentStackView.addArrangedSubview(heightStackView)
+        parentStackView.addArrangedSubview(widthStackView)
         parentStackView.addArrangedSubview(savePresetButton)
         
         view.addSubview(parentStackView)
         
         NSLayoutConstraint.activate([
-            heightField.widthAnchor.constraint(equalToConstant: 80),
-            widthField.widthAnchor.constraint(equalToConstant: 80),
-            heightField.heightAnchor.constraint(equalToConstant: 80),
-            widthField.heightAnchor.constraint(equalToConstant: 80),
+            heightField.heightAnchor.constraint(equalToConstant: 60),
+            widthField.heightAnchor.constraint(equalToConstant: 60),
             
-            savePresetButton.topAnchor.constraint(equalTo: widthField.bottomAnchor, constant: 10),
-            savePresetButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -10),
+            savePresetButton.heightAnchor.constraint(equalToConstant: 40),
             
             parentStackView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -20),
             parentStackView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 15),

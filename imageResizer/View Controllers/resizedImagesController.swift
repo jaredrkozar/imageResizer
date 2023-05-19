@@ -26,14 +26,14 @@ class resizedImagesController: UICollectionViewController, UICollectionViewDragD
         collectionView.dragDelegate = self
 
         collectionView.dragInteractionEnabled = true
-        
+        collectionView.backgroundColor = nil
         collectionView.register(ImageCell.self, forCellWithReuseIdentifier: "image")
         
         collectionView.allowsMultipleSelection = true
         
         NSLayoutConstraint.activate([
             collectionView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 30),
-            collectionView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: -30),
+            collectionView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 30),
             collectionView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: 0),
             collectionView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: 0)
         ])
@@ -92,10 +92,8 @@ class resizedImagesController: UICollectionViewController, UICollectionViewDragD
         checkImages()
         if let cell = collectionView.cellForItem(at: indexPath) {
             //what a cell looks like when the user selects it
-            cell.layer.borderWidth = 3.0
-            cell.layer.borderColor = UIColor(named: "AccentColor")?.cgColor
-            cell.layer.backgroundColor = UIColor(named: "bgColor")?.cgColor
-            cell.layer.cornerRadius = 5.0
+            cell.layer.backgroundColor = UIColor.systemBlue.cgColor
+            cell.layer.cornerRadius = 8.0
         }
         
     }
@@ -111,8 +109,7 @@ class resizedImagesController: UICollectionViewController, UICollectionViewDragD
         
         if let cell = collectionView.cellForItem(at: indexPath) {
             //what a cell looks like when a user deselects it
-            cell.layer.backgroundColor = UIColor.secondarySystemGroupedBackground.cgColor
-            cell.layer.borderWidth = 0.0
+            cell.layer.backgroundColor = nil
         }
     }
     
